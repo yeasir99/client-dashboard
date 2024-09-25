@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+  }
+  .btn-secondary {
+  }
+  .btn-primary-disable {
+  }
+  .btn-secondary-disable {
+  }
+}
