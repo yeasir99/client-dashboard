@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer components {
+  .mainHeading {
+    @apply text-text1 font-semibold;
+  }
+  .subHeading {
+  }
   .btn-primary {
   }
   .btn-secondary {
