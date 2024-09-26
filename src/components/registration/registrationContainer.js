@@ -1,8 +1,8 @@
 import SarinaFontWrapper from '../sarinaF/sarinaFontWrapper';
-import LoginForm from './loginForm';
 import Link from 'next/link';
+import RegistrationForm from './registrationForm';
 
-const LoginContainer = () => {
+const RegestrationContainer = () => {
   return (
     <div className="bg-surface1 w-[872px] min-height-[557px] px-[142px] py-[86px] rounded-[30px] text-center">
       <SarinaFontWrapper>
@@ -10,17 +10,16 @@ const LoginContainer = () => {
           KBL Publication
         </h1>
       </SarinaFontWrapper>
-
       <h1 className="mainHeading text-[30px] mb-2">Welcome to KBL</h1>
       <p className="text-text2 mb-8">
-        Don't have an account?{' '}
-        <Link className="text-primary font-bold" href="/sign-up">
-          Register
+        Have an account?{' '}
+        <Link className="text-primary font-bold" href="/">
+          Login
         </Link>
       </p>
-      <LoginForm />
+      <RegistrationForm />
     </div>
   );
 };
 
-export default LoginContainer;
+export default RegestrationContainer;
