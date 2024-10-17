@@ -7,10 +7,12 @@ const RegestrationContainer = () => {
     <div className="bg-surface1 w-[872px] min-height-[557px] px-[142px] py-[86px] rounded-[30px] text-center">
       <SarinaFontWrapper>
         <h1 className="text-[34px] font-bold mb-2 text-primary">
-          KBL Publication
+          kazal Brothers Limited
         </h1>
       </SarinaFontWrapper>
-      <h1 className="mainHeading text-[30px] mb-2">Welcome to KBL</h1>
+      <h1 className="mainHeading text-[30px] mb-2">
+        Welcome to kazal brothers limited
+      </h1>
       <p className="text-text2 mb-8">
         Have an account?{' '}
         <Link className="text-primary font-bold" href="/">
