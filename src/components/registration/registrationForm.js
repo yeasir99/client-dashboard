@@ -3,62 +3,143 @@ const registrationForm = () => {
     <form className="w-full">
       <div>{/* image upload here */}</div>
       <div className="mb-5">
-        <input
-          type="text"
-          className="w-full rounded-md mb-3"
-          placeholder="Name"
-        />
-        <input
-          type="text"
-          className="w-full rounded-md mb-3"
-          placeholder="Employee Id"
-        />
-        <input
-          type="number"
-          className="w-full rounded-md mb-3"
-          placeholder="Mobile Number"
-        />
-        <div className="mb-3 flex justify-between space-x-3">
-          <select name="zone" className="w-full rounded-md text-gray-500">
+        <div>
+          <label
+            htmlFor="employeeID"
+            className="capitalize flex font-semibold text-md py-1"
+          >
+            employeeID:
+          </label>
+
+          <input
+            id="employeeID"
+            name="employeeID"
+            type="text"
+            className="w-full rounded-md mb-1"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="employeeName"
+            className="capitalize flex font-semibold text-md py-1"
+          >
+            employee Name:
+          </label>
+
+          <input
+            id="employeeName"
+            type="text"
+            name="employeeName"
+            className="w-full rounded-md mb-1"
+          />
+        </div>
+        <div>
+          <label className="capitalize flex font-semibold text-md py-1">
+            Dasignation/Role:
+          </label>
+
+          <select name="zone" className="w-full rounded-md">
             <option value="" disabled={true} selected>
-              Zone
+              NSM
             </option>
             <option value="Zone one">Zone one</option>
             <option value="Zone two">Zone two</option>
             <option value="Zone three">Zone three</option>
           </select>
-          <select name="area" className="w-full rounded-md text-gray-500">
-            <option value="" disabled={true} selected>
-              Area
-            </option>
-            <option value="Area one">Area one</option>
-            <option value="Area two">Area two</option>
-            <option value="Area three">Area three</option>
-          </select>
         </div>
-        <div className="mb-3 flex justify-between space-x-3 text-gray-500">
+
+        <div>
+          <label
+            htmlFor="userID"
+            className="capitalize flex font-semibold text-md py-1"
+          >
+            user ID:
+          </label>
+
+          <input
+            id="userID"
+            type="text"
+            name="userID"
+            className="w-full rounded-md mb-1"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="password"
+            className="capitalize flex font-semibold text-md py-1"
+          >
+            password:
+          </label>
+
+          <input
+            id="password"
+            type="password"
+            name="password"
+            className="w-full rounded-md mb-1"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="email"
+            className="capitalize flex font-semibold text-md py-1"
+          >
+            email:
+          </label>
+
+          <input
+            id="email"
+            type="email"
+            name="email"
+            className="w-full rounded-md mb-1"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="phone"
+            className="capitalize flex font-semibold text-md py-1"
+          >
+            Phone:
+          </label>
+
+          <input
+            id="phone"
+            type="number"
+            name="phone"
+            className="w-full rounded-md mb-1"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="address"
+            className="capitalize flex font-semibold text-md py-1"
+          >
+            address:
+          </label>
+
+          <input
+            id="address"
+            type="text"
+            name="address"
+            className="w-full rounded-md mb-1"
+          />
+        </div>
+        <div>
+          <label className="capitalize flex font-semibold text-md py-1">
+            reporting to:
+          </label>
+
           <select name="district" className="w-full rounded-md">
             <option value="" disabled={true} selected>
-              District
+              John Smith -CEO
             </option>
             <option value="District one">District one</option>
             <option value="District two">District two</option>
             <option value="District three">District three</option>
           </select>
-          <select name="division" className="w-full rounded-md text-gray-500">
-            <option value="" disabled={true} selected>
-              Division
-            </option>
-            <option value="Division one">Division one</option>
-            <option value="Division two">Division two</option>
-            <option value="Division three">Division three</option>
-          </select>
         </div>
-        <input
-          type="password"
-          className="w-full rounded-md"
-          placeholder="Password"
-        />
       </div>
       <button
         type="submit"
