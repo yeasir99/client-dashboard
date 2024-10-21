@@ -1,14 +1,26 @@
 import Navbar from '@/components/navbar/Navbar';
+import NavProfile from '@/components/navbar/NavProfile';
 import Footer from '@/components/Footer';
 
 const layout = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col justify-between">
-      <Navbar />
-      <main className="bg-surface2 h-full flex-grow">
-        <div className="max-w-[1440px] mx-auto h-full">{children}</div>
+    <div className="min-h-screen grid grid-cols-12 max-w-[1540px] mx-auto gap-1">
+      <div className="col-span-3">
+        <Navbar />
+      </div>
+      <main className="bg-surface2 min-h-screen flex-grow col-span-9">
+        <div className="flex flex-col justify-between h-full">
+          <div>
+            <div className="flex justify-end p-3 bg-primary">
+              <NavProfile />
+            </div>
+            <div className="p-3">{children}</div>
+          </div>
+          <div className="order-last">
+            <Footer />
+          </div>
+        </div>
       </main>
-      <Footer />
     </div>
   );
 };
