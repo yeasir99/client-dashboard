@@ -14,47 +14,101 @@ const NavItem = () => {
           <h1 className="text-2xl mb-1 pt-1 ">Basic</h1>
           <div>
             <Link
-              className="capitalize block text-md mb-1"
+              className="capitalize block text-sm mb-0.5"
               href="/dashboard/financial-year"
             >
               financial year
             </Link>
             <Link
-              className="capitalize block text-md mb-1"
+              className="capitalize block text-sm mb-0.5"
               href="/dashboard/designation"
             >
               designation
             </Link>
             <Link
-              className="capitalize block text-md mb-1"
+              className="capitalize block text-sm mb-0.5"
               href="/dashboard/user-employee"
             >
               user-Employee registration
             </Link>
             <Link
-              className="capitalize block text-md mb-1"
+              className="capitalize block text-sm mb-0.5"
               href="/dashboard/region-type"
             >
               region type
             </Link>
             <Link
-              className="capitalize block text-md mb-1"
+              className="capitalize block text-sm mb-0.5"
               href="/dashboard/region-area"
             >
               region area
             </Link>
             <Link
-              className="capitalize block text-md mb-1"
+              className="capitalize block text-sm mb-0.5"
               href="/dashboard/institution-type"
             >
               Institution type
             </Link>
             <Link
-              className="capitalize block text-md mb-1"
+              className="capitalize block text-sm mb-0.5"
               href="/dashboard/institution"
             >
               Institution
             </Link>
+            <span
+              className="capitalize block text-sm mb-0.5"
+              href="/dashboard/financial-year"
+            >
+              book category
+            </span>
+            <span
+              className="capitalize block text-sm mb-0.5"
+              href="/dashboard/financial-year"
+            >
+              books (Products)
+            </span>
+            <span
+              className="capitalize block text-sm mb-0.5"
+              href="/dashboard/financial-year"
+            >
+              party management
+            </span>
+            <span
+              className="capitalize block text-sm mb-0.5"
+              href="/dashboard/financial-year"
+            >
+              TA/DA allowance type
+            </span>
+            <span
+              className="capitalize block text-sm mb-0.5"
+              href="/dashboard/financial-year"
+            >
+              purpose category
+            </span>
+            <span
+              className="capitalize block text-sm mb-0.5"
+              href="/dashboard/financial-year"
+            >
+              mapping employee VS region
+            </span>
+            <span
+              className="capitalize block text-sm mb-0.5"
+              href="/dashboard/financial-year"
+            >
+              class info management
+            </span>
+            <span
+              className="capitalize block text-sm mb-0.5"
+              href="/dashboard/financial-year"
+            >
+              subject info management
+            </span>
+            <span
+              className="capitalize block text-sm mb-0.5"
+              href="/dashboard/financial-year"
+            >
+              specimen order
+            </span>
           </div>
         </div>
       </div>
@@ -66,48 +120,90 @@ const NavItem = () => {
           <div>
             <h1 className="text-2xl mb-1 pt-1">Transection</h1>
             <div>
-              <Link
-                className="capitalize block text-md mb-1"
+              <span
+                className="capitalize block text-sm mb-0.5"
                 href="/dashboard/financial-year"
               >
-                financial year
-              </Link>
-              <Link
-                className="capitalize block text-md mb-1"
+                assign visit plans
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
                 href="/dashboard/designation"
               >
-                designation
-              </Link>
-              <Link
-                className="capitalize block text-md mb-1"
+                visit approval process
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
                 href="/dashboard/user-employee"
               >
-                user-Employee registration
-              </Link>
-              <Link
-                className="capitalize block text-md mb-1"
+                visit entry
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
                 href="/dashboard/region-type"
               >
-                region type
-              </Link>
-              <Link
-                className="capitalize block text-md mb-1"
+                visit approval
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
                 href="/dashboard/region-area"
               >
-                region area
-              </Link>
-              <Link
-                className="capitalize block text-md mb-1"
+                production order
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
                 href="/dashboard/institution-type"
               >
-                Institution type
-              </Link>
-              <Link
-                className="capitalize block text-md mb-1"
+                product receipt
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
                 href="/dashboard/institution"
               >
-                Institution
-              </Link>
+                sales orders
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
+                href="/dashboard/institution"
+              >
+                sales order approval process
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
+                href="/dashboard/institution"
+              >
+                delivery challan
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
+                href="/dashboard/institution"
+              >
+                invoice/Bill
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
+                href="/dashboard/institution"
+              >
+                money receipt
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
+                href="/dashboard/institution"
+              >
+                sales return
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
+                href="/dashboard/institution"
+              >
+                damage product/Book
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
+                href="/dashboard/institution"
+              >
+                inventory transfer
+              </span>
             </div>
           </div>
         </div>
@@ -120,18 +216,18 @@ const NavItem = () => {
           <div>
             <h1 className="text-2xl mb-1 pt-1">Report</h1>
             <div>
-              <Link
-                className="capitalize block text-md mb-1"
+              <span
+                className="capitalize block text-sm mb-0.5"
                 href="/dashboard/financial-year"
               >
-                financial year
-              </Link>
-              <Link
-                className="capitalize block text-md mb-1"
+                stock in-Out report
+              </span>
+              <span
+                className="capitalize block text-sm mb-0.5"
                 href="/dashboard/designation"
               >
-                designation
-              </Link>
+                current stock report
+              </span>
             </div>
           </div>
         </div>
