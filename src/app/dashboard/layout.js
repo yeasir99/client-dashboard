@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 
 const layout = ({ children }) => {
   return (
-    <div className="min-h-screen grid grid-cols-12 max-w-[1540px] mx-auto gap-1">
+    <div className="min-h-screen grid grid-cols-12 max-w-[1540px] mx-auto gap-[2px]">
       <div className="col-span-3">
         <Navbar />
       </div>
