@@ -11,7 +11,7 @@ const NavItem = () => {
           <TiFlowParallel className="text-4xl pt-2" />
         </div>
         <div>
-          <h1 className="text-2xl mb-1 pt-1 font-semibold">Basic</h1>
+          <h1 className="text-2xl mb-1 pt-1 ">Basic</h1>
           <div>
             <Link
               className="capitalize block text-md mb-1"
@@ -64,7 +64,7 @@ const NavItem = () => {
             <MdOutlineEqualizer className="text-4xl pt-2" />
           </div>
           <div>
-            <h1 className="text-2xl mb-1 pt-1 font-semibold">Transection</h1>
+            <h1 className="text-2xl mb-1 pt-1">Transection</h1>
             <div>
               <Link
                 className="capitalize block text-md mb-1"
@@ -118,7 +118,7 @@ const NavItem = () => {
             <BiQrScan className="text-4xl pt-2" />
           </div>
           <div>
-            <h1 className="text-2xl mb-1 pt-1 font-semibold">Report</h1>
+            <h1 className="text-2xl mb-1 pt-1">Report</h1>
             <div>
               <Link
                 className="capitalize block text-md mb-1"
