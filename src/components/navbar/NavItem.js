@@ -55,54 +55,54 @@ const NavItem = () => {
             >
               Institution
             </Link>
-            <span
+            <Link
               className="capitalize block text-sm mb-0.5"
-              href="/dashboard/financial-year"
+              href="/dashboard/book-category"
             >
               book category
-            </span>
-            <span
+            </Link>
+            <Link
               className="capitalize block text-sm mb-0.5"
-              href="/dashboard/financial-year"
+              href="/dashboard/book-management"
             >
               books (Products)
-            </span>
-            <span
+            </Link>
+            <Link
               className="capitalize block text-sm mb-0.5"
-              href="/dashboard/financial-year"
+              href="/dashboard/party-management"
             >
               party management
-            </span>
-            <span
+            </Link>
+            <Link
               className="capitalize block text-sm mb-0.5"
-              href="/dashboard/financial-year"
+              href="/dashboard/ta-da"
             >
               TA/DA allowance type
-            </span>
-            <span
+            </Link>
+            <Link
               className="capitalize block text-sm mb-0.5"
-              href="/dashboard/financial-year"
+              href="/dashboard/purpose-management"
             >
               purpose category
-            </span>
-            <span
+            </Link>
+            <Link
               className="capitalize block text-sm mb-0.5"
-              href="/dashboard/financial-year"
+              href="/dashboard/mapping"
             >
               mapping employee VS region
-            </span>
-            <span
+            </Link>
+            <Link
               className="capitalize block text-sm mb-0.5"
-              href="/dashboard/financial-year"
+              href="/dashboard/class-management"
             >
               class info management
-            </span>
-            <span
+            </Link>
+            <Link
               className="capitalize block text-sm mb-0.5"
-              href="/dashboard/financial-year"
+              href="/dashboard/subject-management"
             >
               subject info management
-            </span>
+            </Link>
             <span
               className="capitalize block text-sm mb-0.5"
               href="/dashboard/financial-year"
