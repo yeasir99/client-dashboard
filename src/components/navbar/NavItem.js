@@ -103,12 +103,12 @@ const NavItem = () => {
             >
               subject info management
             </Link>
-            <span
+            <Link
               className="capitalize block text-sm mb-0.5"
-              href="/dashboard/financial-year"
+              href="/dashboard/specimen"
             >
               specimen order
-            </span>
+            </Link>
           </div>
         </div>
       </div>

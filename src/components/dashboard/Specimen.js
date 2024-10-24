@@ -1,6 +1,5 @@
 import { FaEye, FaRegEdit } from 'react-icons/fa';
-
-const TadaManagement = () => {
+const Specimen = () => {
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto">
@@ -19,7 +18,31 @@ const TadaManagement = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    TA/DA Allowance Type
+                    Specimen order list
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Employee Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Order Date
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Status
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Total Amount
                   </th>
 
                   <th scope="col" className="px-6 py-4">
@@ -33,7 +56,19 @@ const TadaManagement = () => {
                     1
                   </td>
                   <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    RSM
+                    2
+                  </td>
+                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    MD. Rahman
+                  </td>
+                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    2024-09-13
+                  </td>
+                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    pending
+                  </td>
+                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    5000
                   </td>
 
                   <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
@@ -55,4 +90,4 @@ const TadaManagement = () => {
   );
 };
 
-export default TadaManagement;
+export default Specimen;
