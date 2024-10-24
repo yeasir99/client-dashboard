@@ -150,12 +150,12 @@ const NavItem = () => {
               >
                 production order
               </span>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/institution-type"
+                href="/dashboard/product-receipt"
               >
                 product receipt
-              </span>
+              </Link>
               <span
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/institution"
