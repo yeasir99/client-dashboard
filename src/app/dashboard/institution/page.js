@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import InstitutionManagement from '@/components/dashboard/InstitutionManagement';
 
 const page = () => {
   return (
@@ -19,6 +20,7 @@ const page = () => {
           />
         </form>
       </div>
+      <InstitutionManagement />
     </div>
   );
 };
