@@ -126,12 +126,12 @@ const NavItem = () => {
               >
                 assign visit plans
               </Link>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/designation"
+                href="/dashboard/visit-approval"
               >
                 visit approval process
-              </span>
+              </Link>
               <span
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/user-employee"
