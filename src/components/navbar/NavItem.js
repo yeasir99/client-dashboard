@@ -120,12 +120,12 @@ const NavItem = () => {
           <div>
             <h1 className="text-2xl mb-1 pt-1">Transection</h1>
             <div>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/financial-year"
+                href="/dashboard/visit-plan"
               >
                 assign visit plans
-              </span>
+              </Link>
               <span
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/designation"
