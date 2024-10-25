@@ -186,24 +186,24 @@ const NavItem = () => {
               >
                 money receipt
               </Link>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/institution"
+                href="/dashboard/sales-return"
               >
                 sales return
-              </span>
+              </Link>
               <Link
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/damage-product"
               >
                 damage product/Book
               </Link>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/institution"
+                href="/dashboard/inventory-transfer"
               >
                 inventory transfer
-              </span>
+              </Link>
             </div>
           </div>
         </div>
