@@ -1,13 +1,14 @@
-import UEtable from '@/components/dashboard/UEtable';
 import Link from 'next/link';
+import InvoiceBill from '@/components/dashboard/InvoiceBill';
+
 const page = () => {
   return (
     <div>
-      <h1 className="text-2xl capitalize mb-3">user management</h1>
+      <h1 className="text-2xl capitalize mb-3">Invoice list</h1>
       <div className="flex justify-between items-center">
-        <Link href="/dashboard/user-employee/add">
+        <Link href="/dashboard/sales-order/add">
           <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
-            add new User
+            Add New Invoice
           </button>
         </Link>
         <form>
@@ -19,7 +20,7 @@ const page = () => {
           />
         </form>
       </div>
-      <UEtable />
+      <InvoiceBill />
     </div>
   );
 };

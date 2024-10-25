@@ -132,12 +132,12 @@ const NavItem = () => {
               >
                 visit approval process
               </Link>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/user-employee"
+                href="/dashboard/visit-entry"
               >
                 visit entry
-              </span>
+              </Link>
               <span
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/region-type"
@@ -156,30 +156,30 @@ const NavItem = () => {
               >
                 product receipt
               </Link>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/institution"
+                href="/dashboard/sales-order"
               >
                 sales orders
-              </span>
+              </Link>
               <span
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/institution"
               >
                 sales order approval process
               </span>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/institution"
+                href="/dashboard/delivery-challan"
               >
                 delivery challan
-              </span>
-              <span
+              </Link>
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/institution"
+                href="/dashboard/invoice-bill"
               >
                 invoice/Bill
-              </span>
+              </Link>
               <Link
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/money-receipt"
@@ -192,12 +192,12 @@ const NavItem = () => {
               >
                 sales return
               </span>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/institution"
+                href="/dashboard/damage-product"
               >
                 damage product/Book
-              </span>
+              </Link>
               <span
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/institution"

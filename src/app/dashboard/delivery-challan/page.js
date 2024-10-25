@@ -1,13 +1,14 @@
-import UEtable from '@/components/dashboard/UEtable';
 import Link from 'next/link';
+import DeliveryChallan from '@/components/dashboard/DeliveryChallan';
+
 const page = () => {
   return (
     <div>
-      <h1 className="text-2xl capitalize mb-3">user management</h1>
+      <h1 className="text-2xl capitalize mb-3">delivery challan list</h1>
       <div className="flex justify-between items-center">
-        <Link href="/dashboard/user-employee/add">
+        <Link href="/dashboard/delivery-challan/add">
           <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
-            add new User
+            Add New List
           </button>
         </Link>
         <form>
@@ -19,7 +20,7 @@ const page = () => {
           />
         </form>
       </div>
-      <UEtable />
+      <DeliveryChallan />
     </div>
   );
 };
