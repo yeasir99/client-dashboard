@@ -2,7 +2,7 @@ const page = () => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">add sales order</h1>
+        <h1 className="text-2xl capitalize mb-3">add sales return</h1>
         <form>
           <input
             name="search"
@@ -13,12 +13,9 @@ const page = () => {
         </form>
       </div>
       <div className="w-full bg-gray-200 rounded-md px-4 py-4">
-        <h2 className="text-lg font-semibold mb-2 capitalize">
-          add new Books / Edit Books
-        </h2>
         <form>
           <label htmlFor="designation" className="block text-sm font-bold mb-1">
-            Sale Order No:
+            Return No:
           </label>
           <input
             type="text"
@@ -41,7 +38,7 @@ const page = () => {
           </div>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
-              Order Date:
+              Return Date:
             </label>
 
             <select name="zone" className="w-full rounded-md">
@@ -50,17 +47,14 @@ const page = () => {
               </option>
             </select>
           </div>
-          <div>
-            <label className="capitalize flex font-semibold text-md py-1">
-              Status:
-            </label>
-
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                Pending
-              </option>
-            </select>
-          </div>
+          <label htmlFor="designation" className="block text-sm font-bold mb-1">
+            User:
+          </label>
+          <input
+            type="text"
+            id="designation"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+          />
           <div className="flex flex-col">
             {/* table Start */}
             <div className="overflow-x-auto">
