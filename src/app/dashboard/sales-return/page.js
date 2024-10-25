@@ -5,7 +5,7 @@ const page = () => {
     <div>
       <h1 className="text-2xl capitalize mb-3">sales return list</h1>
       <div className="flex justify-between items-center">
-        <Link href="/dashboard/sales-order/add">
+        <Link href="/dashboard/sales-return/add">
           <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
             Add New sales return
           </button>
