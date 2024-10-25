@@ -180,12 +180,12 @@ const NavItem = () => {
               >
                 invoice/Bill
               </span>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/institution"
+                href="/dashboard/money-receipt"
               >
                 money receipt
-              </span>
+              </Link>
               <span
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/institution"
