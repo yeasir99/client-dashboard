@@ -144,12 +144,12 @@ const NavItem = () => {
               >
                 visit approval
               </span>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/region-area"
+                href="/dashboard/production-order"
               >
                 production order
-              </span>
+              </Link>
               <Link
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/product-receipt"
