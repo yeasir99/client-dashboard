@@ -143,7 +143,7 @@ const page = () => {
           </div>
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md w-full">
-              Save Order
+              Save Damage Record
             </button>
           </div>
         </form>
