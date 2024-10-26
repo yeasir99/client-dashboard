@@ -1,6 +1,52 @@
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 
 const TadaManagement = () => {
+  let data = [
+    {
+      id: 1,
+      allowanceType: 'Education',
+    },
+    {
+      id: 2,
+      allowanceType: 'Transportation',
+    },
+    {
+      id: 3,
+      allowanceType: 'Health',
+    },
+    {
+      id: 4,
+      allowanceType: 'Housing',
+    },
+    {
+      id: 5,
+      allowanceType: 'Food',
+    },
+    {
+      id: 6,
+      allowanceType: 'Internet',
+    },
+    {
+      id: 7,
+      allowanceType: 'Utilities',
+    },
+    {
+      id: 8,
+      allowanceType: 'Recreation',
+    },
+    {
+      id: 9,
+      allowanceType: 'Clothing',
+    },
+    {
+      id: 10,
+      allowanceType: 'Childcare',
+    },
+    {
+      id: 11,
+      allowanceType: 'Bonus',
+    },
+  ];
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto">
@@ -28,24 +74,29 @@ const TadaManagement = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-neutral-200 dark:border-white/10">
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                    1
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    RSM
-                  </td>
+                {data.map(item => (
+                  <tr
+                    className="border-b border-neutral-200 dark:border-white/10"
+                    key={item.id}
+                  >
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                      {item.id}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.allowanceType}
+                    </td>
 
-                  <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                    <span>
-                      <FaEye />
-                    </span>{' '}
-                    |{' '}
-                    <span>
-                      <FaRegEdit />
-                    </span>
-                  </td>
-                </tr>
+                    <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
+                      <span>
+                        <FaEye />
+                      </span>{' '}
+                      |{' '}
+                      <span>
+                        <FaRegEdit />
+                      </span>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

@@ -6,7 +6,7 @@ const page = () => {
     <div>
       <h1 className="text-2xl capitalize mb-3">inventory product transfer</h1>
       <div className="flex justify-between items-center">
-        <Link href="/dashboard/sales-order/add">
+        <Link href="/dashboard/inventory-transfer/add">
           <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
             Add New inventory transfer
           </button>
