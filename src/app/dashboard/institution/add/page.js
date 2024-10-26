@@ -168,7 +168,7 @@ const page = () => {
                           </select>
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        <select name="zone" className="w-full rounded-md">
+                          <select name="zone" className="w-full rounded-md">
                             <option value="" disabled={true} selected>
                               Science
                             </option>
