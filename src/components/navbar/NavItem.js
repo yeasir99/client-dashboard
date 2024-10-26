@@ -162,12 +162,12 @@ const NavItem = () => {
               >
                 sales orders
               </Link>
-              <span
+              <Link
                 className="capitalize block text-sm mb-0.5"
-                href="/dashboard/institution"
+                href="/dashboard/sales-order-approval"
               >
                 sales order approval process
-              </span>
+              </Link>
               <Link
                 className="capitalize block text-sm mb-0.5"
                 href="/dashboard/delivery-challan"
