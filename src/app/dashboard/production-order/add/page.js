@@ -4,7 +4,7 @@ const page = () => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">subject-Info management</h1>
+        <h1 className="text-2xl capitalize mb-3">Production Order List</h1>
         <form>
           <input
             name="search"
@@ -16,7 +16,7 @@ const page = () => {
       </div>
       <div className="max-w-2xl bg-gray-200 rounded-md px-4 py-4">
         <h2 className="text-lg font-semibold mb-2 capitalize">
-          add new subject-Info
+          add new Production Order List
         </h2>
         <form>
           <label htmlFor="designation" className="block text-sm font-bold mb-1">

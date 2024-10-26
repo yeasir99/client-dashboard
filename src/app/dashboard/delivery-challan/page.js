@@ -8,7 +8,7 @@ const page = () => {
       <div className="flex justify-between items-center">
         <Link href="/dashboard/delivery-challan/add">
           <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
-            Add New List
+            Add New Challan
           </button>
         </Link>
         <form>
