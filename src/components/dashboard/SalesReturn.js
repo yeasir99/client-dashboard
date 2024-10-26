@@ -1,6 +1,85 @@
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 
 const SalesReturn = () => {
+  let data = [
+    {
+      returnID: 1,
+      returnNumber: 'RET-2024-001',
+      partyID: 'Library 1',
+      returnDate: '2024-09-08',
+      userID: '101',
+    },
+    {
+      returnID: 2,
+      returnNumber: 'RET-2024-002',
+      partyID: 'Library 2',
+      returnDate: '2024-09-09',
+      userID: '102',
+    },
+    {
+      returnID: 3,
+      returnNumber: 'RET-2024-003',
+      partyID: 'Bookstore A',
+      returnDate: '2024-09-10',
+      userID: '103',
+    },
+    {
+      returnID: 4,
+      returnNumber: 'RET-2024-004',
+      partyID: 'Library 3',
+      returnDate: '2024-09-11',
+      userID: '104',
+    },
+    {
+      returnID: 5,
+      returnNumber: 'RET-2024-005',
+      partyID: 'Bookstore B',
+      returnDate: '2024-09-12',
+      userID: '105',
+    },
+    {
+      returnID: 6,
+      returnNumber: 'RET-2024-006',
+      partyID: 'Library 4',
+      returnDate: '2024-09-13',
+      userID: '106',
+    },
+    {
+      returnID: 7,
+      returnNumber: 'RET-2024-007',
+      partyID: 'Book Depot',
+      returnDate: '2024-09-14',
+      userID: '107',
+    },
+    {
+      returnID: 8,
+      returnNumber: 'RET-2024-008',
+      partyID: 'Library 5',
+      returnDate: '2024-09-15',
+      userID: '108',
+    },
+    {
+      returnID: 9,
+      returnNumber: 'RET-2024-009',
+      partyID: 'Bookstore C',
+      returnDate: '2024-09-16',
+      userID: '109',
+    },
+    {
+      returnID: 10,
+      returnNumber: 'RET-2024-010',
+      partyID: 'Library 6',
+      returnDate: '2024-09-17',
+      userID: '110',
+    },
+    {
+      returnID: 11,
+      returnNumber: 'RET-2024-011',
+      partyID: 'Library 7',
+      returnDate: '2024-09-18',
+      userID: '111',
+    },
+  ];
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto">
@@ -46,34 +125,39 @@ const SalesReturn = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-neutral-200 dark:border-white/10">
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                    1
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                    RET-2024-001
-                  </td>
+                {data.map(item => (
+                  <tr
+                    className="border-b border-neutral-200 dark:border-white/10"
+                    key={item.returnID}
+                  >
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                      {item.returnID}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                      {item.returnNumber}
+                    </td>
 
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    1
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    2024-09-12
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    101
-                  </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.partyID}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.returnDate}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.userID}
+                    </td>
 
-                  <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                    <span>
-                      <FaEye />
-                    </span>{' '}
-                    |{' '}
-                    <span>
-                      <FaRegEdit />
-                    </span>
-                  </td>
-                </tr>
+                    <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
+                      <span>
+                        <FaEye />
+                      </span>{' '}
+                      |{' '}
+                      <span>
+                        <FaRegEdit />
+                      </span>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

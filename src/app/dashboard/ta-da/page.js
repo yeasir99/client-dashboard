@@ -10,7 +10,7 @@ const page = () => {
       <div className="flex justify-between items-center">
         <Link href="/dashboard/ta-da/add">
           <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
-            add new book category
+            add new TA/DA
           </button>
         </Link>
         <form>

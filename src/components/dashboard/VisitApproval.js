@@ -1,6 +1,63 @@
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 
 const VisitApproval = () => {
+  let data = [
+    {
+      id: 1,
+      employeeName: 'Mr. Rahman',
+      designation: 'ZM',
+    },
+    {
+      id: 2,
+      employeeName: 'Ms. Akter',
+      designation: 'AM',
+    },
+    {
+      id: 3,
+      employeeName: 'Mr. Khan',
+      designation: 'BM',
+    },
+    {
+      id: 4,
+      employeeName: 'Ms. Shoma',
+      designation: 'ZM',
+    },
+    {
+      id: 5,
+      employeeName: 'Mr. Alam',
+      designation: 'SM',
+    },
+    {
+      id: 6,
+      employeeName: 'Ms. Parvin',
+      designation: 'AM',
+    },
+    {
+      id: 7,
+      employeeName: 'Mr. Saif',
+      designation: 'BM',
+    },
+    {
+      id: 8,
+      employeeName: 'Ms. Hossain',
+      designation: 'ZM',
+    },
+    {
+      id: 9,
+      employeeName: 'Mr. Islam',
+      designation: 'AM',
+    },
+    {
+      id: 10,
+      employeeName: 'Ms. Sultana',
+      designation: 'BM',
+    },
+    {
+      id: 11,
+      employeeName: 'Mr. Kabir',
+      designation: 'SM',
+    },
+  ];
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto">
@@ -28,16 +85,21 @@ const VisitApproval = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-neutral-200 dark:border-white/10">
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                    1
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    Mr. Rahman
-                  </td>
+                {data.map(item => (
+                  <tr
+                    className="border-b border-neutral-200 dark:border-white/10"
+                    key={item.id}
+                  >
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                      {item.id}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.employeeName}
+                    </td>
 
-                  <td className="whitespace-nowrap">ZM</td>
-                </tr>
+                    <td className="whitespace-nowrap">{item.designation}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

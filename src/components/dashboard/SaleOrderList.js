@@ -1,6 +1,96 @@
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 
 const SaleOrderList = () => {
+  let data = [
+    {
+      salesOrderId: 1,
+      salesOrderNo: 1,
+      partyName: 'Library 1',
+      orderDate: '2024-09-08',
+      status: 'Pending',
+      totalAmount: 5000,
+    },
+    {
+      salesOrderId: 2,
+      salesOrderNo: 2,
+      partyName: 'Library 2',
+      orderDate: '2024-09-09',
+      status: 'Completed',
+      totalAmount: 7000,
+    },
+    {
+      salesOrderId: 3,
+      salesOrderNo: 3,
+      partyName: 'Bookstore A',
+      orderDate: '2024-09-10',
+      status: 'Pending',
+      totalAmount: 4500,
+    },
+    {
+      salesOrderId: 4,
+      salesOrderNo: 4,
+      partyName: 'Library 3',
+      orderDate: '2024-09-11',
+      status: 'Shipped',
+      totalAmount: 8000,
+    },
+    {
+      salesOrderId: 5,
+      salesOrderNo: 5,
+      partyName: 'Bookstore B',
+      orderDate: '2024-09-12',
+      status: 'Pending',
+      totalAmount: 6500,
+    },
+    {
+      salesOrderId: 6,
+      salesOrderNo: 6,
+      partyName: 'Library 4',
+      orderDate: '2024-09-13',
+      status: 'Completed',
+      totalAmount: 5500,
+    },
+    {
+      salesOrderId: 7,
+      salesOrderNo: 7,
+      partyName: 'Book Depot',
+      orderDate: '2024-09-14',
+      status: 'Pending',
+      totalAmount: 9000,
+    },
+    {
+      salesOrderId: 8,
+      salesOrderNo: 8,
+      partyName: 'Library 5',
+      orderDate: '2024-09-15',
+      status: 'Shipped',
+      totalAmount: 7500,
+    },
+    {
+      salesOrderId: 9,
+      salesOrderNo: 9,
+      partyName: 'Bookstore C',
+      orderDate: '2024-09-16',
+      status: 'Pending',
+      totalAmount: 6700,
+    },
+    {
+      salesOrderId: 10,
+      salesOrderNo: 10,
+      partyName: 'Library 6',
+      orderDate: '2024-09-17',
+      status: 'Completed',
+      totalAmount: 5800,
+    },
+    {
+      salesOrderId: 11,
+      salesOrderNo: 11,
+      partyName: 'Library 7',
+      orderDate: '2024-09-18',
+      status: 'Pending',
+      totalAmount: 6400,
+    },
+  ];
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto">
@@ -52,36 +142,41 @@ const SaleOrderList = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-neutral-200 dark:border-white/10">
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                    1
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    1
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    1-library
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    2024-09-12
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    Pending
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    5000
-                  </td>
+                {data.map(item => (
+                  <tr
+                    className="border-b border-neutral-200 dark:border-white/10"
+                    key={item.salesOrderId}
+                  >
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                      {item.salesOrderId}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.salesOrderNo}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.partyName}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.orderDate}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.status}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.totalAmount}
+                    </td>
 
-                  <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                    <span>
-                      <FaEye />
-                    </span>{' '}
-                    |{' '}
-                    <span>
-                      <FaRegEdit />
-                    </span>
-                  </td>
-                </tr>
+                    <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
+                      <span>
+                        <FaEye />
+                      </span>{' '}
+                      |{' '}
+                      <span>
+                        <FaRegEdit />
+                      </span>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
