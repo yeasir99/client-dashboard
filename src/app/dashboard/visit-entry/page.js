@@ -1,3 +1,4 @@
+import Link from 'next/link';
 const page = () => {
   return (
     <div>
@@ -104,9 +105,11 @@ const page = () => {
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                      <button className="bg-gray-300 px-1 py-[2px]">
-                        Visit Entry Details
-                      </button>
+                      <Link href="/dashboard/visit-entry/details">
+                        <button className="bg-gray-300 px-1 py-[2px]">
+                          Visit Entry Details
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 </tbody>
