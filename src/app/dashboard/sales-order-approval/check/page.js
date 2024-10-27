@@ -2,7 +2,9 @@ const page = () => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">add sales order</h1>
+        <h1 className="text-2xl capitalize mb-3">
+          sales order - check Approval
+        </h1>
         <form>
           <input
             name="search"
@@ -94,6 +96,18 @@ const page = () => {
                           scope="col"
                           className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                         >
+                          Auth. QTY
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                        >
+                          Avail. QTY
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                        >
                           Price
                         </th>
 
@@ -117,6 +131,12 @@ const page = () => {
                           300
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          300
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          2000
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           2000
                         </td>
 
@@ -138,6 +158,12 @@ const page = () => {
                           300
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          300
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          2000
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           2000
                         </td>
 
@@ -148,7 +174,7 @@ const page = () => {
                       <tr className="border-b border-neutral-200 dark:border-white/10">
                         <td
                           className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
-                          colSpan="4"
+                          colSpan="6"
                         ></td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           Total
@@ -165,14 +191,23 @@ const page = () => {
             </div>
           </div>
           {/* table End */}
+          <div className="mb-5">
+            <label className="block text-xl font-semibold mb-1">
+              Check Approval Comments:
+            </label>
+            <input
+              type="text"
+              className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            />
+          </div>
           <div className="mt-5">
-            <button className="capitalize bg-primary px-5 py-1 text-white rounded-md w-full">
-              Add Another Product
+            <button className="capitalize bg-gray-400 px-5 py-1 text-white rounded-md w-full">
+              Checked
             </button>
           </div>
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md w-full">
-              Save Order
+              Reject
             </button>
           </div>
         </form>
