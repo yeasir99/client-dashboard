@@ -1,3 +1,4 @@
+import Link from 'next/link';
 const page = () => {
   return (
     <div>
@@ -19,8 +20,8 @@ const page = () => {
       <div className="flex flex-col">
         <div className="overflow-x-auto">
           <div className="inline-block max-w-full w-full pt-5">
-            <div className="overflow-hidden">
-              <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+            <div className="">
+              <table className="max-w-full overflow-x-scroll w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
                 <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
                   <tr className="bg-text1 text-white">
                     <th
@@ -111,15 +112,19 @@ const page = () => {
                       Comment
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      <button className="bg-gray-300 px-1 py-[2px]">
-                        Approval
-                      </button>
+                      <Link href="/dashboard/visit-approval-inital/check">
+                        <button className="bg-gray-300 px-1 py-[2px]">
+                          Check
+                        </button>
+                      </Link>
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                      <button className="bg-gray-300 px-1 py-[2px]">
-                        final Approval
-                      </button>
+                      <Link href="/dashboard/visit-approval-inital/final">
+                        <button className="bg-gray-300 px-1 py-[2px]">
+                          final Approval
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 </tbody>
