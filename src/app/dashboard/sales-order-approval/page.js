@@ -102,9 +102,11 @@ const page = () => {
                         </button>
                       </Link>
 
-                      <button className="bg-gray-300 px-1 py-[2px]">
-                        Final Approval
-                      </button>
+                      <Link href="sales-order-approval/final">
+                        <button className="bg-gray-300 px-1 py-[2px]">
+                          Final Approval
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 </tbody>
