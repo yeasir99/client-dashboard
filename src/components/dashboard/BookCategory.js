@@ -49,10 +49,10 @@ const BookCategory = () => {
   ];
   return (
     <div className="flex flex-col">
-      <div className="overflow-x-auto">
+      <div>
         <div className="inline-block max-w-full w-full pt-5">
-          <div className="overflow-hidden">
-            <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+          <div className="overflow-x-scroll">
+            <table className="max-w-full w-full overflow-x-scroll border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
               <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
                 <tr className="bg-text1 text-white">
                   <th
@@ -86,14 +86,14 @@ const BookCategory = () => {
                       {item.bookCategory}
                     </td>
 
-                    <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                      <span>
-                        <FaEye />
+                    <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
+                      <span className="bg-cyan-500 p-1 inline-block rounded-md">
+                        <FaEye className="text-white text-xl" />
                       </span>{' '}
-                      |{' '}
-                      <span>
-                        <FaRegEdit />
-                      </span>
+                      |
+                      <span className="bg-amber-600 p-1 inline-block rounded-md">
+                        <FaRegEdit className="text-white text-xl" />
+                      </span>{' '}
                     </td>
                   </tr>
                 ))}
