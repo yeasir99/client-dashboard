@@ -152,7 +152,7 @@ const NavItem = () => {
     },
   ];
   return (
-    <div className="bg-gray-700">
+    <div>
       {allLinks.map((item, index) => (
         <div
           key={index}
