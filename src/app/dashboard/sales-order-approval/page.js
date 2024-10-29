@@ -17,10 +17,10 @@ const page = () => {
       </div>
       {/* start */}
       <div className="flex flex-col">
-        <div className="overflow-x-auto">
+        <div>
           <div className="inline-block max-w-full w-full pt-5">
-            <div className="overflow-hidden">
-              <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+            <div className="overflow-x-scroll">
+              <table className="max-w-full w-full overflow-x-scroll border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
                 <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
                   <tr className="bg-text1 text-white">
                     <th
@@ -119,10 +119,10 @@ const page = () => {
       <h1 className="text-2xl capitalize mb-2">Completed visit list</h1>
       {/* start */}
       <div className="flex flex-col">
-        <div className="overflow-x-auto">
+        <div>
           <div className="inline-block max-w-full w-full pt-5">
-            <div className="overflow-hidden">
-              <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+            <div className="overflow-x-scroll">
+              <table className="max-w-full w-full overflow-x-scroll border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
                 <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
                   <tr className="bg-text1 text-white">
                     <th

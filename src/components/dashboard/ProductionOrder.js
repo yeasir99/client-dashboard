@@ -126,17 +126,17 @@ const ProductionOrder = () => {
   ];
   return (
     <div className="flex flex-col">
-      <div className="overflow-x-auto">
+      <div>
         <div className="inline-block max-w-full w-full pt-5">
-          <div className="overflow-hidden">
-            <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+          <div className="overflow-x-scroll">
+            <table className="max-w-full w-full overflow-x-scroll border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
               <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
                 <tr className="bg-text1 text-white">
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Order No
+                    Production Order No
                   </th>
                   <th
                     scope="col"
@@ -148,7 +148,7 @@ const ProductionOrder = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Order Date
+                    Production Order Date
                   </th>
                   <th
                     scope="col"
@@ -218,15 +218,7 @@ const ProductionOrder = () => {
                       {item.status}
                     </td>
 
-                    <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                      <span>
-                        <FaEye />
-                      </span>{' '}
-                      |{' '}
-                      <span>
-                        <FaRegEdit />
-                      </span>
-                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3"></td>
                   </tr>
                 ))}
               </tbody>
