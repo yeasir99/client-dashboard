@@ -1,237 +1,186 @@
+'use client';
 import Link from 'next/link';
 import { BiQrScan } from 'react-icons/bi';
 import { MdOutlineEqualizer } from 'react-icons/md';
 import { TiFlowParallel } from 'react-icons/ti';
+import { usePathname } from 'next/navigation';
 
 const NavItem = () => {
+  const pathName = usePathname();
+  let allLinks = [
+    {
+      section: 'Basic',
+      icon: TiFlowParallel,
+      links: [
+        {
+          name: 'financial year',
+          href: '/dashboard/financial-year',
+        },
+        {
+          name: 'designation',
+          href: '/dashboard/designation',
+        },
+        {
+          name: 'user-Employee registration',
+          href: '/dashboard/user-employee',
+        },
+        {
+          name: 'region type',
+          href: '/dashboard/region-type',
+        },
+        {
+          name: 'region area',
+          href: '/dashboard/region-area',
+        },
+        {
+          name: 'Institution type',
+          href: '/dashboard/institution-type',
+        },
+        {
+          name: 'Institution',
+          href: '/dashboard/institution',
+        },
+        {
+          name: 'book category',
+          href: '/dashboard/book-category',
+        },
+        {
+          name: 'books (Products)',
+          href: '/dashboard/book-management',
+        },
+        {
+          name: 'party management',
+          href: '/dashboard/party-management',
+        },
+        {
+          name: 'TA/DA allowance type',
+          href: '/dashboard/ta-da',
+        },
+        {
+          name: 'purpose category',
+          href: '/dashboard/purpose-management',
+        },
+        {
+          name: 'mapping employee VS region',
+          href: '/dashboard/mapping',
+        },
+        {
+          name: 'class info management',
+          href: '/dashboard/class-management',
+        },
+        {
+          name: 'subject info management',
+          href: '/dashboard/subject-management',
+        },
+        {
+          name: 'specimen order',
+          href: '/dashboard/specimen',
+        },
+      ],
+    },
+    {
+      section: 'Transection',
+      icon: MdOutlineEqualizer,
+      links: [
+        {
+          name: 'assign visit plans',
+          href: '/dashboard/visit-plan',
+        },
+        {
+          name: 'visit approval process',
+          href: '/dashboard/visit-approval',
+        },
+        {
+          name: 'visit entry',
+          href: '/dashboard/isit-entry',
+        },
+        {
+          name: 'visit approval',
+          href: '/dashboard/visit-approval-inital',
+        },
+        {
+          name: 'production order',
+          href: '/dashboard/production-order',
+        },
+        {
+          name: 'product receipt',
+          href: '/dashboard/product-receipt',
+        },
+        {
+          name: 'sales orders',
+          href: '/dashboard/sales-order',
+        },
+        {
+          name: 'sales order approval process',
+          href: '/dashboard/sales-order-approval',
+        },
+        {
+          name: 'delivery challan',
+          href: '/dashboard/delivery-challan',
+        },
+        {
+          name: 'invoice/Bill',
+          href: '/dashboard/invoice-bill',
+        },
+        {
+          name: 'money receipt',
+          href: '/dashboard/money-receipt',
+        },
+        {
+          name: 'sales return',
+          href: '/dashboard/sales-return',
+        },
+        {
+          name: 'inventory transfer',
+          href: '/dashboard/inventory-transfer',
+        },
+      ],
+    },
+    {
+      section: 'Report',
+      icon: BiQrScan,
+      links: [
+        {
+          name: 'stock in-out report',
+          href: '/dashboard/stock-in-out-report',
+        },
+        {
+          name: 'current stock report',
+          href: '/dashboard/current-stock-report',
+        },
+      ],
+    },
+  ];
   return (
-    <div className="">
-      <div className="flex gap-3 bg-gray-600 text-white py-2">
-        <div>
-          <TiFlowParallel className="text-4xl pt-2" />
-        </div>
-        <div>
-          <h1 className="text-2xl mb-1 pt-1 ">Basic</h1>
+    <div className="bg-gray-700">
+      {allLinks.map((item, index) => (
+        <div
+          key={index}
+          className={`${item.section === 'Transection' ? 'bg-gray-800' : ''}`}
+        >
           <div>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/financial-year"
-            >
-              financial year
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/designation"
-            >
-              designation
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/user-employee"
-            >
-              user-Employee registration
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/region-type"
-            >
-              region type
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/region-area"
-            >
-              region area
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/institution-type"
-            >
-              Institution type
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/institution"
-            >
-              Institution
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/book-category"
-            >
-              book category
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/book-management"
-            >
-              books (Products)
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/party-management"
-            >
-              party management
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/ta-da"
-            >
-              TA/DA allowance type
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/purpose-management"
-            >
-              purpose category
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/mapping"
-            >
-              mapping employee VS region
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/class-management"
-            >
-              class info management
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/subject-management"
-            >
-              subject info management
-            </Link>
-            <Link
-              className="capitalize block text-sm mb-0.5"
-              href="/dashboard/specimen"
-            >
-              specimen order
-            </Link>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div className="flex gap-3 bg-gray-800 text-white py-2">
-          <div>
-            <MdOutlineEqualizer className="text-4xl pt-2" />
-          </div>
-          <div>
-            <h1 className="text-2xl mb-1 pt-1">Transection</h1>
-            <div>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/visit-plan"
-              >
-                assign visit plans
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/visit-approval"
-              >
-                visit approval process
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/visit-entry"
-              >
-                visit entry
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/visit-approval-inital"
-              >
-                visit approval
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/production-order"
-              >
-                production order
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/product-receipt"
-              >
-                product receipt
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/sales-order"
-              >
-                sales orders
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/sales-order-approval"
-              >
-                sales order approval process
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/delivery-challan"
-              >
-                delivery challan
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/invoice-bill"
-              >
-                invoice/Bill
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/money-receipt"
-              >
-                money receipt
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/sales-return"
-              >
-                sales return
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/damage-product"
-              >
-                damage product/Book
-              </Link>
-              <Link
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/inventory-transfer"
-              >
-                inventory transfer
-              </Link>
+            <div className="flex items-center gap-2 mb-2">
+              <div>
+                <item.icon className="text-4xl pt-2 text-white" />
+              </div>
+              <h1 className="text-2xl text-white">{item.section}</h1>
+            </div>
+            <div className="flex flex-col ">
+              {item.links.map((element, position) => (
+                <Link
+                  key={position}
+                  className={`${
+                    pathName === element.href ? 'bg-primary' : ' '
+                  } capitalize block text-sm text-white py-[2px] pl-12`}
+                  href={element.href}
+                >
+                  {element.name}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
-      </div>
-      <div>
-        <div className="flex gap-3 bg-gray-700 text-white py-2">
-          <div>
-            <BiQrScan className="text-4xl pt-2" />
-          </div>
-          <div>
-            <h1 className="text-2xl mb-1 pt-1">Report</h1>
-            <div>
-              <span
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/financial-year"
-              >
-                stock in-Out report
-              </span>
-              <span
-                className="capitalize block text-sm mb-0.5"
-                href="/dashboard/designation"
-              >
-                current stock report
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };
