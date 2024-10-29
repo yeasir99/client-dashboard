@@ -92,7 +92,7 @@ const NavItem = () => {
         },
         {
           name: 'visit entry',
-          href: '/dashboard/isit-entry',
+          href: '/dashboard/visit-entry',
         },
         {
           name: 'visit approval',
