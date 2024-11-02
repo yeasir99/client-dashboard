@@ -1,52 +1,12 @@
+'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
+import useGetData from '@/utils/useGetData';
 
 const BookCategory = () => {
-  let data = [
-    {
-      id: 1,
-      bookCategory: 'Bangla',
-    },
-    {
-      id: 2,
-      bookCategory: 'English',
-    },
-    {
-      id: 3,
-      bookCategory: 'Mathematics',
-    },
-    {
-      id: 4,
-      bookCategory: 'Science',
-    },
-    {
-      id: 5,
-      bookCategory: 'History',
-    },
-    {
-      id: 6,
-      bookCategory: 'Geography',
-    },
-    {
-      id: 7,
-      bookCategory: 'Computer Science',
-    },
-    {
-      id: 8,
-      bookCategory: 'Biology',
-    },
-    {
-      id: 9,
-      bookCategory: 'Chemistry',
-    },
-    {
-      id: 10,
-      bookCategory: 'Physics',
-    },
-    {
-      id: 11,
-      bookCategory: 'Art',
-    },
-  ];
+  const url =
+    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_bookscategorys';
+  const { status, data } = useGetData(url);
+
   return (
     <div className="flex flex-col">
       <div>
@@ -77,13 +37,13 @@ const BookCategory = () => {
                 {data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.ID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.ID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.bookCategory}
+                      {item.CategoryName}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
