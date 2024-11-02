@@ -1,83 +1,19 @@
+'use client';
+import useGetData from '@/utils/useGetData';
 const FyTable = () => {
-  let data = [
-    {
-      id: 1,
-      financialYear: 'financial year 2025',
-      openingDate: '01-01-2024',
-      closingDate: '31-12-2024',
-      yearClosing: '0',
-    },
-    {
-      id: 2,
-      financialYear: 'financial year 2025',
-      openingDate: '01-01-2025',
-      closingDate: '31-12-2025',
-      yearClosing: '0',
-    },
-    {
-      id: 3,
-      financialYear: 'financial year 2026',
-      openingDate: '01-01-2026',
-      closingDate: '31-12-2026',
-      yearClosing: '0',
-    },
-    {
-      id: 4,
-      financialYear: 'financial year 2027',
-      openingDate: '01-01-2027',
-      closingDate: '31-12-2027',
-      yearClosing: '0',
-    },
-    {
-      id: 5,
-      financialYear: 'financial year 2028',
-      openingDate: '01-01-2028',
-      closingDate: '31-12-2028',
-      yearClosing: '0',
-    },
-    {
-      id: 6,
-      financialYear: 'financial year 2029',
-      openingDate: '01-01-2029',
-      closingDate: '31-12-2029',
-      yearClosing: '0',
-    },
-    {
-      id: 7,
-      financialYear: 'financial year 2030',
-      openingDate: '01-01-2030',
-      closingDate: '31-12-2030',
-      yearClosing: '0',
-    },
-    {
-      id: 8,
-      financialYear: 'financial year 2031',
-      openingDate: '01-01-2031',
-      closingDate: '31-12-2031',
-      yearClosing: '0',
-    },
-    {
-      id: 9,
-      financialYear: 'financial year 2032',
-      openingDate: '01-01-2032',
-      closingDate: '31-12-2032',
-      yearClosing: '0',
-    },
-    {
-      id: 10,
-      financialYear: 'financial year 2033',
-      openingDate: '01-01-2033',
-      closingDate: '31-12-2033',
-      yearClosing: '0',
-    },
-    {
-      id: 11,
-      financialYear: 'financial year 2034',
-      openingDate: '01-01-2034',
-      closingDate: '31-12-2034',
-      yearClosing: '0',
-    },
-  ];
+  let url =
+    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_financialyears';
+
+  let { status, data } = useGetData(url);
+  console.log(data);
+
+  if (status === 'pending') {
+    return <div>Loading....</div>;
+  }
+  if (status === 'error') {
+    return <div>something went wrong</div>;
+  }
+
   return (
     <div className="flex flex-col">
       <div>
@@ -125,16 +61,16 @@ const FyTable = () => {
                       {item.id}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.financialYear}
+                      {item.name}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.openingDate}
+                      {item.OpeningDate.date.split(' ')[0]}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.closingDate}
+                      {item.ClosingDate.date.split(' ')[0]}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
-                      {item.yearClosing}
+                      {item.YearClosingStatus}
                     </td>
                   </tr>
                 ))}
