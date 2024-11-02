@@ -1,52 +1,20 @@
+'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
+import useGetData from '@/utils/useGetData';
 
 const RegionTypeTable = () => {
-  let data = [
-    {
-      id: 1,
-      regionType: 'Division',
-    },
-    {
-      id: 2,
-      regionType: 'District',
-    },
-    {
-      id: 3,
-      regionType: 'Sub-District',
-    },
-    {
-      id: 4,
-      regionType: 'City',
-    },
-    {
-      id: 5,
-      regionType: 'Municipality',
-    },
-    {
-      id: 6,
-      regionType: 'Village',
-    },
-    {
-      id: 7,
-      regionType: 'Region',
-    },
-    {
-      id: 8,
-      regionType: 'Province',
-    },
-    {
-      id: 9,
-      regionType: 'State',
-    },
-    {
-      id: 10,
-      regionType: 'Territory',
-    },
-    {
-      id: 11,
-      regionType: 'Zone',
-    },
-  ];
+  const url =
+    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_regiontypes';
+
+  const { status, data } = useGetData(url);
+
+  if (status === 'pending') {
+    return <div>Loading....</div>;
+  }
+  if (status === 'error') {
+    return <div>something went wrong</div>;
+  }
+
   return (
     <div className="flex flex-col">
       <div>
@@ -77,13 +45,13 @@ const RegionTypeTable = () => {
                 {data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.ID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.ID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.regionType}
+                      {item.CategoryName}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
