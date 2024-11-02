@@ -5,7 +5,6 @@ const FyTable = () => {
     'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_financialyears';
 
   let { status, data } = useGetData(url);
-  console.log(data);
 
   if (status === 'pending') {
     return <div>Loading....</div>;
