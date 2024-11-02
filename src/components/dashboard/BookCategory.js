@@ -6,7 +6,12 @@ const BookCategory = () => {
   const url =
     'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_bookscategorys';
   const { status, data } = useGetData(url);
-
+  if (status === 'pending') {
+    return <div>Loading....</div>;
+  }
+  if (status === 'error') {
+    return <div>something went wrong</div>;
+  }
   return (
     <div className="flex flex-col">
       <div>
