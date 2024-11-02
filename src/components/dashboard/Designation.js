@@ -1,51 +1,17 @@
+'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
+import useGetData from '@/utils/useGetData';
 const Designation = () => {
-  let data = [
-    {
-      id: 1,
-      designation: 'Mark',
-    },
-    {
-      id: 2,
-      designation: 'John',
-    },
-    {
-      id: 3,
-      designation: 'Alice',
-    },
-    {
-      id: 4,
-      designation: 'Sophia',
-    },
-    {
-      id: 5,
-      designation: 'David',
-    },
-    {
-      id: 6,
-      designation: 'Emma',
-    },
-    {
-      id: 7,
-      designation: 'Michael',
-    },
-    {
-      id: 8,
-      designation: 'Olivia',
-    },
-    {
-      id: 9,
-      designation: 'Daniel',
-    },
-    {
-      id: 10,
-      designation: 'Liam',
-    },
-    {
-      id: 11,
-      designation: 'Mia',
-    },
-  ];
+  let url =
+    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_desigs';
+
+  const { status, data } = useGetData(url);
+  if (status === 'pending') {
+    return <div>Loading....</div>;
+  }
+  if (status === 'error') {
+    return <div>something went wrong</div>;
+  }
   return (
     <div className="flex flex-col">
       <div>
@@ -76,13 +42,13 @@ const Designation = () => {
                 {data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.ID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.ID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.designation}
+                      {item.CategoryName}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
                       <span className="bg-cyan-500 p-1 inline-block rounded-md">
