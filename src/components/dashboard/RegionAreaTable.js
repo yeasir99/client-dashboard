@@ -1,76 +1,17 @@
+'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
-
-import React from 'react';
+import useGetData from '@/utils/useGetData';
 
 const RegionAreaTable = () => {
-  let data = [
-    {
-      id: 1,
-      regionName: 'Dhaka',
-      regionType: 'Division',
-      parentRegion: 'None',
-    },
-    {
-      id: 2,
-      regionName: 'Chattogram',
-      regionType: 'Division',
-      parentRegion: 'None',
-    },
-    {
-      id: 3,
-      regionName: 'Rajshahi',
-      regionType: 'Division',
-      parentRegion: 'None',
-    },
-    {
-      id: 4,
-      regionName: 'Sylhet',
-      regionType: 'Division',
-      parentRegion: 'None',
-    },
-    {
-      id: 5,
-      regionName: 'Barisal',
-      regionType: 'Division',
-      parentRegion: 'None',
-    },
-    {
-      id: 6,
-      regionName: 'Khulna',
-      regionType: 'Division',
-      parentRegion: 'None',
-    },
-    {
-      id: 7,
-      regionName: 'Rangpur',
-      regionType: 'Division',
-      parentRegion: 'None',
-    },
-    {
-      id: 8,
-      regionName: 'Cumilla',
-      regionType: 'District',
-      parentRegion: 'Chattogram',
-    },
-    {
-      id: 9,
-      regionName: 'Gazipur',
-      regionType: 'District',
-      parentRegion: 'Dhaka',
-    },
-    {
-      id: 10,
-      regionName: 'Narayanganj',
-      regionType: 'District',
-      parentRegion: 'Dhaka',
-    },
-    {
-      id: 11,
-      regionName: 'Mymensingh',
-      regionType: 'Division',
-      parentRegion: 'None',
-    },
-  ];
+  const url =
+    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_regions';
+  const { status, data } = useGetData(url);
+  if (status === 'pending') {
+    return <div>Loading....</div>;
+  }
+  if (status === 'error') {
+    return <div>something went wrong</div>;
+  }
 
   return (
     <div className="flex flex-col">
@@ -114,19 +55,19 @@ const RegionAreaTable = () => {
                 {data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.RegionID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.RegionID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.regionName}
+                      {item.RegionName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.regionType}
+                      {item.RegionTypeID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.parentRegion}
+                      {item.ParentRegionID}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">

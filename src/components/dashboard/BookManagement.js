@@ -1,74 +1,18 @@
+'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
+import useGetData from '@/utils/useGetData';
 
 const BookManagement = () => {
-  let data = [
-    {
-      id: 1,
-      bookCategory: 'Education',
-      title: 'English 1st',
-      rate: 300,
-    },
-    {
-      id: 2,
-      bookCategory: 'Education',
-      title: 'Mathematics Basics',
-      rate: 350,
-    },
-    {
-      id: 3,
-      bookCategory: 'Science',
-      title: 'Physics Fundamentals',
-      rate: 500,
-    },
-    {
-      id: 4,
-      bookCategory: 'Science',
-      title: 'Chemistry Essentials',
-      rate: 450,
-    },
-    {
-      id: 5,
-      bookCategory: 'History',
-      title: 'World History',
-      rate: 400,
-    },
-    {
-      id: 6,
-      bookCategory: 'Geography',
-      title: 'Physical Geography',
-      rate: 320,
-    },
-    {
-      id: 7,
-      bookCategory: 'Computer Science',
-      title: 'Introduction to Programming',
-      rate: 600,
-    },
-    {
-      id: 8,
-      bookCategory: 'Biology',
-      title: 'Biology for Beginners',
-      rate: 420,
-    },
-    {
-      id: 9,
-      bookCategory: 'Literature',
-      title: 'Classical Poems',
-      rate: 380,
-    },
-    {
-      id: 10,
-      bookCategory: 'Art',
-      title: 'Introduction to Art',
-      rate: 250,
-    },
-    {
-      id: 11,
-      bookCategory: 'Language',
-      title: 'Learn French',
-      rate: 550,
-    },
-  ];
+  const url =
+    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_products';
+  const { status, data } = useGetData(url);
+  if (status === 'pending') {
+    return <div>Loading....</div>;
+  }
+  if (status === 'error') {
+    return <div>something went wrong</div>;
+  }
+
   return (
     <div className="flex flex-col">
       <div>
@@ -111,19 +55,19 @@ const BookManagement = () => {
                 {data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.ProductID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.ProductID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.bookCategory}
+                      {item.Category}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.title}
+                      {item.ProductName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.rate}
+                      {item.Price}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">

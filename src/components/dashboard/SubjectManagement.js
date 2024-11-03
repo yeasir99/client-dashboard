@@ -1,65 +1,18 @@
+'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
-
-import React from 'react';
+import useGetData from '@/utils/useGetData';
 
 const SubjectManagement = () => {
-  let data = [
-    {
-      id: 1,
-      subjectInfo: 'Bangla',
-      classInfo: 'Class One',
-    },
-    {
-      id: 2,
-      subjectInfo: 'English',
-      classInfo: 'Class One',
-    },
-    {
-      id: 3,
-      subjectInfo: 'Mathematics',
-      classInfo: 'Class Two',
-    },
-    {
-      id: 4,
-      subjectInfo: 'Science',
-      classInfo: 'Class Two',
-    },
-    {
-      id: 5,
-      subjectInfo: 'History',
-      classInfo: 'Class Three',
-    },
-    {
-      id: 6,
-      subjectInfo: 'Geography',
-      classInfo: 'Class Three',
-    },
-    {
-      id: 7,
-      subjectInfo: 'Computer Science',
-      classInfo: 'Class Four',
-    },
-    {
-      id: 8,
-      subjectInfo: 'Art',
-      classInfo: 'Class Four',
-    },
-    {
-      id: 9,
-      subjectInfo: 'Physical Education',
-      classInfo: 'Class Five',
-    },
-    {
-      id: 10,
-      subjectInfo: 'Music',
-      classInfo: 'Class Five',
-    },
-    {
-      id: 11,
-      subjectInfo: 'Islamic Studies',
-      classInfo: 'Class Six',
-    },
-  ];
+  const url =
+    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_subjectinfos';
+  const { status, data } = useGetData(url);
+  if (status === 'pending') {
+    return <div>Loading....</div>;
+  }
+  if (status === 'error') {
+    return <div>something went wrong</div>;
+  }
+
   return (
     <div className="flex flex-col">
       <div>
@@ -96,16 +49,16 @@ const SubjectManagement = () => {
                 {data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.ID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.ID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.subjectInfo}
+                      {item.SubjectName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.classInfo}
+                      {item.sndClassID}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">

@@ -1,52 +1,18 @@
+'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
+import useGetData from '@/utils/useGetData';
 
 const ClassManagement = () => {
-  let data = [
-    {
-      id: 1,
-      classInfo: 'Class One',
-    },
-    {
-      id: 2,
-      classInfo: 'Class Two',
-    },
-    {
-      id: 3,
-      classInfo: 'Class Three',
-    },
-    {
-      id: 4,
-      classInfo: 'Class Four',
-    },
-    {
-      id: 5,
-      classInfo: 'Class Five',
-    },
-    {
-      id: 6,
-      classInfo: 'Class Six',
-    },
-    {
-      id: 7,
-      classInfo: 'Class Seven',
-    },
-    {
-      id: 8,
-      classInfo: 'Class Eight',
-    },
-    {
-      id: 9,
-      classInfo: 'Class Nine',
-    },
-    {
-      id: 10,
-      classInfo: 'Class Ten',
-    },
-    {
-      id: 11,
-      classInfo: 'Class Eleven',
-    },
-  ];
+  const url =
+    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_classinfos';
+  const { status, data } = useGetData(url);
+  if (status === 'pending') {
+    return <div>Loading....</div>;
+  }
+  if (status === 'error') {
+    return <div>something went wrong</div>;
+  }
+
   return (
     <div className="flex flex-col">
       <div>
@@ -77,13 +43,13 @@ const ClassManagement = () => {
                 {data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.ID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.ID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.classInfo}
+                      {item.CategoryName}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">

@@ -1,54 +1,17 @@
+'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
-
-import React from 'react';
+import useGetData from '@/utils/useGetData';
 
 const PurposeManagement = () => {
-  let data = [
-    {
-      id: 1,
-      purpose: 'Specimen',
-    },
-    {
-      id: 2,
-      purpose: 'Research',
-    },
-    {
-      id: 3,
-      purpose: 'Education',
-    },
-    {
-      id: 4,
-      purpose: 'Demonstration',
-    },
-    {
-      id: 5,
-      purpose: 'Analysis',
-    },
-    {
-      id: 6,
-      purpose: 'Testing',
-    },
-    {
-      id: 7,
-      purpose: 'Quality Control',
-    },
-    {
-      id: 8,
-      purpose: 'Training',
-    },
-    {
-      id: 9,
-      purpose: 'Exhibition',
-    },
-    {
-      id: 10,
-      purpose: 'Development',
-    },
-    {
-      id: 11,
-      purpose: 'Maintenance',
-    },
-  ];
+  const url =
+    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_visitpurposes';
+  const { status, data } = useGetData(url);
+  if (status === 'pending') {
+    return <div>Loading....</div>;
+  }
+  if (status === 'error') {
+    return <div>something went wrong</div>;
+  }
   return (
     <div className="flex flex-col">
       <div>
@@ -79,13 +42,13 @@ const PurposeManagement = () => {
                 {data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.ID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.ID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.purpose}
+                      {item.CategoryName}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
