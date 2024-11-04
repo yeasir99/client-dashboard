@@ -169,7 +169,7 @@ const page = () => {
         </div>
         <button
           type="submit"
-          className="bg-primary px-6 py-2 rounded-full text-surface1"
+          className="bg-primary px-6 py-2 rounded-md text-surface1"
         >
           Register
         </button>

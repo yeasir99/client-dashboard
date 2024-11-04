@@ -41,18 +41,10 @@ const page = () => {
             id="designation"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
           />
-          <label htmlFor="designation" className="block text-sm font-bold mb-1">
-            Role :
-          </label>
-          <input
-            type="text"
-            id="designation"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-          />
 
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
-              Register
+              Save
             </button>
           </div>
         </form>

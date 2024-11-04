@@ -18,7 +18,7 @@ const page = () => {
         </h2>
         <form>
           <label htmlFor="designation" className="block text-sm font-bold mb-1">
-            Class Info:
+            Puroses:
           </label>
           <input
             type="text"

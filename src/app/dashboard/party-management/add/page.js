@@ -50,18 +50,44 @@ const page = () => {
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
               />
             </div>
-            <div>
-              <label className="block text-sm font-bold mb-1">
-                Region/Area:
-              </label>
-              <select name="zone" className="w-full rounded-md">
-                <option value="" disabled={true} selected>
-                  Dhaka Division
-                </option>
-                <option value="">Dhaka Division</option>
-                <option value="">Dhaka Division</option>
-                <option value="">Dhaka Division</option>
-              </select>
+            <div className="grid grid-cols-3 gap-2">
+              <div>
+                <label className="block text-sm font-bold mb-1">
+                  Region/Area:
+                </label>
+                <select name="zone" className="w-full rounded-md">
+                  <option value="" disabled={true} selected>
+                    Dhaka Division
+                  </option>
+                  <option value="">Dhaka Division</option>
+                  <option value="">Dhaka Division</option>
+                  <option value="">Dhaka Division</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-1">Thana:</label>
+                <select name="zone" className="w-full rounded-md">
+                  <option value="" disabled={true} selected>
+                    Dhaka Division
+                  </option>
+                  <option value="">Dhaka Division</option>
+                  <option value="">Dhaka Division</option>
+                  <option value="">Dhaka Division</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-1">
+                  District:
+                </label>
+                <select name="zone" className="w-full rounded-md">
+                  <option value="" disabled={true} selected>
+                    Dhaka Division
+                  </option>
+                  <option value="">Dhaka Division</option>
+                  <option value="">Dhaka Division</option>
+                  <option value="">Dhaka Division</option>
+                </select>
+              </div>
             </div>
             <div>
               <label className="block text-sm font-bold mb-1">
