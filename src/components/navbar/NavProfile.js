@@ -1,5 +1,6 @@
 import { RxAvatar } from 'react-icons/rx';
-const NavProfile = () => {
+import Logout from './Logout';
+const NavProfile = ({ session }) => {
   return (
     <div className="flex items-center space-x-2 text-surface1">
       <div>
@@ -7,13 +8,9 @@ const NavProfile = () => {
       </div>
       <div>
         <p className="text-sm">Welcome</p>
-        <h1>Md. Abdur</h1>
+        <h1>{session.user.name}</h1>
       </div>
-      <div>
-        <button className="bg-surface2 text-black py-1.5 px-4 rounded-md ml-4">
-          Logout
-        </button>
-      </div>
+      <Logout />
     </div>
   );
 };
