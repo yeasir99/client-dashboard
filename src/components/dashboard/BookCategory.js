@@ -4,7 +4,7 @@ import useGetData from '@/utils/useGetData';
 
 const BookCategory = () => {
   const url =
-    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_bookscategorys';
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys';
   const { status, data } = useGetData(url);
   if (status === 'pending') {
     return <div>Loading....</div>;

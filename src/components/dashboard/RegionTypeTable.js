@@ -4,7 +4,7 @@ import useGetData from '@/utils/useGetData';
 
 const RegionTypeTable = () => {
   const url =
-    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_regiontypes';
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regiontypes';
 
   const { status, data } = useGetData(url);
 

@@ -2,8 +2,7 @@
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import useGetData from '@/utils/useGetData';
 const Designation = () => {
-  let url =
-    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_desigs';
+  let url = 'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_desigs';
 
   const { status, data } = useGetData(url);
   if (status === 'pending') {

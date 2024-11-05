@@ -4,7 +4,7 @@ import useGetData from '@/utils/useGetData';
 
 const ClassManagement = () => {
   const url =
-    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_classinfos';
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_classinfos';
   const { status, data } = useGetData(url);
   if (status === 'pending') {
     return <div>Loading....</div>;

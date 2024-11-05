@@ -4,7 +4,7 @@ import useGetData from '@/utils/useGetData';
 
 const RegionAreaTable = () => {
   const url =
-    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_regions';
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regions';
   const { status, data } = useGetData(url);
   if (status === 'pending') {
     return <div>Loading....</div>;

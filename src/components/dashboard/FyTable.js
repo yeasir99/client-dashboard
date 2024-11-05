@@ -2,7 +2,7 @@
 import useGetData from '@/utils/useGetData';
 const FyTable = () => {
   let url =
-    'http://36.255.68.50:8080/DLogicKBL/salesforce_api.php?action=get_financialyears';
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_financialyears';
 
   let { status, data } = useGetData(url);
 
