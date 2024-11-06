@@ -44,7 +44,7 @@ const LoginForm = () => {
           id="empId"
           className="w-full text-md outline-0 border-0 focus:ring-0 rounded-md"
           type="text"
-          placeholder="Employee Id"
+          placeholder="Employee Id Or UserName"
           name="Username"
           onChange={handleChange}
         />

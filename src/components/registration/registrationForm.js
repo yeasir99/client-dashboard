@@ -47,7 +47,6 @@ const registrationForm = () => {
             <option value="Zone three">Zone three</option>
           </select>
         </div>
-
         <div>
           <label
             htmlFor="userID"
@@ -60,6 +59,21 @@ const registrationForm = () => {
             id="userID"
             type="text"
             name="userID"
+            className="w-full rounded-md mb-1"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="userName"
+            className="capitalize flex font-semibold text-md py-1"
+          >
+            User Name:
+          </label>
+
+          <input
+            id="userName"
+            type="text"
+            name="userName"
             className="w-full rounded-md mb-1"
           />
         </div>
