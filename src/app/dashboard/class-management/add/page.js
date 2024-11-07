@@ -11,7 +11,7 @@ const page = () => {
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_classinfo',
       {
-        CategoryType: 'books-category',
+        CategoryType: 'ClassInfo',
         CategoryName: formData.classManagement,
       }
     );
