@@ -1,6 +1,27 @@
-import React from 'react';
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
 
 const page = () => {
+  const [formData, setFormData] = useState({
+    institutionType: '',
+  });
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_institutiontype',
+      {
+        CategoryType: 'institution-type',
+        CategoryName: formData.institutionType,
+      }
+    );
+    if (res.status === 200) {
+      setFormData({
+        institutionType: '',
+      });
+    }
+  };
   return (
     <>
       <div className="flex justify-between items-center">
@@ -20,14 +41,19 @@ const page = () => {
         <h2 className="text-lg font-semibold mb-2 capitalize">
           add new Institution-Type
         </h2>
-        <form>
-          <label htmlFor="designation" className="block text-sm font-bold mb-1">
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="institution" className="block text-sm font-bold mb-1">
             Institution-Type:
           </label>
           <input
             type="text"
-            id="designation"
+            id="institution"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            name="institutionType"
+            value={formData.institutionType}
+            onChange={e => {
+              setFormData({ ...formData, [e.target.name]: e.target.value });
+            }}
           />
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
