@@ -1,6 +1,25 @@
-import React from 'react';
+'use client';
+import { useState } from 'react';
 
 const page = () => {
+  const [formData, setFormData] = useState({
+    parentRegion: '',
+    regionName: '',
+    regionType: '',
+  });
+
+  const handleChange = e => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -18,41 +37,54 @@ const page = () => {
         <h2 className="text-lg font-semibold mb-2 capitalize">
           add new Region
         </h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
               Parent Region (if applicable):
             </label>
 
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                1234
+            <select
+              className="w-full rounded-md"
+              defaultValue="none"
+              name="parentRegion"
+              onChange={handleChange}
+            >
+              <option value="none" disabled>
+                Choose a Location ...
               </option>
-              <option value="Zone one">1234</option>
-              <option value="Zone two">1234</option>
-              <option value="Zone three">1234</option>
+              <option value="dhaka">Dhaka</option>
+              <option value="sylhet">Sylhet</option>
+              <option value="rajshahi">Rajshahi</option>
             </select>
           </div>
-          <label htmlFor="designation" className="block text-sm font-bold mb-1">
-            Region-Type:
+          <label htmlFor="regionName" className="block text-sm font-bold mb-1">
+            Region-Name:
           </label>
           <input
             type="text"
-            id="designation"
+            id="regionName"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            name="regionName"
+            onChange={handleChange}
+            value={formData.regionName}
           />
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
               Region type:
             </label>
 
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                NSM
+            <select
+              className="w-full rounded-md"
+              defaultValue="none"
+              name="regionType"
+              onChange={handleChange}
+            >
+              <option value="none" disabled>
+                Choose a Region Type ...
               </option>
-              <option value="Zone one">NSM</option>
-              <option value="Zone two">NSM</option>
-              <option value="Zone three">NSM</option>
+              <option value="nsm">NSM</option>
+              <option value="gm">NSM</option>
+              <option value="csm">NSM</option>
             </select>
           </div>
           <div className="mt-5">

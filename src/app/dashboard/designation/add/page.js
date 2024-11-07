@@ -1,6 +1,32 @@
-import React from 'react';
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
 
 const page = () => {
+  const [state, setState] = useState({
+    categoryName: '',
+  });
+  const [status, setStatus] = useState('idle');
+  const handleSubmit = async e => {
+    e.preventDefault();
+    if (!state.categoryName) {
+      return;
+    }
+    setStatus('pending');
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_desig',
+      {
+        CategoryType: 'Designation',
+        CategoryName: state.categoryName,
+      }
+    );
+    if (res.status === 200) {
+      setStatus('idle');
+      setState({
+        categoryName: '',
+      });
+    }
+  };
   return (
     <>
       <div className="flex justify-between items-center">
@@ -18,7 +44,7 @@ const page = () => {
         <h2 className="text-lg font-semibold mb-2 capitalize">
           add new designation
         </h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="designation" className="block text-sm font-bold mb-1">
             Designation:
           </label>
@@ -26,10 +52,22 @@ const page = () => {
             type="text"
             id="designation"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            name="categoryName"
+            required
+            value={state.categoryName}
+            onChange={e => {
+              setState({
+                ...state,
+                [e.target.name]: e.target.value,
+              });
+            }}
           />
           <div className="mt-5">
-            <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
-              Save Designation
+            <button
+              className="capitalize bg-primary px-5 py-1 text-white rounded-md"
+              type="submit"
+            >
+              {status === 'pending' ? 'Saving' : 'Save Designation'}
             </button>
           </div>
         </form>
