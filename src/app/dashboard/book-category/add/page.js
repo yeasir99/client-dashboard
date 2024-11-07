@@ -1,6 +1,26 @@
-import React from 'react';
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
 
 const page = () => {
+  const [formData, setFormData] = useState({
+    bookCategory: '',
+  });
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_bookscategory',
+      {
+        CategoryType: 'books-category',
+        CategoryName: formData.bookCategory,
+      }
+    );
+    if (res.status === 200) {
+      setFormData({
+        bookCategory: '',
+      });
+    }
+  };
   return (
     <>
       <div className="flex justify-between items-center">
@@ -18,14 +38,23 @@ const page = () => {
         <h2 className="text-lg font-semibold mb-2 capitalize">
           add new books-Category
         </h2>
-        <form>
-          <label htmlFor="designation" className="block text-sm font-bold mb-1">
+        <form onSubmit={handleSubmit}>
+          <label
+            htmlFor="bookCategory"
+            className="block text-sm font-bold mb-1"
+          >
             Books-Category:
           </label>
           <input
             type="text"
-            id="designation"
+            id="bookCategory"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            name="bookCategory"
+            value={formData.bookCategory}
+            onChange={e => {
+              setFormData({ ...formData, [e.target.name]: e.target.value });
+            }}
+            required
           />
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
