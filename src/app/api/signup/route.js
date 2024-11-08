@@ -15,7 +15,6 @@ export const POST = async request => {
     const address = formData.get('address');
     const reportingTo = formData.get('reportingTo');
     const image = formData.get('image');
-    const status = formData.get('status');
 
     //upload image to cloudinary
     const imageBuffer = await image.arrayBuffer();
@@ -39,7 +38,6 @@ export const POST = async request => {
       Phone: phone,
       Address: address,
       ReportingToUserID: reportingTo,
-      Status: status,
       userpicture: result.secure_url,
     };
 

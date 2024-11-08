@@ -40,7 +40,6 @@ const registrationForm = () => {
     phone: '',
     address: '',
     reportingTo: '',
-    status: '',
   });
   console.log(formData);
 
@@ -246,22 +245,6 @@ const registrationForm = () => {
                   {item.reportUsers}
                 </option>
               ))}
-          </select>
-        </div>
-        <div>
-          <label className="capitalize flex font-semibold text-md py-1">
-            Status:
-          </label>
-
-          <select
-            name="status"
-            className="w-full rounded-md"
-            defaultValue=""
-            onChange={handleChange}
-          >
-            <option value="" disabled={true} selected></option>
-            <option value="true">True</option>
-            <option value="false">False</option>
           </select>
         </div>
       </div>
