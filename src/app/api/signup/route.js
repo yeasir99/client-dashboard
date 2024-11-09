@@ -38,7 +38,7 @@ export const POST = async request => {
       Phone: phone,
       Address: address,
       ReportingToUserID: reportingTo,
-      userpicture: result.secure_url,
+      Userpicture: result.secure_url,
     };
 
     const res = await axios.post(
