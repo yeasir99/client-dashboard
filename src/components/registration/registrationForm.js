@@ -36,6 +36,7 @@ const registrationForm = () => {
     dasignationRole: '',
     userId: '',
     password: '',
+    userName: '',
     email: '',
     phone: '',
     address: '',

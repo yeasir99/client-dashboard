@@ -1,6 +1,54 @@
-import React from 'react';
+'use client';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const page = () => {
+  const [desigs, setDesigs] = useState([]);
+  const [reportingTo, setReportingTo] = useState([]);
+  const [formData, setFormData] = useState({
+    image: '',
+    employeeId: '',
+    employeeName: '',
+    dasignationRole: '',
+    userId: '',
+    password: '',
+    userName: '',
+    email: '',
+    phone: '',
+    address: '',
+    reportingTo: '',
+    status: '',
+  });
+
+  const getDesig = async cb => {
+    const res = await axios.get(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_desigs'
+    );
+    if (res.status === 200) {
+      cb(res.data);
+    }
+  };
+
+  const getReporting = async cb => {
+    const res = await axios.get(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_reporttoUsers'
+    );
+    if (res.status === 200) {
+      cb(res.data);
+    }
+  };
+
+  useEffect(() => {
+    getDesig(setDesigs);
+    getReporting(setReportingTo);
+  }, []);
+
+  const handleChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  console.log(formData);
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -14,130 +62,183 @@ const page = () => {
           />
         </form>
       </div>
-      <form className="w-full max-w-lg">
-        <div>{/* image upload here */}</div>
+      <form
+        className="w-full max-w-lg"
+        action="/api/user-registration"
+        method="POST"
+        encType="multipart/form-data"
+      >
         <div className="mb-5">
           <div>
             <label
-              htmlFor="employeeID"
+              htmlFor="EmployeeID"
               className="capitalize flex font-semibold text-md py-1"
             >
               employeeID:
             </label>
 
             <input
-              id="employeeID"
-              name="employeeID"
+              id="EmployeeID"
+              name="employeeId"
               type="text"
               className="w-full rounded-md mb-1"
+              onChange={handleChange}
             />
           </div>
           <div>
             <label
-              htmlFor="employeeName"
+              htmlFor="EmployeeName"
               className="capitalize flex font-semibold text-md py-1"
             >
               employee Name:
             </label>
 
             <input
-              id="employeeName"
+              id="EmployeeName"
               type="text"
               name="employeeName"
               className="w-full rounded-md mb-1"
+              onChange={handleChange}
             />
           </div>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
               Dasignation/Role:
             </label>
-
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                NSM
-              </option>
-              <option value="Zone one">Zone one</option>
-              <option value="Zone two">Zone two</option>
-              <option value="Zone three">Zone three</option>
+            <select
+              name="dasignationRole"
+              className="w-full rounded-md"
+              defaultValue=""
+              onChange={handleChange}
+            >
+              <option value="" disabled={true} selected></option>
+              {desigs.length &&
+                desigs.map(item => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.CategoryName}
+                  </option>
+                ))}
             </select>
           </div>
 
           <div>
             <label
-              htmlFor="userID"
+              htmlFor="UserID"
               className="capitalize flex font-semibold text-md py-1"
             >
               user ID:
             </label>
 
             <input
-              id="userID"
+              id="UserID"
               type="text"
-              name="userID"
+              name="userId"
               className="w-full rounded-md mb-1"
+              onChange={handleChange}
             />
           </div>
 
           <div>
             <label
-              htmlFor="password"
+              htmlFor="userName"
+              className="capitalize flex font-semibold text-md py-1"
+            >
+              User Name:
+            </label>
+
+            <input
+              id="userName"
+              type="text"
+              name="userName"
+              className="w-full rounded-md mb-1"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="Password"
               className="capitalize flex font-semibold text-md py-1"
             >
               password:
             </label>
 
             <input
-              id="password"
+              id="Password"
               type="password"
               name="password"
               className="w-full rounded-md mb-1"
+              onChange={handleChange}
             />
+          </div>
+          <div>
+            <label
+              htmlFor="Image"
+              className="capitalize flex font-semibold text-md py-1"
+            >
+              User's Picture:
+            </label>
+            <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
+              <input
+                id="Image"
+                type="file"
+                name="image"
+                className="w-full rounded-md mb-1"
+                onChange={e => {
+                  const file = e.target.files[0];
+                  setFormData({ ...formData, [e.target.name]: file });
+                }}
+              />
+            </div>
           </div>
 
           <div>
             <label
-              htmlFor="email"
+              htmlFor="Email"
               className="capitalize flex font-semibold text-md py-1"
             >
               email:
             </label>
 
             <input
-              id="email"
+              id="Email"
               type="email"
               name="email"
               className="w-full rounded-md mb-1"
+              onChange={handleChange}
             />
           </div>
 
           <div>
             <label
-              htmlFor="phone"
+              htmlFor="Phone"
               className="capitalize flex font-semibold text-md py-1"
             >
               Phone:
             </label>
 
             <input
-              id="phone"
+              id="Phone"
               type="number"
               name="phone"
               className="w-full rounded-md mb-1"
+              onChange={handleChange}
             />
           </div>
           <div>
             <label
-              htmlFor="address"
+              htmlFor="Address"
               className="capitalize flex font-semibold text-md py-1"
             >
               address:
             </label>
 
             <input
-              id="address"
+              id="Address"
               type="text"
               name="address"
               className="w-full rounded-md mb-1"
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -145,13 +246,19 @@ const page = () => {
               reporting to:
             </label>
 
-            <select name="district" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                John Smith -CEO
-              </option>
-              <option value="District one">District one</option>
-              <option value="District two">District two</option>
-              <option value="District three">District three</option>
+            <select
+              name="reportingTo"
+              className="w-full rounded-md"
+              defaultValue=""
+              onChange={handleChange}
+            >
+              <option value="" disabled={true} selected></option>
+              {reportingTo.length &&
+                reportingTo.map(item => (
+                  <option value={item.UserID} key={item.UserID}>
+                    {item.reportUsers}
+                  </option>
+                ))}
             </select>
           </div>
           <div>
@@ -159,11 +266,15 @@ const page = () => {
               Status
             </label>
 
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                Active
-              </option>
-              <option value="Zone one">Disable</option>
+            <select
+              name="status"
+              className="w-full rounded-md"
+              defaultValue=""
+              onChange={handleChange}
+            >
+              <option value="" disabled={true} selected></option>
+              <option value="true">active</option>
+              <option value="">disable</option>
             </select>
           </div>
         </div>
