@@ -7,7 +7,6 @@ export const POST = async request => {
     const employeeId = formData.get('employeeId');
     const employeeName = formData.get('employeeName');
     const dasignationRole = formData.get('dasignationRole');
-    const userId = formData.get('userId');
     const userName = formData.get('userName');
     const password = formData.get('password');
     const email = formData.get('email');
@@ -54,7 +53,7 @@ export const POST = async request => {
     console.log(newUser);
 
     return Response.redirect(
-      `${process.env.URL_DOMAIN}/dashboard/user-employee/add`
+      `${process.env.URL_DOMAIN}/dashboard/user-employee`
     );
   } catch (error) {
     return new Response('failed to add User', {

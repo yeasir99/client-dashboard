@@ -10,7 +10,6 @@ const page = () => {
     employeeId: '',
     employeeName: '',
     dasignationRole: '',
-    userId: '',
     password: '',
     userName: '',
     email: '',
@@ -123,27 +122,10 @@ const page = () => {
 
           <div>
             <label
-              htmlFor="UserID"
-              className="capitalize flex font-semibold text-md py-1"
-            >
-              user ID:
-            </label>
-
-            <input
-              id="UserID"
-              type="text"
-              name="userId"
-              className="w-full rounded-md mb-1"
-              onChange={handleChange}
-            />
-          </div>
-
-          <div>
-            <label
               htmlFor="userName"
               className="capitalize flex font-semibold text-md py-1"
             >
-              User Name:
+              User Name / User Id:
             </label>
 
             <input
