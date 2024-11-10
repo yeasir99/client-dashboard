@@ -405,7 +405,7 @@ const page = () => {
                       <tr>
                         <td
                           className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium "
-                          colspan="6"
+                          colSpan="6"
                         >
                           <div className="flex justify-end">
                             <button
