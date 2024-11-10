@@ -7,7 +7,6 @@ export const POST = async request => {
     const employeeId = formData.get('employeeId');
     const employeeName = formData.get('employeeName');
     const dasignationRole = formData.get('dasignationRole');
-    const userId = formData.get('userId');
     const userName = formData.get('userName');
     const password = formData.get('password');
     const email = formData.get('email');
