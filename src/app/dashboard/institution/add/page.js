@@ -406,6 +406,7 @@ const page = () => {
                         >
                           <div className="flex justify-end">
                             <button
+                              type="button"
                               className="bg-green-300 text-md rounded-md px-4 py-2"
                               onClick={() => {
                                 setFormData({
@@ -436,7 +437,10 @@ const page = () => {
             </div>
           </div>
           <div className="mt-5">
-            <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
+            <button
+              className="capitalize bg-primary px-5 py-1 text-white rounded-md"
+              type="submit"
+            >
               Save Institution
             </button>
           </div>
