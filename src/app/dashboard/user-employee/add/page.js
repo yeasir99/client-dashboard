@@ -82,6 +82,7 @@ const page = () => {
               type="text"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              required
             />
           </div>
           <div>
@@ -98,6 +99,7 @@ const page = () => {
               name="employeeName"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              required
             />
           </div>
           <div>
@@ -109,6 +111,7 @@ const page = () => {
               className="w-full rounded-md"
               defaultValue=""
               onChange={handleChange}
+              required
             >
               <option value="" disabled={true} selected></option>
               {desigs.length &&
@@ -134,6 +137,7 @@ const page = () => {
               name="userName"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -151,6 +155,7 @@ const page = () => {
               name="password"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              required
             />
           </div>
           <div>
@@ -188,6 +193,7 @@ const page = () => {
               name="email"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -205,6 +211,7 @@ const page = () => {
               name="phone"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              required
             />
           </div>
           <div>
@@ -221,6 +228,7 @@ const page = () => {
               name="address"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              required
             />
           </div>
           <div>
@@ -233,6 +241,7 @@ const page = () => {
               className="w-full rounded-md"
               defaultValue=""
               onChange={handleChange}
+              required
             >
               <option value="" disabled={true} selected></option>
               {reportingTo.length &&
@@ -253,10 +262,11 @@ const page = () => {
               className="w-full rounded-md"
               defaultValue=""
               onChange={handleChange}
+              required
             >
               <option value="" disabled={true} selected></option>
-              <option value="true">active</option>
-              <option value="">disable</option>
+              <option value="1">active</option>
+              <option value="0">disable</option>
             </select>
           </div>
         </div>

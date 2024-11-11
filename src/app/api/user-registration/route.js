@@ -39,7 +39,7 @@ export const POST = async request => {
       Address: address,
       ReportingToUserID: reportingTo,
       Userpicture: result.secure_url,
-      status: Boolean(status),
+      status: Number(status),
     };
 
     const res = await axios.post(
