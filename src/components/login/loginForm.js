@@ -47,6 +47,7 @@ const LoginForm = () => {
           placeholder="Employee Id Or UserName"
           name="Username"
           onChange={handleChange}
+          required
         />
       </div>
       <div className="w-full flex items-center border border-text2 rounded-md mb-6">
@@ -60,6 +61,7 @@ const LoginForm = () => {
           placeholder="Password"
           name="Password"
           onChange={handleChange}
+          required
         />
       </div>
 
