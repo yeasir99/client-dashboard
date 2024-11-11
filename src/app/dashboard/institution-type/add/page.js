@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     institutionType: '',
   });
@@ -20,6 +22,7 @@ const page = () => {
       setFormData({
         institutionType: '',
       });
+      router.push('/dashboard/institution-type');
     }
   };
   return (

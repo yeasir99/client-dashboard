@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     regionType: '',
   });
@@ -19,6 +21,7 @@ const page = () => {
       setFormData({
         regionType: '',
       });
+      router.push('/dashboard/region-type');
     }
   };
   return (

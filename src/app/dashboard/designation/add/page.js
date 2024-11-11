@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+  const router = useRouter();
   const [state, setState] = useState({
     categoryName: '',
   });
@@ -25,6 +27,7 @@ const page = () => {
       setState({
         categoryName: '',
       });
+      router.push(`/dashboard/designation`);
     }
   };
   return (

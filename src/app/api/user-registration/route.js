@@ -42,15 +42,10 @@ export const POST = async request => {
       status: Boolean(status),
     };
 
-    console.log(newUser);
-
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndUser',
       newUser
     );
-
-    console.log(res.data);
-    console.log(newUser);
 
     return Response.redirect(
       `${process.env.URL_DOMAIN}/dashboard/user-employee`
