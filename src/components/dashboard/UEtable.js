@@ -12,7 +12,7 @@ const UEtable = () => {
   if (status === 'error') {
     return <div>something went wrong</div>;
   }
-  
+
   return (
     <div className="flex flex-col">
       <div>
@@ -31,7 +31,7 @@ const UEtable = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Employee ID
+                    Employee_ID
                   </th>
                   <th
                     scope="col"
@@ -49,7 +49,7 @@ const UEtable = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    email
+                    Email
                   </th>
                   <th
                     scope="col"
@@ -61,7 +61,7 @@ const UEtable = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Login-username
+                    username
                   </th>
                   <th
                     scope="col"
@@ -107,18 +107,18 @@ const UEtable = () => {
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
                       <div>
                         <span className="bg-cyan-500 p-1 inline-block rounded-md">
-                          <FaEye className="text-white text-xl" />
+                          <FaEye className="text-white text-sm" />
                         </span>
-                        <p className="text-lg text-green-600 font-semibold">
+                        <p className="text-sm text-green-600 font-semibold">
                           Active
                         </p>
                       </div>
                       |
                       <div>
                         <span className="bg-amber-600 p-1 inline-block rounded-md">
-                          <FaRegEdit className="text-white text-xl" />
+                          <FaRegEdit className="text-white text-sm" />
                         </span>
-                        <p className="text-lg text-red-500 font-semibold">
+                        <p className="text-sm text-red-500 font-semibold">
                           De-active
                         </p>
                       </div>
