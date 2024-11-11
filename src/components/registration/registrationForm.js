@@ -73,6 +73,7 @@ const registrationForm = () => {
               const file = e.target.files[0];
               setFormData({ ...formData, [e.target.name]: file });
             }}
+            required
           />
         </div>
         <div>
@@ -89,6 +90,7 @@ const registrationForm = () => {
             type="text"
             className="w-full rounded-md mb-1"
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -105,6 +107,7 @@ const registrationForm = () => {
             name="employeeName"
             className="w-full rounded-md mb-1"
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -117,6 +120,7 @@ const registrationForm = () => {
             className="w-full rounded-md"
             defaultValue=""
             onChange={handleChange}
+            required
           >
             <option value="" disabled={true} selected></option>
             {desigs.length &&
@@ -142,6 +146,7 @@ const registrationForm = () => {
             name="userName"
             className="w-full rounded-md mb-1"
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -159,6 +164,7 @@ const registrationForm = () => {
             name="password"
             className="w-full rounded-md mb-1"
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -176,6 +182,7 @@ const registrationForm = () => {
             name="email"
             className="w-full rounded-md mb-1"
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -193,6 +200,7 @@ const registrationForm = () => {
             name="phone"
             className="w-full rounded-md mb-1"
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -209,6 +217,7 @@ const registrationForm = () => {
             name="address"
             className="w-full rounded-md mb-1"
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -221,6 +230,7 @@ const registrationForm = () => {
             className="w-full rounded-md"
             defaultValue=""
             onChange={handleChange}
+            required
           >
             <option value="" disabled={true} selected></option>
             {reportingTo.length &&
