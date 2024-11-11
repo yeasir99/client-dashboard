@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     purpose: '',
   });
@@ -20,6 +22,7 @@ const page = () => {
       setFormData({
         purpose: '',
       });
+      router.push('/dashboard/purpose-management');
     }
   };
   return (
@@ -52,6 +55,7 @@ const page = () => {
             onChange={e => {
               setFormData({ ...formData, [e.target.name]: e.target.value });
             }}
+            required
           />
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">

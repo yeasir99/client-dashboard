@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     taDa: '',
   });
@@ -20,6 +22,7 @@ const page = () => {
       setFormData({
         taDa: '',
       });
+      router.push('/dashboard/ta-da');
     }
   };
   return (
@@ -52,6 +55,7 @@ const page = () => {
             onChange={e => {
               setFormData({ ...formData, [e.target.name]: e.target.value });
             }}
+            required
           />
           <div className="mt-5">
             <button

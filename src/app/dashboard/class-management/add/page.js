@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     classManagement: '',
   });
@@ -20,6 +22,7 @@ const page = () => {
       setFormData({
         classManagement: '',
       });
+      router.push('/dashboard/class-management');
     }
   };
   return (
