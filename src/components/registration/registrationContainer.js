@@ -6,8 +6,9 @@ const RegestrationContainer = () => {
   return (
     <div className="bg-surface1 w-[872px] min-height-[557px] px-[142px] py-[86px] rounded-[30px] text-center">
       <SarinaFontWrapper>
-        <h1 className="text-[30px] font-bold mb-2 text-primary">
-          kazal Brothers Limited
+        <h1 className="text-[30px] font-semibold mb-2 text-fuchsia-500 capitalize text-center">
+          D-Logic Sales & Distribution <br />
+          with Sales Force
         </h1>
       </SarinaFontWrapper>
       <h1 className="mainHeading text-[30px] mb-2">

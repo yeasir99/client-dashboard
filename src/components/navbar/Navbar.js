@@ -13,7 +13,15 @@ const Navbar = () => {
             alt="Brand Name"
           />
         </div>
-        <NavItem />
+        <div>
+          <NavItem />
+          <div className="bg-white">
+            <h1 className="text-center py-1">
+              D-Logic Sales & Distribution <br />
+              with Sales Force
+            </h1>
+          </div>
+        </div>
       </div>
     </div>
   );

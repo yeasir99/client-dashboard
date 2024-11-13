@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 
 const NavItem = () => {
   const pathName = usePathname();
+  const updatedLink = [];
   let allLinks = [
     {
       section: 'Basic',
