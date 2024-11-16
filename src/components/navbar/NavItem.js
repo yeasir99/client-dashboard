@@ -4,10 +4,198 @@ import { BiQrScan } from 'react-icons/bi';
 import { MdOutlineEqualizer } from 'react-icons/md';
 import { TiFlowParallel } from 'react-icons/ti';
 import { usePathname } from 'next/navigation';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel,
+} from 'react-accessible-accordion';
 
 const NavItem = () => {
   const pathName = usePathname();
-  const updatedLink = [];
+  let updatedLink = [
+    {
+      name: 'Home',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Security & Setting',
+      status: 'accordion',
+      internalLinks: [
+        {
+          name: 'Emoloyee Registration',
+          href: '/dashboard/',
+        },
+        {
+          name: 'User Role',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Menu Entry',
+          href: '/dashboard/',
+        },
+        {
+          name: 'User Role Mapping',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Role Menu Privileges',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Approvals',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Approvals Menu',
+          href: '/dashboard/',
+        },
+        {
+          name: 'User Approvals Privileges',
+          href: '/dashboard/',
+        },
+      ],
+    },
+    {
+      name: 'Master Setup',
+      status: 'accordion',
+      internalLinks: [
+        {
+          name: 'Financial Year',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Designation',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Region Type',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Region Area',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Institution Type',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Institution',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Book Category',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Book/Product',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Party Management',
+          href: '/dashboard/',
+        },
+        {
+          name: 'TA/DA & Others Allowance',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Purpose Category',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Employee VS Region Mapping',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Class Information',
+          href: '/dashboard/',
+        },
+        {
+          name: 'Subject Information',
+          href: '/dashboard/',
+        },
+      ],
+    },
+    {
+      name: 'Assign Visit Plans',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Visit Plans Approval',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Visit Entry',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Visit Approval',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Production Order',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Product Receipt',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Sales Order',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Sales Order Approval',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Sales Return',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Delivery Chalan',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Invoice/Bill',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Invoice/Bill Approval',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Money Receipt',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Specimen Order',
+      href: '/dashboard/',
+      status: 'main',
+    },
+    {
+      name: 'Specimen Approval',
+      href: '/dashboard/',
+      status: 'main',
+    },
+  ];
   let allLinks = [
     {
       section: 'Basic',
@@ -16,6 +204,7 @@ const NavItem = () => {
         {
           name: 'financial year',
           href: '/dashboard/financial-year',
+          status: 'main',
         },
         {
           name: 'designation',
@@ -154,7 +343,48 @@ const NavItem = () => {
   ];
   return (
     <div>
-      {allLinks.map((item, index) => (
+      {updatedLink.map((item, index) =>
+        item.status === 'main' ? (
+          <div key={index}>
+            <Link
+              className="capitalize block text-sm text-white py-[2px] pl-12"
+              href={item.href}
+            >
+              {item.name}
+            </Link>
+          </div>
+        ) : (
+          <Accordion key={index} allowZeroExpanded={true}>
+            <AccordionItem>
+              <AccordionItemHeading>
+                <AccordionItemButton className="text-primary">
+                  {item.name}
+                </AccordionItemButton>
+              </AccordionItemHeading>
+              <AccordionItemPanel>
+                {item.internalLinks.map((ele, id) => (
+                  <div key={id}>
+                    <Link
+                      className="capitalize block text-sm text-white py-[2px] pl-12"
+                      href={ele.href}
+                    >
+                      {ele.name}
+                    </Link>
+                  </div>
+                ))}
+              </AccordionItemPanel>
+            </AccordionItem>
+          </Accordion>
+        )
+      )}
+    </div>
+  );
+};
+
+export default NavItem;
+
+{
+  /* {allLinks.map((item, index) => (
         <div
           key={index}
           className={`${item.section === 'Transection' ? 'bg-gray-800' : ''}`}
@@ -181,9 +411,5 @@ const NavItem = () => {
             </div>
           </div>
         </div>
-      ))}
-    </div>
-  );
-};
-
-export default NavItem;
+      ))} */
+}
