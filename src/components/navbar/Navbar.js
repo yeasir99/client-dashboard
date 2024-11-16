@@ -7,7 +7,7 @@ const Navbar = () => {
       <div>
         <div className="bg-primary flex justify-center">
           <Image
-            src="/images/anupom.jpg"
+            src="/images/anupom-v2.png"
             height={20}
             width={119}
             alt="Brand Name"

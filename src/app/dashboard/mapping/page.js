@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import { Accordion, AccordionItem } from '@szhsin/react-accordion';
 
 const page = () => {
   const [selectNasa, setSelectNasa] = useState(false);

@@ -65,59 +65,59 @@ const NavItem = () => {
       internalLinks: [
         {
           name: 'Financial Year',
-          href: '/dashboard/',
+          href: '/dashboard/financial-year',
         },
         {
           name: 'Designation',
-          href: '/dashboard/',
+          href: '/dashboard/designation',
         },
         {
           name: 'Region Type',
-          href: '/dashboard/',
+          href: '/dashboard/region-type',
         },
         {
           name: 'Region Area',
-          href: '/dashboard/',
+          href: '/dashboard/region-area',
         },
         {
           name: 'Institution Type',
-          href: '/dashboard/',
+          href: '/dashboard/institution-type',
         },
         {
           name: 'Institution',
-          href: '/dashboard/',
+          href: '/dashboard/institution',
         },
         {
           name: 'Book Category',
-          href: '/dashboard/',
+          href: '/dashboard/book-category',
         },
         {
           name: 'Book/Product',
-          href: '/dashboard/',
+          href: '/dashboard/book-management',
         },
         {
           name: 'Party Management',
-          href: '/dashboard/',
+          href: '/dashboard/party-management',
         },
         {
           name: 'TA/DA & Others Allowance',
-          href: '/dashboard/',
+          href: '/dashboard/ta-da',
         },
         {
           name: 'Purpose Category',
-          href: '/dashboard/',
+          href: '/dashboard/purpose-management',
         },
         {
           name: 'Employee VS Region Mapping',
-          href: '/dashboard/',
+          href: '/dashboard/mapping',
         },
         {
           name: 'Class Information',
-          href: '/dashboard/',
+          href: '/dashboard/class-management',
         },
         {
           name: 'Subject Information',
-          href: '/dashboard/',
+          href: '/dashboard/subject-management',
         },
       ],
     },
@@ -188,7 +188,7 @@ const NavItem = () => {
     },
     {
       name: 'Specimen Order',
-      href: '/dashboard/',
+      href: '/dashboard/specimen',
       status: 'main',
     },
     {
@@ -375,7 +375,7 @@ const NavItem = () => {
                     </Link>
                   </div>
                 ))}
-                <div className="border border-gray-300 border-dashed"></div>
+                <div className="border border-gray-300 border-dashed my-2"></div>
               </AccordionItemPanel>
             </AccordionItem>
           </Accordion>
@@ -386,34 +386,3 @@ const NavItem = () => {
 };
 
 export default NavItem;
-
-{
-  /* {allLinks.map((item, index) => (
-        <div
-          key={index}
-          className={`${item.section === 'Transection' ? 'bg-gray-800' : ''}`}
-        >
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <div>
-                <item.icon className="text-4xl pt-2 text-white" />
-              </div>
-              <h1 className="text-2xl text-white">{item.section}</h1>
-            </div>
-            <div className="flex flex-col ">
-              {item.links.map((element, position) => (
-                <Link
-                  key={position}
-                  className={`${
-                    pathName === element.href ? 'bg-primary' : ' '
-                  } capitalize block text-sm text-white py-[2px] pl-12`}
-                  href={element.href}
-                >
-                  {element.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      ))} */
-}
