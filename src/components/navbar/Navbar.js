@@ -3,7 +3,7 @@ import NavItem from './NavItem';
 import Image from 'next/image';
 const Navbar = () => {
   return (
-    <div>
+    <div className="flex flex-col justify-between h-full">
       <div>
         <div className="bg-primary flex justify-center">
           <Image
@@ -15,13 +15,13 @@ const Navbar = () => {
         </div>
         <div>
           <NavItem />
-          <div className="bg-white">
-            <h1 className="text-center py-1">
-              D-Logic Sales & Distribution <br />
-              with Sales Force
-            </h1>
-          </div>
         </div>
+      </div>
+      <div className="bg-white">
+        <h1 className="text-center py-1">
+          D-Logic Sales & Distribution <br />
+          with Sales Force
+        </h1>
       </div>
     </div>
   );
