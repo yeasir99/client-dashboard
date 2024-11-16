@@ -27,7 +27,7 @@ const NavItem = () => {
       internalLinks: [
         {
           name: 'Emoloyee Registration',
-          href: '/dashboard/',
+          href: '/dashboard/user-employee',
         },
         {
           name: 'User Role',
