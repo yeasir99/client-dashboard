@@ -4,6 +4,7 @@ import { BiQrScan } from 'react-icons/bi';
 import { MdOutlineEqualizer } from 'react-icons/md';
 import { TiFlowParallel } from 'react-icons/ti';
 import { usePathname } from 'next/navigation';
+import { FaArrowRightLong } from 'react-icons/fa6';
 import {
   Accordion,
   AccordionItem,
@@ -357,8 +358,10 @@ const NavItem = () => {
           <Accordion key={index} allowZeroExpanded={true}>
             <AccordionItem>
               <AccordionItemHeading>
-                <AccordionItemButton className="text-primary">
-                  {item.name}
+                <AccordionItemButton className="text-white">
+                  <div className="flex gap-2 items-center pl-12">
+                    <FaArrowRightLong /> {item.name}
+                  </div>
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
@@ -372,6 +375,7 @@ const NavItem = () => {
                     </Link>
                   </div>
                 ))}
+                <div className="border border-gray-300 border-dashed"></div>
               </AccordionItemPanel>
             </AccordionItem>
           </Accordion>
