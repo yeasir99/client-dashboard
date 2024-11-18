@@ -1,30 +1,42 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import useGetData from '@/utils/useGetData';
 
-const page = () => {
+const INTtype = ({ id }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     institutionType: '',
   });
+
+  const { status, data } = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutiontypes'
+  );
+
+  useEffect(() => {
+    if (data.length) {
+      const founded = data.filter(item => item.ID === Number(id));
+      setFormData({
+        institutionType: founded[0].CategoryName,
+      });
+    }
+  }, [data]);
 
   const handleSubmit = async e => {
     e.preventDefault();
     if (!formData.institutionType) {
       return;
     }
-    const res = await axios.post(
-      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_institutiontype',
+    console.log(formData);
+    const res = await axios.put(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_institutiontype&ID=${id}`,
       {
         CategoryType: 'institution-type',
         CategoryName: formData.institutionType,
       }
     );
     if (res.status === 200) {
-      setFormData({
-        institutionType: '',
-      });
       router.push('/dashboard/institution-type');
     }
   };
@@ -62,7 +74,10 @@ const page = () => {
             }}
           />
           <div className="mt-5">
-            <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
+            <button
+              className="capitalize bg-primary px-5 py-1 text-white rounded-md"
+              type="submit"
+            >
               save Institution-Type
             </button>
           </div>
@@ -72,4 +87,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default INTtype;
