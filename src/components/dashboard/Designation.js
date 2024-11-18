@@ -1,6 +1,7 @@
 'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import useGetData from '@/utils/useGetData';
+import Link from 'next/link';
 const Designation = () => {
   let url = 'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_desigs';
 
@@ -54,7 +55,9 @@ const Designation = () => {
                         <FaEye className="text-white text-xl" />
                       </span>{' '}
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
-                        <FaRegEdit className="text-white text-xl" />
+                        <Link href={`/dashboard/designation/edit/${item.ID}`}>
+                          <FaRegEdit className="text-white text-xl" />
+                        </Link>
                       </span>{' '}
                     </td>
                   </tr>
