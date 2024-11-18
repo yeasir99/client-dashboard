@@ -123,57 +123,57 @@ const NavItem = () => {
     },
     {
       name: 'Assign Visit Plans',
-      href: '/dashboard/',
+      href: '/dashboard/visit-plan',
       status: 'main',
     },
     {
       name: 'Visit Plans Approval',
-      href: '/dashboard/',
+      href: '/dashboard/visit-approval',
       status: 'main',
     },
     {
       name: 'Visit Entry',
-      href: '/dashboard/',
+      href: '/dashboard/visit-entry',
       status: 'main',
     },
     {
       name: 'Visit Approval',
-      href: '/dashboard/',
+      href: '/dashboard/visit-approval-inital',
       status: 'main',
     },
     {
       name: 'Production Order',
-      href: '/dashboard/',
+      href: '/dashboard/production-order',
       status: 'main',
     },
     {
       name: 'Product Receipt',
-      href: '/dashboard/',
+      href: '/dashboard/product-receipt',
       status: 'main',
     },
     {
       name: 'Sales Order',
-      href: '/dashboard/',
+      href: '/dashboard/sales-order',
       status: 'main',
     },
     {
       name: 'Sales Order Approval',
-      href: '/dashboard/',
+      href: '/dashboard/sales-order-approval',
       status: 'main',
     },
     {
       name: 'Sales Return',
-      href: '/dashboard/',
+      href: '/dashboard/sales-return',
       status: 'main',
     },
     {
       name: 'Delivery Chalan',
-      href: '/dashboard/',
+      href: '/dashboard/delivery-challan',
       status: 'main',
     },
     {
       name: 'Invoice/Bill',
-      href: '/dashboard/',
+      href: '/dashboard/invoice-bill',
       status: 'main',
     },
     {
@@ -183,7 +183,7 @@ const NavItem = () => {
     },
     {
       name: 'Money Receipt',
-      href: '/dashboard/',
+      href: '/dashboard/money-receipt',
       status: 'main',
     },
     {
