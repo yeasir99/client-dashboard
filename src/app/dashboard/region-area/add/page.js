@@ -3,9 +3,10 @@ import { useState } from 'react';
 
 const page = () => {
   const [formData, setFormData] = useState({
-    parentRegion: '',
-    regionName: '',
-    regionType: '',
+    division: '',
+    district: '',
+    thana: '',
+    area: '',
   });
 
   const handleChange = e => {
@@ -46,7 +47,7 @@ const page = () => {
             <select
               className="w-full rounded-md"
               defaultValue="none"
-              name="parentRegion"
+              name="division"
               onChange={handleChange}
             >
               <option value="none" disabled>

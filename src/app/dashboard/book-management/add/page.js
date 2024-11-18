@@ -1,6 +1,45 @@
-import React from 'react';
+'use client';
+import useGetData from '@/utils/useGetData';
+import { useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+  const router = useRouter();
+  const url =
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys';
+
+  const { status, data } = useGetData(url);
+
+  const [formData, setFormData] = useState({
+    category: '',
+    bookTitle: '',
+    bookPrice: '',
+  });
+
+  const handleChange = e => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_product',
+      {
+        Category: formData.category,
+        ProductName: formData.bookTitle,
+        Price: formData.bookPrice,
+      }
+    );
+
+    if (res.status === 200) {
+      router.push('/dashboard/book-management');
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -18,32 +57,56 @@ const page = () => {
         <h2 className="text-lg font-semibold mb-2 capitalize">
           add new Books / Edit Books
         </h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
-              Category
+              Category:
             </label>
 
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                Primary
-              </option>
-              <option value="Zone one">Primary</option>
-              <option value="Zone two">Primary</option>
-              <option value="Zone three">Primary</option>
+            <select
+              name="category"
+              className="w-full rounded-md"
+              defaultValue=""
+              onChange={handleChange}
+            >
+              <option value="" disabled={true} selected></option>
+              {data.length &&
+                data.map(item => (
+                  <option value={item.CategoryName} key={item.ID}>
+                    {item.CategoryName}
+                  </option>
+                ))}
             </select>
           </div>
-          <label htmlFor="designation" className="block text-sm font-bold mb-1">
+          <label htmlFor="BookTitle" className="block text-sm font-bold mb-1">
             Book Title :
           </label>
           <input
             type="text"
-            id="designation"
+            id="BookTitle"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            name="bookTitle"
+            onChange={handleChange}
+            value={formData.bookTitle}
+          />
+
+          <label htmlFor="Price" className="block text-sm font-bold mb-1">
+            Price:
+          </label>
+          <input
+            type="number"
+            id="Price"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            name="bookPrice"
+            onChange={handleChange}
+            value={formData.bookPrice}
           />
 
           <div className="mt-5">
-            <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
+            <button
+              className="capitalize bg-primary px-5 py-1 text-white rounded-md"
+              type="submit"
+            >
               Save
             </button>
           </div>
