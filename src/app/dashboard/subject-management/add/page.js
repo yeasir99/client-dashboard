@@ -1,6 +1,41 @@
-import React from 'react';
+'use client';
+import { useState } from 'react';
+import useGetData from '@/utils/useGetData';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const page = () => {
+  const url =
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_classinfos';
+  const [formData, setFormData] = useState({
+    subjectName: '',
+    classInfoName: '',
+  });
+
+  const { status, data } = useGetData(url);
+
+  const handleChange = e => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const router = useRouter();
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_subjectinfo',
+      {
+        SubjectName: formData.subjectName,
+        sndClassID: formData.classInfoName,
+      }
+    );
+    if (res.status === 200) {
+      router.push('/dashboard/subject-management');
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -18,31 +53,43 @@ const page = () => {
         <h2 className="text-lg font-semibold mb-2 capitalize">
           add new subject-Info
         </h2>
-        <form>
-          <label htmlFor="designation" className="block text-sm font-bold mb-1">
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="SubjectName" className="block text-sm font-bold mb-1">
             Subject-Name:
           </label>
           <input
             type="text"
-            id="designation"
+            id="SubjectName"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            name="subjectName"
+            value={formData.subjectName}
+            onChange={handleChange}
           />
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
-              Class Name
+              Class Name:
             </label>
 
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                class1
-              </option>
-              <option value="Zone one">class1</option>
-              <option value="Zone two">class1</option>
-              <option value="Zone three">class1</option>
+            <select
+              name="classInfoName"
+              className="w-full rounded-md"
+              defaultValue=""
+              onChange={handleChange}
+            >
+              <option value="" disabled={true} selected></option>
+              {data.length &&
+                data.map(item => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.CategoryName}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="mt-5">
-            <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
+            <button
+              className="capitalize bg-primary px-5 py-1 text-white rounded-md"
+              type="submit"
+            >
               Save Subject-Info
             </button>
           </div>
