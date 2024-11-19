@@ -2,6 +2,7 @@
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import useGetData from '@/utils/useGetData';
 import axios from 'axios';
+import Link from 'next/link';
 
 const UEtable = () => {
   const url =
@@ -29,8 +30,6 @@ const UEtable = () => {
       window.location.reload();
     }
   };
-
-  console.log(data);
 
   return (
     <div className="flex flex-col">
@@ -125,9 +124,13 @@ const UEtable = () => {
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                       <div>
-                        <span className="bg-cyan-500 p-1 inline-block rounded-md">
-                          <FaEye className="text-white text-sm" />
-                        </span>
+                        <Link
+                          href={`/dashboard/user-employee/view/${item.UserID}`}
+                        >
+                          <span className="bg-cyan-500 p-1 inline-block rounded-md">
+                            <FaEye className="text-white text-sm" />
+                          </span>
+                        </Link>
                       </div>
                       |
                       <div>
