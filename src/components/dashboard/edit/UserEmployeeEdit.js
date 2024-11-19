@@ -1,8 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import useGetData from '@/utils/useGetData';
 
-const page = () => {
+const UserEmployeeEdit = ({ id }) => {
   const [desigs, setDesigs] = useState([]);
   const [reportingTo, setReportingTo] = useState([]);
   const [formData, setFormData] = useState({
@@ -18,6 +19,29 @@ const page = () => {
     reportingTo: '',
     status: '',
   });
+
+  const { status, data } = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_sndUser&UserID=${id}`
+  );
+
+  useEffect(() => {
+    if (status !== 'pending') {
+      setFormData({
+        image: '',
+        employeeId: data.EmployeeID,
+        employeeName: data.EmpName,
+        dasignationRole: data.DesignationID,
+        password: '',
+        userName: data.Username,
+        email: data.Email,
+        phone: data.Phone,
+        address: data.Address,
+        reportingTo: data.ReportingToUserID,
+        status: data.Status,
+      });
+      console.log(data);
+    }
+  }, [status]);
 
   const getDesig = async cb => {
     const res = await axios.get(
@@ -45,7 +69,6 @@ const page = () => {
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -61,7 +84,7 @@ const page = () => {
       </div>
       <form
         className="w-full max-w-lg"
-        action="/api/user-registration"
+        action="/api/user-registration/update"
         method="POST"
         encType="multipart/form-data"
       >
@@ -80,9 +103,11 @@ const page = () => {
               type="text"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              value={formData.employeeId}
               required
             />
           </div>
+
           <div>
             <label
               htmlFor="EmployeeName"
@@ -97,6 +122,7 @@ const page = () => {
               name="employeeName"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              value={formData.employeeName}
               required
             />
           </div>
@@ -107,11 +133,10 @@ const page = () => {
             <select
               name="dasignationRole"
               className="w-full rounded-md"
-              defaultValue=""
               onChange={handleChange}
+              value={formData.dasignationRole}
               required
             >
-              <option value="" disabled={true} selected></option>
               {desigs.length &&
                 desigs.map(item => (
                   <option value={item.ID} key={item.ID}>
@@ -135,6 +160,7 @@ const page = () => {
               name="userName"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              value={formData.userName}
               required
             />
           </div>
@@ -153,7 +179,7 @@ const page = () => {
               name="password"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
-              required
+              value={formData.password}
             />
           </div>
           <div>
@@ -173,6 +199,7 @@ const page = () => {
                   const file = e.target.files[0];
                   setFormData({ ...formData, [e.target.name]: file });
                 }}
+                value={formData.image}
               />
             </div>
           </div>
@@ -191,6 +218,7 @@ const page = () => {
               name="email"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              value={formData.email}
               required
             />
           </div>
@@ -209,6 +237,7 @@ const page = () => {
               name="phone"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              value={formData.phone}
               required
             />
           </div>
@@ -226,6 +255,7 @@ const page = () => {
               name="address"
               className="w-full rounded-md mb-1"
               onChange={handleChange}
+              value={formData.address}
               required
             />
           </div>
@@ -237,11 +267,10 @@ const page = () => {
             <select
               name="reportingTo"
               className="w-full rounded-md"
-              defaultValue=""
+              value={formData.reportingTo}
               onChange={handleChange}
               required
             >
-              <option value="" disabled={true} selected></option>
               {reportingTo.length &&
                 reportingTo.map(item => (
                   <option value={item.UserID} key={item.UserID}>
@@ -258,11 +287,10 @@ const page = () => {
             <select
               name="status"
               className="w-full rounded-md"
-              defaultValue=""
+              value={formData.status}
               onChange={handleChange}
               required
             >
-              <option value="" disabled={true} selected></option>
               <option value="1">active</option>
               <option value="0">disable</option>
             </select>
@@ -272,11 +300,11 @@ const page = () => {
           type="submit"
           className="bg-primary px-6 py-2 rounded-md text-surface1"
         >
-          Register
+          Update
         </button>
       </form>
     </div>
   );
 };
 
-export default page;
+export default UserEmployeeEdit;
