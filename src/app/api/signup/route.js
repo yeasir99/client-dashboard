@@ -1,5 +1,4 @@
 import axios from 'axios';
-import cloudinary from '../../../../config/cloudinary';
 
 export const POST = async request => {
   try {
@@ -15,18 +14,12 @@ export const POST = async request => {
     const reportingTo = formData.get('reportingTo');
     const image = formData.get('image');
 
-    //upload image to cloudinary
-    const imageBuffer = await image.arrayBuffer();
-    const imageArray = Array.from(new Uint8Array(imageBuffer));
-    const imageData = Buffer.from(imageArray);
-    const imageBase64 = imageData.toString('base64');
+    const imageName = image.name.split('.');
+    const imageType = imageName[imageName.length - 1];
+    const updatedImage = new File([image], `${employeeId}.${imageType}`, {
+      type: image.type,
+    });
 
-    const result = await cloudinary.uploader.upload(
-      `data:image/png;base64,${imageBase64}`,
-      {
-        folder: 'dlink',
-      }
-    );
     let newUser = {
       EmployeeID: employeeId,
       EmpName: employeeName,
@@ -37,8 +30,11 @@ export const POST = async request => {
       Phone: phone,
       Address: address,
       ReportingToUserID: reportingTo,
-      Userpicture: result.secure_url,
+      Userpicture: updatedImage,
+      status: 0,
     };
+
+    console.log(updatedImage);
 
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndUser',

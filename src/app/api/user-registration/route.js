@@ -16,18 +16,12 @@ export const POST = async request => {
     const image = formData.get('image');
     const status = formData.get('status');
 
-    //upload image to cloudinary
-    const imageBuffer = await image.arrayBuffer();
-    const imageArray = Array.from(new Uint8Array(imageBuffer));
-    const imageData = Buffer.from(imageArray);
-    const imageBase64 = imageData.toString('base64');
+    const imageName = image.name.split('.');
+    const imageType = imageName[imageName.length - 1];
+    const updatedImage = new File([image], `${employeeId}.${imageType}`, {
+      type: image.type,
+    });
 
-    const result = await cloudinary.uploader.upload(
-      `data:image/png;base64,${imageBase64}`,
-      {
-        folder: 'dlink',
-      }
-    );
     let newUser = {
       EmployeeID: employeeId,
       EmpName: employeeName,
@@ -38,8 +32,8 @@ export const POST = async request => {
       Phone: phone,
       Address: address,
       ReportingToUserID: reportingTo,
-      Userpicture: result.secure_url,
-      status: Number(status),
+      Userpicture: updatedImage,
+      status: Boolean(Number(status)),
     };
 
     const res = await axios.post(

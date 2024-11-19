@@ -2,10 +2,12 @@
 import { useState, useEffect } from 'react';
 import { RxAvatar } from 'react-icons/rx';
 import axios from 'axios';
+import Image from 'next/image';
 
 const registrationForm = () => {
   const [desigs, setDesigs] = useState([]);
   const [reportingTo, setReportingTo] = useState([]);
+  const [imagePreview, setImagePreview] = useState('');
 
   const getDesig = async cb => {
     const res = await axios.get(
@@ -60,7 +62,18 @@ const registrationForm = () => {
               htmlFor="Image"
               className="capitalize flex font-semibold text-md py-1"
             >
-              <RxAvatar className="text-8xl" />
+              {formData.image ? (
+                <div className="h-150">
+                  <Image
+                    src={imagePreview}
+                    width={100}
+                    height={100}
+                    className="rounded-full"
+                  />
+                </div>
+              ) : (
+                <RxAvatar className="text-8xl" />
+              )}
             </label>
           </div>
 
@@ -72,6 +85,8 @@ const registrationForm = () => {
             onChange={e => {
               const file = e.target.files[0];
               setFormData({ ...formData, [e.target.name]: file });
+              const previewUrl = URL.createObjectURL(file);
+              setImagePreview(previewUrl);
             }}
             required
           />

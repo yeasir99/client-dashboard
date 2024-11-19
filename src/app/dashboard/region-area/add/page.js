@@ -53,25 +53,12 @@ const page = () => {
               <option value="none" disabled>
                 Choose a Location ...
               </option>
-              <option value="dhaka">Dhaka</option>
-              <option value="sylhet">Sylhet</option>
-              <option value="rajshahi">Rajshahi</option>
             </select>
           </div>
-          <label htmlFor="regionName" className="block text-sm font-bold mb-1">
-            Region-Name:
-          </label>
-          <input
-            type="text"
-            id="regionName"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            name="regionName"
-            onChange={handleChange}
-            value={formData.regionName}
-          />
+
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
-              Region type:
+              district:
             </label>
 
             <select
@@ -83,9 +70,6 @@ const page = () => {
               <option value="none" disabled>
                 Choose a Region Type ...
               </option>
-              <option value="nsm">NSM</option>
-              <option value="gm">NSM</option>
-              <option value="csm">NSM</option>
             </select>
           </div>
           <div className="mt-5">

@@ -58,16 +58,16 @@ const RegionAreaTable = () => {
                     key={item.RegionID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.RegionID}
+                      {item.AreaID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.RegionName}
+                      {item.DistrictName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.RegionTypeID}
+                      {item.ThanaName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.ParentRegionID}
+                      {item.DivisionName}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
