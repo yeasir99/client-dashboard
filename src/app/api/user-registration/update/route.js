@@ -22,8 +22,6 @@ export const POST = async request => {
         type: image.type,
       });
     }
-    console.log(image);
-    console.log(updatedImage);
 
     let newUser = {
       EmployeeID: employeeId,
