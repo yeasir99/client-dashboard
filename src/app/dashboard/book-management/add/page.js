@@ -14,7 +14,6 @@ const page = () => {
   const [formData, setFormData] = useState({
     category: '',
     bookTitle: '',
-    bookPrice: '',
   });
 
   const handleChange = e => {
@@ -31,7 +30,6 @@ const page = () => {
       {
         Category: formData.category,
         ProductName: formData.bookTitle,
-        Price: formData.bookPrice,
       }
     );
 
@@ -88,18 +86,6 @@ const page = () => {
             name="bookTitle"
             onChange={handleChange}
             value={formData.bookTitle}
-          />
-
-          <label htmlFor="Price" className="block text-sm font-bold mb-1">
-            Price:
-          </label>
-          <input
-            type="number"
-            id="Price"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            name="bookPrice"
-            onChange={handleChange}
-            value={formData.bookPrice}
           />
 
           <div className="mt-5">
