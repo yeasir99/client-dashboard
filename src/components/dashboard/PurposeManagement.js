@@ -1,6 +1,7 @@
 'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import useGetData from '@/utils/useGetData';
+import Link from 'next/link';
 
 const PurposeManagement = () => {
   const url =
@@ -53,7 +54,11 @@ const PurposeManagement = () => {
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                       <span className="bg-cyan-500 p-1 inline-block rounded-md">
-                        <FaEye className="text-white text-xl" />
+                        <Link
+                          href={`/dashboard/purpose-management/view/${item.ID}`}
+                        >
+                          <FaEye className="text-white text-xl" />
+                        </Link>
                       </span>{' '}
                       |
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
