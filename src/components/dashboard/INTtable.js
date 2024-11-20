@@ -54,7 +54,11 @@ const INTtable = () => {
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                       <span className="bg-cyan-500 p-1 inline-block rounded-md">
-                        <FaEye className="text-white text-xl" />
+                        <Link
+                          href={`/dashboard/institution-type/view/${item.ID}`}
+                        >
+                          <FaEye className="text-white text-xl" />
+                        </Link>
                       </span>{' '}
                       |
                       <span className="bg-amber-600 p-1 inline-block rounded-md">

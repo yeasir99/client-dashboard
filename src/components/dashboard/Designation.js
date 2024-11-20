@@ -51,9 +51,11 @@ const Designation = () => {
                       {item.CategoryName}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                      <span className="bg-cyan-500 p-1 inline-block rounded-md">
-                        <FaEye className="text-white text-xl" />
-                      </span>{' '}
+                      <Link href={`/dashboard/designation/view/${item.ID}`}>
+                        <span className="bg-cyan-500 p-1 inline-block rounded-md">
+                          <FaEye className="text-white text-xl" />
+                        </span>
+                      </Link>{' '}
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
                         <Link href={`/dashboard/designation/edit/${item.ID}`}>
                           <FaRegEdit className="text-white text-xl" />

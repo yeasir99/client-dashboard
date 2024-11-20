@@ -44,7 +44,6 @@ export const POST = async request => {
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_sndUser&UserID=${employeeId}`,
       newUser
     );
-    console.log(res);
 
     return Response.redirect(
       `${process.env.URL_DOMAIN}/dashboard/user-employee`
