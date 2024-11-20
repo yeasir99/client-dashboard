@@ -41,11 +41,11 @@ export const POST = async request => {
       newUser.Password = password;
     }
     const res = await axios.put(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_sndUser&UserID=${employeeId}`,
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_sndUser&UserID=${employeeId}`,
       newUser
     );
-
     console.log(res);
+
     return Response.redirect(
       `${process.env.URL_DOMAIN}/dashboard/user-employee`
     );
