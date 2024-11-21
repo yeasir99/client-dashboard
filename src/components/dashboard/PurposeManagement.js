@@ -62,7 +62,11 @@ const PurposeManagement = () => {
                       </span>{' '}
                       |
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
-                        <FaRegEdit className="text-white text-xl" />
+                        <Link
+                          href={`/dashboard/purpose-management/edit/${item.ID}`}
+                        >
+                          <FaRegEdit className="text-white text-xl" />
+                        </Link>
                       </span>{' '}
                     </td>
                   </tr>
