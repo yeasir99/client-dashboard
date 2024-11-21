@@ -72,7 +72,11 @@ const SubjectManagement = () => {
                       </span>{' '}
                       |
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
-                        <FaRegEdit className="text-white text-xl" />
+                        <Link
+                          href={`/dashboard/subject-management/edit/${item.ID}`}
+                        >
+                          <FaRegEdit className="text-white text-xl" />
+                        </Link>
                       </span>{' '}
                     </td>
                   </tr>
