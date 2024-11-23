@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import useGetData from '@/utils/useGetData';
+import { useRouter } from 'next/navigation';
 
 const LocationImput = ({ name, label, handleChange, value }) => {
   return (
@@ -111,6 +112,7 @@ const DisplayThanaList = ({ handleChange, formData, id }) => {
 };
 
 const page = () => {
+  const router = useRouter();
   const [baseData, setBaseData] = useState();
   const [conditionCase, setConditionCase] = useState('');
 
@@ -121,6 +123,8 @@ const page = () => {
     thana: '',
     area: '',
   });
+
+  const { regionType } = formData;
 
   const { status, data } = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regiontype1'
@@ -135,6 +139,16 @@ const page = () => {
     }
   }, [baseData]);
 
+  useEffect(() => {
+    setFormData({
+      regionType: formData.regionType,
+      division: '',
+      district: '',
+      thana: '',
+      area: '',
+    });
+  }, [regionType]);
+
   const handleChange = e => {
     setFormData({
       ...formData,
@@ -144,7 +158,38 @@ const page = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(formData);
+    let sumbitAbleData = {};
+    if (conditionCase === 'Division') {
+      sumbitAbleData.RegionTypeID = formData.regionType;
+      sumbitAbleData.ParentRegionID = data.filter(
+        item => item.CategoryName === 'Bangladesh'
+      )[0].id;
+      sumbitAbleData.RegionName = formData.division;
+    } else if (conditionCase === 'District') {
+      sumbitAbleData.RegionTypeID = formData.regionType;
+      sumbitAbleData.ParentRegionID = formData.division;
+      sumbitAbleData.RegionName = formData.district;
+    } else if (conditionCase === 'Thana') {
+      sumbitAbleData.RegionTypeID = formData.regionType;
+      sumbitAbleData.ParentRegionID = formData.district;
+      sumbitAbleData.RegionName = formData.thana;
+    } else if (conditionCase === 'Area') {
+      sumbitAbleData.RegionTypeID = formData.regionType;
+      sumbitAbleData.ParentRegionID = formData.thana;
+      sumbitAbleData.RegionName = formData.area;
+    } else {
+      sumbitAbleData = null;
+    }
+
+    if (sumbitAbleData) {
+      const res = await axios.post(
+        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_region',
+        sumbitAbleData
+      );
+      if (res.status === 200) {
+        router.push('/dashboard/region-area');
+      }
+    }
   };
 
   return (
@@ -207,12 +252,14 @@ const page = () => {
                   handleChange={handleChange}
                   formData={formData}
                 />
-                <LocationImput
-                  name="district"
-                  label="Enter The District Name:"
-                  handleChange={handleChange}
-                  value={formData.district}
-                />
+                {formData.division && (
+                  <LocationImput
+                    name="district"
+                    label="Enter The District Name:"
+                    handleChange={handleChange}
+                    value={formData.district}
+                  />
+                )}
               </div>
             ) : conditionCase === 'Thana' ? (
               <div>
