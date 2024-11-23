@@ -1,83 +1,139 @@
 'use client';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import useGetData from '@/utils/useGetData';
+
+const LocationImput = ({ name, label, handleChange, value }) => {
+  return (
+    <div>
+      <label
+        htmlFor="PlaceImput"
+        className="block text-md font-bold mb-1 mt-1 text-semibold"
+      >
+        {label}
+      </label>
+      <input
+        type="text"
+        id="PlaceImput"
+        className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+        name={name}
+        onChange={handleChange}
+        value={value}
+        required
+      />
+    </div>
+  );
+};
+
+const DisplayDivisionList = ({ handleChange, formData }) => {
+  const { status, data } = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'
+  );
+  return (
+    <div>
+      <label className="capitalize flex font-semibold text-md py-1">
+        Select Division:
+      </label>
+      <select
+        className="w-full rounded-md"
+        name="division"
+        defaultValue=""
+        onChange={handleChange}
+        value={formData.division}
+      >
+        <option value="" disabled></option>
+        {data.length &&
+          data.map(item => (
+            <option value={item.RegionID} key={item.RegionID}>
+              {item.RegionName}
+            </option>
+          ))}
+      </select>
+    </div>
+  );
+};
+
+const DisplayDistrictList = ({ handleChange, formData, id }) => {
+  const { status, data } = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDistrict&ParentRegionID=${id}`
+  );
+  return (
+    <div>
+      <label className="capitalize flex font-semibold text-md py-1">
+        Select District:
+      </label>
+      <select
+        className="w-full rounded-md"
+        name="district"
+        defaultValue=""
+        onChange={handleChange}
+        value={formData.district}
+      >
+        <option value="" disabled></option>
+        {data.length &&
+          data.map(item => (
+            <option value={item.RegionID} key={item.RegionID}>
+              {item.RegionName}
+            </option>
+          ))}
+      </select>
+    </div>
+  );
+};
+
+const DisplayThanaList = ({ handleChange, formData, id }) => {
+  const { status, data } = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionThana&ParentRegionID=${id}`
+  );
+
+  return (
+    <div>
+      <label className="capitalize flex font-semibold text-md py-1">
+        Select Thana:
+      </label>
+      <select
+        className="w-full rounded-md"
+        name="thana"
+        defaultValue=""
+        onChange={handleChange}
+        value={formData.thana}
+      >
+        <option value="" disabled></option>
+        {data.length &&
+          data.map(item => (
+            <option value={item.RegionID} key={item.RegionID}>
+              {item.RegionName}
+            </option>
+          ))}
+      </select>
+    </div>
+  );
+};
 
 const page = () => {
+  const [baseData, setBaseData] = useState();
+  const [conditionCase, setConditionCase] = useState('');
+
   const [formData, setFormData] = useState({
+    regionType: '',
     division: '',
     district: '',
     thana: '',
     area: '',
   });
-  const { division, district, thana, area } = formData;
-  const [divisionList, setDivisionList] = useState([]);
-  const [districtList, setDistrictList] = useState([]);
-  const [thanaList, setThanaList] = useState([]);
-  const [areaList, setAreaList] = useState([]);
 
-  console.log(areaList);
-
-  const getDivision = async () => {
-    const res = await axios.get(
-      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'
-    );
-    setDivisionList(res.data);
-  };
-
-  const getDistrict = async id => {
-    const res = await axios.get(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDistrict&ParentRegionID=${id}`
-    );
-    setDistrictList(res.data);
-  };
-
-  const getThana = async id => {
-    const res = await axios.get(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionThana&ParentRegionID=${id}`
-    );
-    setThanaList(res.data);
-  };
-
-  const getArea = async id => {
-    const res = await axios.get(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionThana&ParentRegionID=${id}`
-    );
-    setAreaList(res.data);
-  };
+  const { status, data } = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regiontype1'
+  );
 
   useEffect(() => {
-    getDivision();
-  }, []);
-
-  useEffect(() => {
-    if (divisionList.length) {
-      const id = divisionList.filter(item => item.RegionName === division)[0]
-        .RegionID;
-      getDistrict(id);
+    if (baseData) {
+      const dataWillbeUseConditioning = data.filter(
+        item => item.id === Number(baseData)
+      )[0].CategoryName;
+      setConditionCase(dataWillbeUseConditioning);
     }
-  }, [division]);
-
-  useEffect(() => {
-    if (districtList.length) {
-      const founded = districtList.filter(
-        item => item.RegionName === district
-      )[0];
-      const id = founded?.RegionID;
-      if (id) {
-        getThana(id);
-      }
-    }
-  }, [district]);
-
-  useEffect(() => {
-    if (thanaList.length) {
-      const founded = thanaList.filter(item => item.RegionName === thana)[0];
-      const id = founded?.RegionID;
-      if (id) {
-        getArea(id);
-      }
-    }
-  }, [thana]);
+  }, [baseData]);
 
   const handleChange = e => {
     setFormData({
@@ -111,87 +167,109 @@ const page = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
-              Division:
+              Select The Type You Want To Add:
             </label>
             <select
               className="w-full rounded-md"
-              name="division"
-              onChange={handleChange}
-              value={formData.division}
+              name="regionType"
+              defaultValue=""
+              onChange={e => {
+                setBaseData(e.target.value);
+                handleChange(e);
+              }}
+              value={formData.regionType}
             >
               <option value="" disabled></option>
-              {divisionList.length &&
-                divisionList.map(item => (
-                  <option value={item.RegionName} key={item.RegionID}>
-                    {item.RegionName}
+              {data.length &&
+                data.map(item => (
+                  <option
+                    value={item.id}
+                    key={item.id}
+                    disabled={item.CategoryName === 'Bangladesh'}
+                  >
+                    {item.CategoryName}
                   </option>
                 ))}
             </select>
           </div>
 
           <div>
-            <label className="capitalize flex font-semibold text-md py-1">
-              District:
-            </label>
-
-            <select
-              className="w-full rounded-md"
-              name="district"
-              onChange={handleChange}
-              value={formData.district}
-              disabled={division ? false : true}
-            >
-              <option value="" disabled></option>
-              {districtList.length &&
-                districtList.map(item => (
-                  <option value={item.RegionName} key={item.RegionID}>
-                    {item.RegionName}
-                  </option>
-                ))}
-            </select>
+            {conditionCase && conditionCase === 'Division' ? (
+              <LocationImput
+                name="division"
+                label="Enter The Division Name:"
+                handleChange={handleChange}
+                value={formData.division}
+              />
+            ) : conditionCase === 'District' ? (
+              <div>
+                <DisplayDivisionList
+                  handleChange={handleChange}
+                  formData={formData}
+                />
+                <LocationImput
+                  name="district"
+                  label="Enter The District Name:"
+                  handleChange={handleChange}
+                  value={formData.district}
+                />
+              </div>
+            ) : conditionCase === 'Thana' ? (
+              <div>
+                <DisplayDivisionList
+                  handleChange={handleChange}
+                  formData={formData}
+                />
+                {formData.division && (
+                  <DisplayDistrictList
+                    handleChange={handleChange}
+                    formData={formData}
+                    id={formData.division}
+                  />
+                )}
+                {formData.district && (
+                  <LocationImput
+                    name="thana"
+                    label="Enter The Thana Name:"
+                    handleChange={handleChange}
+                    value={formData.thana}
+                  />
+                )}
+              </div>
+            ) : conditionCase === 'Area' ? (
+              <div>
+                <DisplayDivisionList
+                  handleChange={handleChange}
+                  formData={formData}
+                />
+                {formData.division && (
+                  <DisplayDistrictList
+                    handleChange={handleChange}
+                    formData={formData}
+                    id={formData.division}
+                  />
+                )}
+                {formData.district && (
+                  <DisplayThanaList
+                    handleChange={handleChange}
+                    formData={formData}
+                    id={formData.district}
+                  />
+                )}
+                {formData.thana && (
+                  <LocationImput
+                    name="area"
+                    label="Enter The Area Name:"
+                    handleChange={handleChange}
+                    value={formData.area}
+                  />
+                )}
+              </div>
+            ) : (
+              ''
+            )}
           </div>
-          <div>
-            <label className="capitalize flex font-semibold text-md py-1">
-              Thana:
-            </label>
 
-            <select
-              className="w-full rounded-md"
-              name="thana"
-              onChange={handleChange}
-              value={formData.thana}
-              disabled={district ? false : true}
-            >
-              <option value="" disabled></option>
-              {thanaList.length &&
-                thanaList.map(item => (
-                  <option value={item.RegionName} key={item.RegionID}>
-                    {item.RegionName}
-                  </option>
-                ))}
-            </select>
-          </div>
-          <div>
-            <label className="capitalize flex font-semibold text-md py-1">
-              Area:
-            </label>
-
-            <select
-              className="w-full rounded-md"
-              name="area"
-              onChange={handleChange}
-              value={formData.area}
-              disabled={thana ? false : true}
-            >
-              <option value="" disabled></option>
-              {areaList.length &&
-                areaList.map(item => (
-                  <option value={item.RegionName} key={item.RegionID}>
-                    {item.RegionName}
-                  </option>
-                ))}
-            </select>
-          </div>
           <div className="mt-5" type="submit">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
               save region-type

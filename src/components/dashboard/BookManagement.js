@@ -40,12 +40,6 @@ const BookManagement = () => {
                   >
                     title
                   </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    rate
-                  </th>
 
                   <th scope="col" className="px-6 py-4">
                     Action
@@ -67,10 +61,6 @@ const BookManagement = () => {
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                       {item.ProductName}
                     </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.Price}
-                    </td>
-
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                       <span className="bg-cyan-500 p-1 inline-block rounded-md">
                         <Link
