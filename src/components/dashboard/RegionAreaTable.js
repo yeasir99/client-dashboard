@@ -1,6 +1,7 @@
 'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import useGetData from '@/utils/useGetData';
+import Link from 'next/link';
 
 const RegionAreaTable = () => {
   const url =
@@ -31,19 +32,25 @@ const RegionAreaTable = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Region Name
+                    Area Name
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Region Type
+                    Thana Name
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    parent region
+                    District Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Division Name
                   </th>
 
                   <th scope="col" className="px-6 py-4">
@@ -61,23 +68,38 @@ const RegionAreaTable = () => {
                       {item.AreaID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.DistrictName}
+                      {item.AreaName ? item.AreaName : null}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.ThanaName}
+                      {item.ThanaName ? item.ThanaName : null}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.DistrictName ? item.DistrictName : null}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                       {item.DivisionName}
                     </td>
-
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
-                      <span className="bg-cyan-500 p-1 inline-block rounded-md">
-                        <FaEye className="text-white text-xl" />
-                      </span>{' '}
-                      |
-                      <span className="bg-amber-600 p-1 inline-block rounded-md">
-                        <FaRegEdit className="text-white text-xl" />
-                      </span>{' '}
+                      {item.AreaName ? (
+                        <div>
+                          <span className="bg-cyan-500 p-1 inline-block rounded-md">
+                            <Link
+                              href={`/dashboard/region-area/view/${item.AreaID}`}
+                            >
+                              <FaEye className="text-white text-xl" />
+                            </Link>
+                          </span>{' '}
+                          <span className="bg-amber-600 p-1 inline-block rounded-md">
+                            <Link
+                              href={`/dashboard/region-area/edit/${item.AreaID}`}
+                            >
+                              <FaRegEdit className="text-white text-xl" />
+                            </Link>
+                          </span>{' '}
+                        </div>
+                      ) : (
+                        <h1>No Action</h1>
+                      )}
                     </td>
                   </tr>
                 ))}

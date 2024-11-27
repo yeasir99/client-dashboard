@@ -41,6 +41,8 @@ export const POST = async request => {
       newUser
     );
 
+    console.log(res);
+
     return Response.redirect(
       `${process.env.URL_DOMAIN}/dashboard/user-employee`
     );

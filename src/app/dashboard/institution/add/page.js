@@ -1,8 +1,9 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useGetData from '@/utils/useGetData';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import axios from 'axios';
 
 const page = () => {
   const classInfo = useGetData(
@@ -18,6 +19,10 @@ const page = () => {
 
   const regions = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regions'
+  );
+
+  const regionsData = regions.data.filter(
+    item => Boolean(item.AreaID) === true
   );
 
   const [formData, setFormData] = useState({
@@ -61,9 +66,35 @@ const page = () => {
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log(formData);
+    const prepareData = {
+      institutionTypeID: formData.institutionType,
+      institutionName: formData.institutionName,
+      TotalStudents: formData.totalStudent,
+      ContactPersonName: formData.contactPersonName,
+      Designation: formData.designation,
+      ContactPhone: formData.phone,
+      Address: formData.address,
+      RegionID: formData.regionArea,
+      InstitutionScanImagePath: formData.institutionImage,
+    };
+    if (formData.teachers.length) {
+      prepareData.details = formData.teachers.map(item => ({
+        TeacherName: item.teacherName,
+        Designation: item.designation,
+        ContactPhone: item.phone,
+        sndClassID: item.classNameInfo,
+        sndSubjectID: item.subjectName,
+      }));
+    }
+    console.log(prepareData);
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_institution',
+      prepareData
+    );
+
+    console.log(res);
   };
 
   return (
@@ -99,7 +130,7 @@ const page = () => {
               <option value="" disabled={true} selected></option>
               {institution.data.length &&
                 institution.data.map(item => (
-                  <option value={item.CategoryName} key={item.ID}>
+                  <option value={item.ID} key={item.ID}>
                     {item.CategoryName}
                   </option>
                 ))}
@@ -193,10 +224,10 @@ const page = () => {
               value={formData.regionArea}
             >
               <option value="" disabled={true} selected></option>
-              {regions.data.length &&
-                regions.data.map(item => (
-                  <option value={item.RegionName} key={item.ID}>
-                    {item.RegionName}
+              {regionsData.length &&
+                regionsData.map(item => (
+                  <option value={item.AreaID} key={item.AreaID}>
+                    {item.AreaName}
                   </option>
                 ))}
             </select>
@@ -350,10 +381,7 @@ const page = () => {
                                 ></option>
                                 {classInfo.data.length &&
                                   classInfo.data.map(item => (
-                                    <option
-                                      value={item.CategoryName}
-                                      key={item.ID}
-                                    >
+                                    <option value={item.ID} key={item.ID}>
                                       {item.CategoryName}
                                     </option>
                                   ))}
@@ -376,10 +404,7 @@ const page = () => {
                                 ></option>
                                 {subjectInfo.data.length &&
                                   subjectInfo.data.map(item => (
-                                    <option
-                                      value={item.SubjectName}
-                                      key={item.ID}
-                                    >
+                                    <option value={item.ID} key={item.ID}>
                                       {item.SubjectName}
                                     </option>
                                   ))}
