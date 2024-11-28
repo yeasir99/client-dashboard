@@ -20,26 +20,31 @@ export const POST = async request => {
       type: image.type,
     });
 
-    let newUser = {
-      EmployeeID: employeeId,
-      EmpName: employeeName,
-      DesignationID: dasignationRole,
-      Username: userName,
-      Password: password,
-      Email: email,
-      Phone: phone,
-      Address: address,
-      ReportingToUserID: reportingTo,
-      Userpicture: updatedImage,
-      status: 0,
-    };
+    const datawillBeSend = new FormData();
 
-    console.log(updatedImage);
+    datawillBeSend.append('EmployeeID', employeeId);
+    datawillBeSend.append('EmpName', employeeName);
+    datawillBeSend.append('DesignationID', dasignationRole);
+    datawillBeSend.append('Username', userName);
+    datawillBeSend.append('Password', password);
+    datawillBeSend.append('Email', email);
+    datawillBeSend.append('Phone', phone);
+    datawillBeSend.append('Address', address);
+    datawillBeSend.append('ReportingToUserID', reportingTo);
+    datawillBeSend.append('Status', 0);
+    datawillBeSend.append('Userpicture', updatedImage);
 
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndUser',
-      newUser
+      datawillBeSend,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
     );
+
+    console.log(res);
 
     return Response.redirect(`${process.env.URL_DOMAIN}`);
   } catch (error) {

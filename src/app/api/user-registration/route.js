@@ -1,5 +1,4 @@
 import axios from 'axios';
-import cloudinary from '../../../../config/cloudinary';
 
 export const POST = async request => {
   try {
@@ -22,26 +21,29 @@ export const POST = async request => {
       type: image.type,
     });
 
-    let newUser = {
-      EmployeeID: employeeId,
-      EmpName: employeeName,
-      DesignationID: dasignationRole,
-      Username: userName,
-      Password: password,
-      Email: email,
-      Phone: phone,
-      Address: address,
-      ReportingToUserID: reportingTo,
-      Userpicture: updatedImage,
-      status: Boolean(Number(status)),
-    };
+    const datawillBeSend = new FormData();
+
+    datawillBeSend.append('EmployeeID', employeeId);
+    datawillBeSend.append('EmpName', employeeName);
+    datawillBeSend.append('DesignationID', dasignationRole);
+    datawillBeSend.append('Username', userName);
+    datawillBeSend.append('Password', password);
+    datawillBeSend.append('Email', email);
+    datawillBeSend.append('Phone', phone);
+    datawillBeSend.append('Address', address);
+    datawillBeSend.append('ReportingToUserID', reportingTo);
+    datawillBeSend.append('Status', Boolean(Number(status)));
+    datawillBeSend.append('Userpicture', updatedImage);
 
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndUser',
-      newUser
+      datawillBeSend,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
     );
-
-    console.log(res);
 
     return Response.redirect(
       `${process.env.URL_DOMAIN}/dashboard/user-employee`

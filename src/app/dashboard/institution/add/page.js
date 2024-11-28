@@ -114,7 +114,11 @@ const page = () => {
         <h2 className="text-lg font-semibold mb-2 capitalize">
           add new Institution
         </h2>
-        <form onSubmit={handleSubmit}>
+        <form
+          action="/api/handle-image"
+          method="POST"
+          encType="multipart/form-data"
+        >
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
               Institution Type:
