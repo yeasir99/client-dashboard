@@ -25,7 +25,7 @@ const page = () => {
       </div>
       <div className="grid grid-cols-2 gap-5">
         {/* left start */}
-        <div>
+        <div className="bg-gray-50 p-3 rounded-md">
           <MappingUser />
         </div>
         {/* right start */}

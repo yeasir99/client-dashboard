@@ -18,7 +18,11 @@ const MappingUser = () => {
   }, [data]);
 
   const handleChange = e => {
-    setSelectedUser(e.target.value);
+    if (selectedUser === e.target.value) {
+      setSelectedUser('');
+    } else {
+      setSelectedUser(e.target.value);
+    }
   };
 
   if (status === 'pending') {
