@@ -8,8 +8,6 @@ const MappingUser = () => {
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_sndUsers'
   );
 
-  console.log(activeUsers);
-
   useEffect(() => {
     if (data.length > 0) {
       let dataWillBeSet = data.filter(item => Boolean(item.Status));
@@ -39,7 +37,7 @@ const MappingUser = () => {
                 value={item.EmployeeID}
                 checked={selectedUser === item.EmployeeID}
                 onChange={handleChange}
-                className="mx-2"
+                className="mx-2 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
               />
               {item.EmpName}
             </label>
