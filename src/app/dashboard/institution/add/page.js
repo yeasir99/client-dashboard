@@ -68,19 +68,10 @@ const page = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const prepareData = {
-      institutionTypeID: formData.institutionType,
-      institutionName: formData.institutionName,
-      TotalStudents: formData.totalStudent,
-      ContactPersonName: formData.contactPersonName,
-      Designation: formData.designation,
-      ContactPhone: formData.phone,
-      Address: formData.address,
-      RegionID: formData.regionArea,
-      InstitutionScanImagePath: formData.institutionImage,
-    };
+
+    let teachersData = [];
     if (formData.teachers.length) {
-      prepareData.details = formData.teachers.map(item => ({
+      teachersData = formData.teachers.map(item => ({
         TeacherName: item.teacherName,
         Designation: item.designation,
         ContactPhone: item.phone,
@@ -88,10 +79,32 @@ const page = () => {
         sndSubjectID: item.subjectName,
       }));
     }
-    console.log(prepareData);
+    let dataWillBeSubmit = new FormData();
+    dataWillBeSubmit.append('institutionTypeID', formData.institutionType);
+    dataWillBeSubmit.append('institutionName', formData.institutionName);
+    dataWillBeSubmit.append('TotalStudents', formData.totalStudent);
+    dataWillBeSubmit.append('Designation', formData.designation);
+    dataWillBeSubmit.append('ContactPhone', formData.phone);
+    dataWillBeSubmit.append('Address', formData.address);
+    dataWillBeSubmit.append('RegionID', formData.regionArea);
+    dataWillBeSubmit.append(
+      'InstitutionScanImagePath',
+      formData.institutionImage
+    );
+    dataWillBeSubmit.append('details', teachersData);
+
+    console.log(dataWillBeSubmit);
+
+    console.log(Array.from(dataWillBeSubmit));
+
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_institution',
-      prepareData
+      dataWillBeSubmit,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
     );
 
     console.log(res);
@@ -114,11 +127,7 @@ const page = () => {
         <h2 className="text-lg font-semibold mb-2 capitalize">
           add new Institution
         </h2>
-        <form
-          action="/api/handle-image"
-          method="POST"
-          encType="multipart/form-data"
-        >
+        <form onSubmit={handleSubmit}>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
               Institution Type:

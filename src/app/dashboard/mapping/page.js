@@ -1,9 +1,15 @@
 'use client';
 import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import MappingUser from '@/components/dashboard/MappingUser';
+import MappingRegion from '@/components/dashboard/MappingRegion';
 
 const page = () => {
-  const [selectNasa, setSelectNasa] = useState(false);
+  const [mappingUser, setMappingUser] = useState({
+    user: '',
+    region: '',
+  });
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -19,17 +25,13 @@ const page = () => {
       </div>
       <div className="grid grid-cols-2 gap-5">
         {/* left start */}
-        <div className="bg-gray-400">
-          <div className="flex items-center gap-3">
-            <div onClick={() => setSelectNasa(!selectNasa)}>
-              {selectNasa ? <FaPlus /> : <FaMinus />}
-            </div>
-            <input type="checkbox" />
-            nasa
-          </div>
+        <div>
+          <MappingUser />
         </div>
         {/* right start */}
-        <div></div>
+        <div>
+          <MappingRegion />
+        </div>
       </div>
     </div>
   );
