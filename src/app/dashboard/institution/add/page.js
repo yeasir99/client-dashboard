@@ -69,33 +69,59 @@ const page = () => {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    let teachersData = [];
-    if (formData.teachers.length) {
-      teachersData = formData.teachers.map(item => ({
-        TeacherName: item.teacherName,
-        Designation: item.designation,
-        ContactPhone: item.phone,
-        sndClassID: item.classNameInfo,
-        sndSubjectID: item.subjectName,
-      }));
-    }
     let dataWillBeSubmit = new FormData();
     dataWillBeSubmit.append('institutionTypeID', formData.institutionType);
     dataWillBeSubmit.append('institutionName', formData.institutionName);
+    dataWillBeSubmit.append('ContactPersonName', formData.contactPersonName);
     dataWillBeSubmit.append('TotalStudents', formData.totalStudent);
     dataWillBeSubmit.append('Designation', formData.designation);
     dataWillBeSubmit.append('ContactPhone', formData.phone);
     dataWillBeSubmit.append('Address', formData.address);
     dataWillBeSubmit.append('RegionID', formData.regionArea);
-    dataWillBeSubmit.append(
-      'InstitutionScanImagePath',
-      formData.institutionImage
-    );
-    dataWillBeSubmit.append('details', teachersData);
 
-    console.log(dataWillBeSubmit);
+    let updatedImage;
 
-    console.log(Array.from(dataWillBeSubmit));
+    let image = formData.institutionImage;
+
+    if (formData.institutionImage) {
+      const imageName = image.name.split('.');
+      const imageType = imageName[imageName.length - 1];
+      console.log(`${String(Date.now())}-${imageName[0]}.${imageType}`);
+
+      updatedImage = new File(
+        [image],
+        `${String(Date.now())}-${imageName}.${imageType[0]}`,
+        {
+          type: image.type,
+        }
+      );
+    }
+
+    dataWillBeSubmit.append('InstitutionScanImagePath', updatedImage);
+    if (formData.teachers.length) {
+      formData.teachers.forEach((teacher, index) => {
+        dataWillBeSubmit.append(
+          `details[${index}].TeacherName`,
+          teacher.teacherName
+        );
+        dataWillBeSubmit.append(
+          `details[${index}].Designation`,
+          teacher.designation
+        );
+        dataWillBeSubmit.append(
+          `details[${index}].ContactPhone`,
+          teacher.phone
+        );
+        dataWillBeSubmit.append(
+          `details[${index}].sndClassID`,
+          teacher.classNameInfo
+        );
+        dataWillBeSubmit.append(
+          `details[${index}].sndSubjectID`,
+          teacher.subjectName
+        );
+      });
+    }
 
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_institution',
@@ -261,6 +287,7 @@ const page = () => {
                 name="institutionImage"
                 onChange={e => {
                   const file = e.target.files[0];
+                  console.log(file);
                   setFormData({
                     ...formData,
                     [e.target.name]: file,

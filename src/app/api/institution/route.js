@@ -4,7 +4,22 @@ export const POST = async request => {
   try {
     const formData = await request.formData();
 
+    const image = formData.get('InstitutionScanImagePath');
+    console.log(image);
+
     console.log(formData);
+
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_institution',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    console.log(res);
 
     // {
     //   "institutionTypeID": 1,
