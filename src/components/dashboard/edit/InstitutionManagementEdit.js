@@ -37,17 +37,22 @@ const InstitutionManagementEdit = ({ id }) => {
 
   console.log(data);
 
-  // const getImageBlob = async () => {
-  //   console.log(data.InstitutionScanImageURL);
-  //   const response = await axios.get(data.InstitutionScanImageURL);
-  //   response
-  //     .then(fileData => {
-  //       console.log(fileData);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
+  const getImageBlob = async () => {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'https://kblsf.site/DLogicKBL/uploads/institution_images/Institution_674b7b2157e754.71926424.jpg',
+      headers: {},
+    };
+    const response = await axios.request(config);
+    response
+      .then(fileData => {
+        console.log(fileData);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     if (data.InstitutionID) {
@@ -83,6 +88,7 @@ const InstitutionManagementEdit = ({ id }) => {
               subjectName: '',
             },
       });
+      getImageBlob();
     }
   }, [data]);
 
