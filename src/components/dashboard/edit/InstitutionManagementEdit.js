@@ -1,30 +1,13 @@
 'use client';
-import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import useGetData from '@/utils/useGetData';
+import { useState, useEffect, useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
-const page = () => {
-  const classInfo = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_classinfos'
-  );
-  const subjectInfo = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_subjectinfos'
-  );
-
-  const institution = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutiontypes'
-  );
-
-  const regions = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regions'
-  );
-
-  const regionsData = regions.data.filter(
-    item => Boolean(item.AreaID) === true
-  );
-
+const InstitutionManagementEdit = ({ id }) => {
+  // const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
     institutionType: '',
     institutionName: '',
@@ -48,6 +31,80 @@ const page = () => {
     ],
   });
 
+  const { status, data } = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institution&institutionID=${id}`
+  );
+
+  console.log(data);
+
+  // const getImageBlob = async () => {
+  //   console.log(data.InstitutionScanImageURL);
+  //   const response = await axios.get(data.InstitutionScanImageURL);
+  //   response
+  //     .then(fileData => {
+  //       console.log(fileData);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
+
+  useEffect(() => {
+    if (data.InstitutionID) {
+      setFormData({
+        institutionType: data.InstitutionTypeID,
+        institutionName: data.InstitutionName,
+        totalStudent: data.TotalStudents,
+        contactPersonName: data.ContactPersonName,
+        designation: data.Designation,
+        phone: data.ContactPhone,
+        address: data.Address,
+        regionArea: data.RegionID,
+        institutionImage: '',
+        status: data.status,
+        teachers: data.details.length
+          ? data.details.map(item => {
+              console.log(item);
+              return {
+                id: uuidv4(),
+                teacherName: item.TeacherName,
+                designation: item.Designation,
+                phone: item.ContactPhone,
+                classNameInfo: item.sndClassID,
+                subjectName: item.sndSubjectID,
+              };
+            })
+          : {
+              id: uuidv4(),
+              teacherName: '',
+              designation: '',
+              phone: '',
+              classNameInfo: '',
+              subjectName: '',
+            },
+      });
+    }
+  }, [data]);
+
+  const classInfo = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_classinfos'
+  );
+  const subjectInfo = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_subjectinfos'
+  );
+
+  const institution = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutiontypes'
+  );
+
+  const regions = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regions'
+  );
+
+  const regionsData = regions.data.filter(
+    item => Boolean(item.AreaID) === true
+  );
+
   const handleChange = e => {
     setFormData({
       ...formData,
@@ -66,19 +123,24 @@ const page = () => {
     });
   };
 
+  const router = useRouter();
+
   const handleSubmit = async e => {
     e.preventDefault();
 
-    // Create FormData object
     let dataWillBeSubmit = new FormData();
-    dataWillBeSubmit.append('institutionName', formData.institutionName);
     dataWillBeSubmit.append('institutionTypeID', formData.institutionType);
-    dataWillBeSubmit.append('TotalStudents', formData.totalStudent);
+    dataWillBeSubmit.append('institutionName', formData.institutionName);
     dataWillBeSubmit.append('ContactPersonName', formData.contactPersonName);
+    dataWillBeSubmit.append('TotalStudents', formData.totalStudent);
     dataWillBeSubmit.append('Designation', formData.designation);
     dataWillBeSubmit.append('ContactPhone', formData.phone);
     dataWillBeSubmit.append('Address', formData.address);
     dataWillBeSubmit.append('RegionID', formData.regionArea);
+
+    let updatedImage;
+
+    let image = formData.institutionImage;
 
     // Handle institution image
     if (formData.institutionImage) {
@@ -89,42 +151,46 @@ const page = () => {
       );
     }
 
-    // Append teacher details dynamically
-    formData.teachers.forEach((teacher, index) => {
-      dataWillBeSubmit.append(
-        `details[${index}][TeacherName]`,
-        teacher.teacherName
-      );
-      dataWillBeSubmit.append(
-        `details[${index}][Designation]`,
-        teacher.designation
-      );
-      dataWillBeSubmit.append(`details[${index}][ContactPhone]`, teacher.phone);
-      dataWillBeSubmit.append(
-        `details[${index}][sndClassID]`,
-        teacher.classNameInfo
-      );
-      dataWillBeSubmit.append(
-        `details[${index}][sndSubjectID]`,
-        teacher.subjectName
-      );
-    });
-
-    try {
-      // Use axios for the POST request
-      const res = await axios.post(
-        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_institution',
-        dataWillBeSubmit,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.error('Error submitting the form:', error);
+    dataWillBeSubmit.append('InstitutionScanImagePath', updatedImage);
+    if (formData.teachers.length) {
+      formData.teachers.forEach((teacher, index) => {
+        dataWillBeSubmit.append(
+          `details[${index}].TeacherName`,
+          teacher.teacherName
+        );
+        dataWillBeSubmit.append(
+          `details[${index}].Designation`,
+          teacher.designation
+        );
+        dataWillBeSubmit.append(
+          `details[${index}].ContactPhone`,
+          teacher.phone
+        );
+        dataWillBeSubmit.append(
+          `details[${index}].sndClassID`,
+          teacher.classNameInfo
+        );
+        dataWillBeSubmit.append(
+          `details[${index}].sndSubjectID`,
+          teacher.subjectName
+        );
+      });
     }
+
+    console.log(Array.from(dataWillBeSubmit));
+
+    const res = await axios.put(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_institution&institutionID=${id}`,
+      dataWillBeSubmit,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    console.log(res);
+    router.push('/dashboard/institution');
   };
 
   return (
@@ -142,7 +208,7 @@ const page = () => {
       </div>
       <div className="bg-gray-200 rounded-md px-4 py-4">
         <h2 className="text-lg font-semibold mb-2 capitalize">
-          add new Institution
+          Update Institution
         </h2>
         <form onSubmit={handleSubmit}>
           <div>
@@ -274,11 +340,14 @@ const page = () => {
               <input
                 id="InstitutionImage"
                 type="file"
+                className="file-input file-input-bordered w-full max-w-xs"
                 name="institutionImage"
-                className="w-full rounded-md mb-1"
                 onChange={e => {
                   const file = e.target.files[0];
-                  setFormData({ ...formData, institutionImage: file });
+                  setFormData({
+                    ...formData,
+                    [e.target.name]: file,
+                  });
                 }}
               />
             </div>
@@ -363,7 +432,7 @@ const page = () => {
                                 onChange={event =>
                                   updateTeacher(event, item.id)
                                 }
-                                value={formData.teachers.teacherName}
+                                value={item.teacherName}
                               />
                             </td>
 
@@ -375,7 +444,7 @@ const page = () => {
                                 onChange={event =>
                                   updateTeacher(event, item.id)
                                 }
-                                value={formData.teachers.designation}
+                                value={item.designation}
                               />
                             </td>
 
@@ -387,7 +456,7 @@ const page = () => {
                                 onChange={event =>
                                   updateTeacher(event, item.id)
                                 }
-                                value={formData.teachers.phone}
+                                value={item.phone}
                               />
                             </td>
 
@@ -399,7 +468,7 @@ const page = () => {
                                 onChange={event =>
                                   updateTeacher(event, item.id)
                                 }
-                                value={formData.teachers.classNameInfo}
+                                value={item.classNameInfo}
                               >
                                 <option
                                   value=""
@@ -422,7 +491,7 @@ const page = () => {
                                 onChange={event =>
                                   updateTeacher(event, item.id)
                                 }
-                                value={formData.teachers.subjectName}
+                                value={item.subjectName}
                               >
                                 <option
                                   value=""
@@ -496,7 +565,7 @@ const page = () => {
               className="capitalize bg-primary px-5 py-1 text-white rounded-md"
               type="submit"
             >
-              Save Institution
+              Update Institution
             </button>
           </div>
         </form>
@@ -505,4 +574,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default InstitutionManagementEdit;

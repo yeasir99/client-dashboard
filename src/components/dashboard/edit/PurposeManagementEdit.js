@@ -14,8 +14,6 @@ const PurposeManagementEdit = ({ id }) => {
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_visitpurpose&ID=${id}`
   );
 
-  console.log(data);
-
   useEffect(() => {
     setFormData({
       purpose: data.CategoryName,
