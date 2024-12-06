@@ -11,6 +11,8 @@ const page = () => {
 
   const { status, data } = useGetData(url);
 
+  console.log(data);
+
   const [formData, setFormData] = useState({
     category: '',
     bookTitle: '',
@@ -25,13 +27,16 @@ const page = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    console.log(formData);
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_product',
       {
-        Category: formData.category,
+        Categoryid: formData.category,
         ProductName: formData.bookTitle,
       }
     );
+
+    console.log(res);
 
     if (res.status === 200) {
       router.push('/dashboard/book-management');
@@ -70,7 +75,7 @@ const page = () => {
               <option value="" disabled={true} selected></option>
               {data.length &&
                 data.map(item => (
-                  <option value={item.CategoryName} key={item.ID}>
+                  <option value={item.ID} key={item.ID}>
                     {item.CategoryName}
                   </option>
                 ))}
