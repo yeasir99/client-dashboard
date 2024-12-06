@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import MappingUser from '@/components/dashboard/MappingUser';
-import MappingRegion from '@/components/dashboard/MappingRegion';
+import MappingUser from '@/components/dashboard/mappingInternals/MappingUser';
+import MappingRegion from '@/components/dashboard/mappingInternals/MappingRegion';
 
 const page = () => {
   const [mappingUser, setMappingUser] = useState({
@@ -26,10 +26,12 @@ const page = () => {
       <div className="grid grid-cols-2 gap-5">
         {/* left start */}
         <div className="bg-gray-50 p-3 rounded-md">
+          <h1 className="text-xl font-semibold">User Selection</h1>
           <MappingUser />
         </div>
         {/* right start */}
-        <div>
+        <div className="p-3 rounded-md">
+          <h1 className="text-xl font-semibold">Region Selection</h1>
           <MappingRegion />
         </div>
       </div>

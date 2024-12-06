@@ -1,41 +1,29 @@
 'use client';
 import { useState } from 'react';
+import axios from 'axios';
 const page = () => {
   const [formData, setFormData] = useState({
-    partyName: '',
-    contactPerson: '',
-    contactPhone: '',
-    address: '',
-    regionArea: '',
-    thana: '',
-    district: '',
-    coveredAreaOne: '',
-    coveredAreaTwo: '',
-    partyEmail: '',
-    partyWebsite: '',
-    creditLimit: '',
-    depositAmount: '',
-    openingAmount: '',
-    ownerName: '',
+    PartyName: '',
+    ContactPersonName: '',
+    ContactNumber: '',
+    Address: '',
+    RegionID: '40',
+    Email: '',
+    Website: '',
+    CreditLimit: '',
+    DepositAmount: '',
+    OpeningBalance: '',
+    OwnerName: '',
     ownerContact: '',
-    ownerAddress: '',
-    ownerPermanentAddress: '',
-    ownerDOB: '',
-    businessStartYear: '',
-    thanaUnderParty: '',
-    isMemberOfBPS: '',
-    waySendLetter: '',
-    picture: '',
-    nid: '',
-    tradeLicense: '',
-    membershipCard: '',
-    tin: '',
-    depositCheck: '',
-    nonHuditialAP: '',
-    aggrementPaper: '',
+    OwnerCurrentAddress: '',
+    OwnerPermanentAddress: '',
+    OwnerDateOfBirth: '',
+    BusinessStartYear: '',
+    NoOfThana: '',
+    NoOfDistrict: '',
+    IsSamityMember: '',
+    WayOfSendingLetters: '',
   });
-
-  console.log(formData);
 
   const handleChange = e => {
     setFormData({
@@ -44,12 +32,14 @@ const page = () => {
     });
   };
 
-  const handleFileChange = e => {
-    const file = e.target.files[0];
-    setFormData({
-      ...formData,
-      [e.target.name]: file,
-    });
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_party',
+      formData
+    );
+    console.log(res);
+    console.log(formData);
   };
 
   return (
@@ -65,23 +55,23 @@ const page = () => {
           />
         </form>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-6">
           {/* section one start */}
           <div className="bg-gray-200 rounded-md px-4 py-4 w-full">
             <div>
               <label
                 className="block text-sm font-bold mb-1"
-                htmlFor="PartyName"
+                htmlFor="partyName"
               >
                 Party Name:
               </label>
               <input
-                id="PartyName"
+                id="partyName"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="partyName"
-                value={formData.partyName}
+                name="PartyName"
+                value={formData.PartyName}
                 onChange={handleChange}
               />
             </div>
@@ -96,37 +86,37 @@ const page = () => {
                 id="ContactPerson"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="contactPerson"
-                value={formData.contactPerson}
+                name="ContactPersonName"
+                value={formData.ContactPersonName}
                 onChange={handleChange}
               />
             </div>
             <div>
               <label
                 className="block text-sm font-bold mb-1"
-                htmlFor="ContactPhone"
+                htmlFor="contactPhone"
               >
                 Contact Phone:
               </label>
               <input
-                id="ContactPhone"
+                id="contactPhone"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="contactPhone"
-                value={formData.contactPhone}
+                name="ContactNumber"
+                value={formData.ContactNumber}
                 onChange={handleChange}
               />
             </div>
             <div>
-              <label className="block text-sm font-bold mb-1" htmlFor="Address">
+              <label className="block text-sm font-bold mb-1" htmlFor="address">
                 Address:
               </label>
               <input
-                id="Address"
+                id="address"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="address"
-                value={formData.address}
+                name="Address"
+                value={formData.Address}
                 onChange={handleChange}
               />
             </div>
@@ -195,37 +185,7 @@ const page = () => {
                 </select>
               </div>
             </div>
-            <div>
-              <label className="block text-sm font-bold mb-1">
-                Total Covered Area:
-              </label>
-              <div className="flex gap-5">
-                <select
-                  name="coveredAreaOne"
-                  className="w-full rounded-md"
-                  value={formData.coveredAreaOne}
-                  onChange={handleChange}
-                >
-                  <option value="" disabled={true} selected>
-                    Area-1
-                  </option>
-                  <option value="">Area-1</option>
-                  <option value="">Area-1</option>
-                  <option value="">Area-1</option>
-                </select>
-                <select
-                  name="coveredAreaTwo"
-                  className="w-full rounded-md"
-                  value={formData.coveredAreaTwo}
-                  onChange={handleChange}
-                >
-                  <option value="" disabled={true} selected></option>
-                  <option value="">Area-1</option>
-                  <option value="">Area-1</option>
-                  <option value="">Area-1</option>
-                </select>
-              </div>
-            </div>
+
             <div>
               <label
                 className="block text-sm font-bold mb-1"
@@ -237,8 +197,8 @@ const page = () => {
                 id="PartyEmail"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="partyEmail"
-                value={formData.partyEmail}
+                name="Email"
+                value={formData.Email}
                 onChange={handleChange}
               />
             </div>
@@ -253,40 +213,40 @@ const page = () => {
                 id="PartyWebsite"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="partyWebsite"
-                value={formData.partyWebsite}
+                name="Website"
+                value={formData.Website}
                 onChange={handleChange}
               />
             </div>
             <div>
               <label
                 className="block text-sm font-bold mb-1"
-                htmlFor="CreditLimit"
+                htmlFor="creditLimit"
               >
                 Credit Limit:
               </label>
               <input
-                id="CreditLimit"
+                id="creditLimit"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="creditLimit"
-                value={formData.creditLimit}
+                name="CreditLimit"
+                value={formData.CreditLimit}
                 onChange={handleChange}
               />
             </div>
             <div>
               <label
                 className="block text-sm font-bold mb-1"
-                htmlFor="DepositAmount"
+                htmlFor="depositAmount"
               >
                 Deposit Amount:
               </label>
               <input
-                id="DepositAmount"
+                id="depositAmount"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="depositAmount"
-                value={formData.depositAmount}
+                name="DepositAmount"
+                value={formData.DepositAmount}
                 onChange={handleChange}
               />
             </div>
@@ -301,24 +261,24 @@ const page = () => {
                 id="OpeningAmount"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="openingAmount"
-                value={formData.openingAmount}
+                name="OpeningBalance"
+                value={formData.OpeningBalance}
                 onChange={handleChange}
               />
             </div>
             <div>
               <label
                 className="block text-sm font-bold mb-1"
-                htmlFor="OwnerName"
+                htmlFor="ownerName"
               >
                 Owner Name:
               </label>
               <input
-                id="OwnerName"
+                id="ownerName"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="ownerName"
-                value={formData.ownerName}
+                name="OwnerName"
+                value={formData.OwnerName}
                 onChange={handleChange}
               />
             </div>
@@ -349,8 +309,8 @@ const page = () => {
                 id="OwnerAddress"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="ownerAddress"
-                value={formData.ownerAddress}
+                name="OwnerCurrentAddress"
+                value={formData.OwnerCurrentAddress}
                 onChange={handleChange}
               />
             </div>
@@ -369,8 +329,8 @@ const page = () => {
                 id="OwnerPermanentAddress"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="ownerPermanentAddress"
-                value={formData.ownerPermanentAddress}
+                name="OwnerPermanentAddress"
+                value={formData.OwnerPermanentAddress}
                 onChange={handleChange}
               />
             </div>
@@ -385,24 +345,24 @@ const page = () => {
                 id="OwnerDOB"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="ownerDOB"
-                value={formData.ownerDOB}
+                name="OwnerDateOfBirth"
+                value={formData.OwnerDateOfBirth}
                 onChange={handleChange}
               />
             </div>
             <div>
               <label
                 className="block text-sm font-bold mb-1"
-                htmlFor="BusinessStartYear"
+                htmlFor="businessStartYear"
               >
                 Business Start Year:
               </label>
               <input
-                id="BusinessStartYear"
+                id="businessStartYear"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="businessStartYear"
-                value={formData.businessStartYear}
+                name="BusinessStartYear"
+                value={formData.BusinessStartYear}
                 onChange={handleChange}
               />
             </div>
@@ -417,8 +377,24 @@ const page = () => {
                 id="ThanaUnderParty"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="thanaUnderParty"
-                value={formData.thanaUnderParty}
+                name="NoOfThana"
+                value={formData.NoOfThana}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label
+                className="block text-sm font-bold mb-1"
+                htmlFor="districtUnderParty"
+              >
+                No Of District Under The Party:
+              </label>
+              <input
+                id="districtUnderParty"
+                type="text"
+                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                name="NoOfDistrict"
+                value={formData.NoOfDistrict}
                 onChange={handleChange}
               />
             </div>
@@ -433,8 +409,8 @@ const page = () => {
                 id="IsMemberOfBPS"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="isMemberOfBPS"
-                value={formData.isMemberOfBPS}
+                name="IsSamityMember"
+                value={formData.IsSamityMember}
                 onChange={handleChange}
               />
             </div>
@@ -449,122 +425,21 @@ const page = () => {
                 id="WaySendLetter"
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                name="waySendLetter"
-                value={formData.waySendLetter}
+                name="WayOfSendingLetters"
+                value={formData.WayOfSendingLetters}
                 onChange={handleChange}
               />
             </div>
-            <div>
-              <label className="capitalize flex font-semibold text-md py-1">
-                Upload Picture (Image):
-              </label>
-              <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-                <input
-                  type="file"
-                  className="file-input file-input-bordered w-full max-w-xs"
-                  name="picture"
-                  onChange={handleFileChange}
-                />
-              </div>
-            </div>
-            <div>
-              <label className="capitalize flex font-semibold text-md py-1">
-                National NID (PDF/Image):
-              </label>
-              <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-                <input
-                  type="file"
-                  className="file-input file-input-bordered w-full max-w-xs"
-                  name="nid"
-                  onChange={handleFileChange}
-                />
-              </div>
-            </div>
-            <div>
-              <label className="capitalize flex font-semibold text-md py-1">
-                Trade License Update (PDF/Image):
-              </label>
-              <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-                <input
-                  type="file"
-                  className="file-input file-input-bordered w-full max-w-xs"
-                  name="tradeLicense"
-                  onChange={handleFileChange}
-                />
-              </div>
-            </div>
-            <div>
-              <label className="capitalize flex font-semibold text-md py-1">
-                Book Publication Samity Membership Card Updated (PDF/Image):
-              </label>
-              <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-                <input
-                  type="file"
-                  className="file-input file-input-bordered w-full max-w-xs"
-                  name="membershipCard"
-                  onChange={handleFileChange}
-                />
-              </div>
-            </div>
-            <div>
-              <label className="capitalize flex font-semibold text-md py-1">
-                TIN Certificate (PDF/Image):
-              </label>
-              <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-                <input
-                  type="file"
-                  className="file-input file-input-bordered w-full max-w-xs"
-                  name="tin"
-                  onChange={handleFileChange}
-                />
-              </div>
-            </div>
-            <div>
-              <label className="capitalize flex font-semibold text-md py-1">
-                Deposit Cheque (PDF/Image):
-              </label>
-              <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-                <input
-                  type="file"
-                  className="file-input file-input-bordered w-full max-w-xs"
-                  name="depositCheck"
-                  onChange={handleFileChange}
-                />
-              </div>
-            </div>
-            <div>
-              <label className="capitalize flex font-semibold text-md py-1">
-                Non-Huditial Agreement Paper (PDF/Image):
-              </label>
-              <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-                <input
-                  type="file"
-                  className="file-input file-input-bordered w-full max-w-xs"
-                  name="nonHuditialAP"
-                  onChange={handleFileChange}
-                />
-              </div>
-            </div>
-            <div>
-              <label className="capitalize flex font-semibold text-md py-1">
-                Agreement Paper (PDF/Image):
-              </label>
-              <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-                <input
-                  type="file"
-                  className="file-input file-input-bordered w-full max-w-xs"
-                  name="aggrementPaper"
-                  onChange={handleFileChange}
-                />
-              </div>
-            </div>
-            <div className="mt-5">
-              <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
-                Save Book
-              </button>
-            </div>
           </div>
           {/* section two end */}
+        </div>
+        <div className="mt-5 mb-3 flex justify-center">
+          <button
+            className="capitalize bg-primary px-7 py-1 text-white rounded-md"
+            type="submit"
+          >
+            Save Party
+          </button>
         </div>
       </form>
     </>

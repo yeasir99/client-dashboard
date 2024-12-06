@@ -1,6 +1,7 @@
 'use client';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import useGetData from '@/utils/useGetData';
+import Link from 'next/link';
 
 const PartyManagement = () => {
   const url =
@@ -113,6 +114,36 @@ const PartyManagement = () => {
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
                         <FaRegEdit className="text-white text-xl" />
                       </span>{' '}
+                      |
+                      <Link
+                        href={`/dashboard/party-management/add/area/${item.PartyID}`}
+                      >
+                        <button
+                          className="group relative z-0 h-10 overflow-hidden overflow-x-hidden rounded-md bg-neutral-950 px-8 py-2 text-neutral-50"
+                          type="button"
+                        >
+                          <span className="relative z-10">
+                            Add Covered Area
+                          </span>
+                          <span className="absolute inset-0 overflow-hidden rounded-md">
+                            <span className="absolute left-0 aspect-square w-full origin-center translate-x-full rounded-full bg-blue-500 transition-all duration-500 group-hover:-translate-x-0 group-hover:scale-150"></span>
+                          </span>
+                        </button>
+                      </Link>
+                      |
+                      <Link
+                        href={`/dashboard/party-management/add/document/${item.PartyID}`}
+                      >
+                        <button
+                          className="group relative z-0 h-10 overflow-hidden overflow-x-hidden rounded-md bg-neutral-950 px-8 py-2 text-neutral-50"
+                          type="button"
+                        >
+                          <span className="relative z-10">Add Document</span>
+                          <span className="absolute inset-0 overflow-hidden rounded-md">
+                            <span className="absolute left-0 aspect-square w-full origin-center translate-x-full rounded-full bg-blue-500 transition-all duration-500 group-hover:-translate-x-0 group-hover:scale-150"></span>
+                          </span>
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ))}
