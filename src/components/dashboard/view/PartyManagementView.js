@@ -91,6 +91,70 @@ const PartyManagementView = ({ id }) => {
         ) : (
           ''
         )}
+        {data.OwnerDateOfBirth ? (
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg">Owner Date Of Birth:</h1>
+            <h1>{data.OwnerDateOfBirth}</h1>
+          </div>
+        ) : (
+          ''
+        )}
+        {data.BusinessStartYear ? (
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg">Business Start Year:</h1>
+            <h1>{data.BusinessStartYear}</h1>
+          </div>
+        ) : (
+          ''
+        )}
+        {data.CreditLimit ? (
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg">Credit Limit:</h1>
+            <h1>{data.CreditLimit}</h1>
+          </div>
+        ) : (
+          ''
+        )}
+        {data.DepositAmount ? (
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg">Deposit Amount:</h1>
+            <h1>{data.DepositAmount}</h1>
+          </div>
+        ) : (
+          ''
+        )}
+        {data.OpeningBalance ? (
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg">Opening Balance:</h1>
+            <h1>{data.OpeningBalance}</h1>
+          </div>
+        ) : (
+          ''
+        )}
+        {data.IsSamityMember ? (
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg">IsSamityMember:</h1>
+            <h1>{data.IsSamityMember}</h1>
+          </div>
+        ) : (
+          ''
+        )}
+        {data.NoOfDistrict ? (
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg">No Of District:</h1>
+            <h1>{data.NoOfDistrict}</h1>
+          </div>
+        ) : (
+          ''
+        )}
+        {data.NoOfThana ? (
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg">No Of Thana:</h1>
+            <h1>{data.NoOfThana}</h1>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
