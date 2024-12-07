@@ -71,7 +71,11 @@ const BookManagement = () => {
                       </span>{' '}
                       |
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
-                        <FaRegEdit className="text-white text-xl" />
+                        <Link
+                          href={`/dashboard/book-management/edit/${item.ProductID}`}
+                        >
+                          <FaRegEdit className="text-white text-xl" />
+                        </Link>
                       </span>{' '}
                     </td>
                   </tr>

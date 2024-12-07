@@ -1,20 +1,46 @@
 'use client';
 import useGetData from '@/utils/useGetData';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-const page = () => {
-  const router = useRouter();
-  const url =
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys';
-
-  const { status, data } = useGetData(url);
-
+const BookManagementEdit = ({ id }) => {
   const [formData, setFormData] = useState({
     category: '',
     bookTitle: '',
   });
+
+  const [prevData, setPrevData] = useState({});
+  const url =
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys';
+  const { status, data } = useGetData(url);
+
+  const getProductDetails = async (id, cb) => {
+    const res = await axios.get(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_product&ProductID=${id}`
+    );
+    cb({
+      ...res.data,
+    });
+  };
+
+  useEffect(() => {
+    getProductDetails(id, setPrevData);
+  }, []);
+
+  useEffect(() => {
+    if (prevData.ProductID) {
+      const filterItem = data.filter(
+        item => item.CategoryName === prevData.Category
+      );
+      if (filterItem[0]) {
+        setFormData({
+          category: filterItem[0].ID,
+          bookTitle: prevData.ProductName,
+        });
+      }
+    }
+  }, [prevData]);
 
   const handleChange = e => {
     setFormData({
@@ -23,15 +49,18 @@ const page = () => {
     });
   };
 
+  const router = useRouter();
+
   const handleSubmit = async e => {
     e.preventDefault();
-    const res = await axios.post(
-      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_product',
+    const res = await axios.put(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_product&ProductID=${id}`,
       {
         Categoryid: formData.category,
         ProductName: formData.bookTitle,
       }
     );
+    console.log(res);
 
     if (res.status === 200) {
       router.push('/dashboard/book-management');
@@ -64,8 +93,9 @@ const page = () => {
             <select
               name="category"
               className="w-full rounded-md"
-              defaultValue=""
+              defaultValue={formData.category}
               onChange={handleChange}
+              value={formData.category}
             >
               <option value="" disabled={true} selected></option>
               {data.length &&
@@ -93,7 +123,7 @@ const page = () => {
               className="capitalize bg-primary px-5 py-1 text-white rounded-md"
               type="submit"
             >
-              Save
+              Update Book
             </button>
           </div>
         </form>
@@ -102,4 +132,5 @@ const page = () => {
   );
 };
 
-export default page;
+export default BookManagementEdit;
+// DLogicKBL/salesforce_api.php?action=get_product&ProductID=145

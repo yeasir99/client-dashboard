@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useGetData from '@/utils/useGetData';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
   const classInfo = useGetData(
@@ -66,6 +67,8 @@ const page = () => {
     });
   };
 
+  const router = useRouter();
+
   const handleSubmit = async e => {
     e.preventDefault();
 
@@ -110,21 +113,17 @@ const page = () => {
       );
     });
 
-    try {
-      // Use axios for the POST request
-      const res = await axios.post(
-        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_institution',
-        dataWillBeSubmit,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.error('Error submitting the form:', error);
-    }
+    // Use axios for the POST request
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_institution',
+      dataWillBeSubmit,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    router.push('/dashboard/institution');
   };
 
   return (
