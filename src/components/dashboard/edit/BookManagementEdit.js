@@ -60,11 +60,7 @@ const BookManagementEdit = ({ id }) => {
         ProductName: formData.bookTitle,
       }
     );
-    console.log(res);
-
-    if (res.status === 200) {
-      router.push('/dashboard/book-management');
-    }
+    router.push('/dashboard/book-management');
   };
 
   return (

@@ -76,12 +76,22 @@ const page = () => {
     let dataWillBeSubmit = new FormData();
     dataWillBeSubmit.append('institutionName', formData.institutionName);
     dataWillBeSubmit.append('institutionTypeID', formData.institutionType);
-    dataWillBeSubmit.append('TotalStudents', formData.totalStudent);
-    dataWillBeSubmit.append('ContactPersonName', formData.contactPersonName);
-    dataWillBeSubmit.append('Designation', formData.designation);
-    dataWillBeSubmit.append('ContactPhone', formData.phone);
-    dataWillBeSubmit.append('Address', formData.address);
     dataWillBeSubmit.append('RegionID', formData.regionArea);
+    if (formData.totalStudent) {
+      dataWillBeSubmit.append('TotalStudents', formData.totalStudent);
+    }
+    if (formData.contactPersonName) {
+      dataWillBeSubmit.append('ContactPersonName', formData.contactPersonName);
+    }
+    if (formData.designation) {
+      dataWillBeSubmit.append('Designation', formData.designation);
+    }
+    if (formData.phone) {
+      dataWillBeSubmit.append('ContactPhone', formData.phone);
+    }
+    if (formData.address) {
+      dataWillBeSubmit.append('Address', formData.address);
+    }
 
     // Handle institution image
     if (formData.institutionImage) {
@@ -155,6 +165,7 @@ const page = () => {
               defaultValue=""
               onChange={handleChange}
               value={formData.institutionType}
+              required
             >
               <option value="" disabled={true} selected></option>
               {institution.data.length &&
@@ -178,6 +189,7 @@ const page = () => {
             name="institutionName"
             onChange={handleChange}
             value={formData.institutionName}
+            required
           />
           <label
             className="block text-sm font-bold mb-1"
@@ -251,6 +263,7 @@ const page = () => {
               defaultValue=""
               onChange={handleChange}
               value={formData.regionArea}
+              required
             >
               <option value="" disabled={true} selected></option>
               {regionsData.length &&
