@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import useGetData from '@/utils/useGetData';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const PartyManagementAreaAdd = ({ id }) => {
   const [allArea, setAllArea] = useState({
@@ -59,18 +60,21 @@ const PartyManagementAreaAdd = ({ id }) => {
     }
   }, [allArea.thana]);
 
+  const router = useRouter();
+
   const handleSubmit = async e => {
     e.preventDefault();
     const PartyAreas = allArea.locationWithName.map(item => ({
       RegionID: item.AreaID,
       RegionName: item.AreaName,
     }));
-
-    const res = await axios.post(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_partydetailsAreas&PartyID=${id}`,
-      { PartyAreas }
-    );
-    console.log(res);
+    if (PartyAreas.length) {
+      const res = await axios.post(
+        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_partydetailsAreas&PartyID=${id}`,
+        { PartyAreas }
+      );
+      router.push('/dashboard/party-management');
+    }
   };
 
   if (status === 'pending') {

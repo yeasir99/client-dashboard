@@ -2,69 +2,18 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import useGetData from '@/utils/useGetData';
+import axios from 'axios';
 
 const PartyManagementDocumentAdd = ({ id }) => {
-  let data = [
-    {
-      id: 1,
-      name: 'PartyOwnerPicture',
-      displayName: 'Party Owner Picture',
-    },
-    {
-      id: 2,
-      name: 'PartyOwnerNidDocument',
-      displayName: 'Party Owner Nid',
-    },
-    {
-      id: 3,
-      name: 'TradeLicense',
-      displayName: 'Trade License',
-    },
-    {
-      id: 4,
-      name: 'SamityMemberCard',
-      displayName: 'Samity Member Card',
-    },
-    {
-      id: 5,
-      name: 'TinCertificate',
-      displayName: 'TIN Certificate',
-    },
-    {
-      id: 6,
-      name: 'DepositCheque',
-      displayName: 'Deposit Cheque',
-    },
-    {
-      id: 7,
-      name: 'NonJudicialAgreementDocument',
-      displayName: 'Non Judicial Agreement Document',
-    },
-    {
-      id: 8,
-      name: 'AgreementDocument',
-      displayName: 'Agreement Document',
-    },
-    {
-      id: 9,
-      name: 'Document1',
-      displayName: 'Document1',
-    },
-    {
-      id: 10,
-      name: 'Document2',
-      displayName: 'Document2',
-    },
-    {
-      id: 11,
-      name: 'Document3',
-      displayName: 'Document3',
-    },
-  ];
+  const { status, data } = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_partydoctypes'
+  );
 
   const [formData, setFormData] = useState([
     {
       id: uuidv4(),
+      docId: '',
       docName: '',
       file: '',
     },
@@ -75,6 +24,17 @@ const PartyManagementDocumentAdd = ({ id }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     console.log(formData);
+    const dataWillBeSubmit = new FormData();
+
+    formData.forEach(item => {
+      dataWillBeSubmit.append('PartyDocsTypeID[]', item.docId);
+      dataWillBeSubmit.append('PartyDocsPath[]', item.file);
+    });
+    const res = await axios.post(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_partyDocs&PartyID=${id}`,
+      dataWillBeSubmit
+    );
+    console.log(res);
   };
 
   return (
@@ -115,11 +75,19 @@ const PartyManagementDocumentAdd = ({ id }) => {
                       <select
                         name="institutionType"
                         className="w-full rounded-md"
+                        defaultValue=""
                         onChange={e => {
+                          const { docType, docName } = JSON.parse(
+                            e.target.value
+                          );
                           setFormData(
                             formData.map(currentData =>
                               currentData.id === item.id
-                                ? { ...currentData, docName: e.target.value }
+                                ? {
+                                    ...currentData,
+                                    docId: docType,
+                                    docName: docName,
+                                  }
                                 : currentData
                             )
                           );
@@ -128,11 +96,18 @@ const PartyManagementDocumentAdd = ({ id }) => {
                         <option value="" disabled={true} selected>
                           Select Document Name
                         </option>
-                        {data.map(docType => (
-                          <option value={docType.name} key={docType.id}>
-                            {docType.displayName}
-                          </option>
-                        ))}
+                        {data.length &&
+                          data.map(docType => (
+                            <option
+                              value={JSON.stringify({
+                                docType: docType.PartyDocsTypeID,
+                                docName: docType.PartyDocName,
+                              })}
+                              key={docType.PartyDocsTypeID}
+                            >
+                              {docType.PartyDocName}
+                            </option>
+                          ))}
                       </select>
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-1 font-medium dark:border-white/10">
@@ -157,7 +132,7 @@ const PartyManagementDocumentAdd = ({ id }) => {
                       )}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-1 font-medium dark:border-white/10">
-                      <td className="whitespace-nowrap px-6 py-4 flex justify-center items-end h-full gap-3">
+                      <div className="whitespace-nowrap px-6 py-4 flex justify-center items-end h-full gap-3">
                         <AiOutlineCloseCircle
                           className="text-4xl text-red-500 cursor-pointer"
                           onClick={() => {
@@ -168,7 +143,7 @@ const PartyManagementDocumentAdd = ({ id }) => {
                             );
                           }}
                         />
-                      </td>
+                      </div>
                     </td>
                   </tr>
                 ))}
