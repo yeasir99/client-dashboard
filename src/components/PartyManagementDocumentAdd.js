@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import useGetData from '@/utils/useGetData';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const PartyManagementDocumentAdd = ({ id }) => {
   const { status, data } = useGetData(
@@ -19,11 +20,10 @@ const PartyManagementDocumentAdd = ({ id }) => {
     },
   ]);
 
-  console.log(formData);
+  const router = useRouter();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(formData);
     const dataWillBeSubmit = new FormData();
 
     formData.forEach(item => {
@@ -34,7 +34,7 @@ const PartyManagementDocumentAdd = ({ id }) => {
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_partyDocs&PartyID=${id}`,
       dataWillBeSubmit
     );
-    console.log(res);
+    router.push('/dashboard/party-management');
   };
 
   return (

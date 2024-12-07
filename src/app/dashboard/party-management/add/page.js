@@ -1,14 +1,15 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import useGetData from '@/utils/useGetData';
 const page = () => {
   const [formData, setFormData] = useState({
     PartyName: '',
     ContactPersonName: '',
     ContactNumber: '',
     Address: '',
-    RegionID: '40',
+    RegionID: '',
     Email: '',
     Website: '',
     CreditLimit: '',
@@ -25,6 +26,45 @@ const page = () => {
     IsSamityMember: '',
     WayOfSendingLetters: '',
   });
+
+  console.log(formData);
+
+  const [locations, setLocations] = useState({
+    division: '',
+    district: '',
+    thana: '',
+  });
+  const [district, setDistrict] = useState([]);
+  const [thana, setThana] = useState([]);
+
+  const { status, data } = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'
+  );
+
+  const getLocationData = async (url, id, cb) => {
+    const res = await axios.get(`${url}${id}`);
+    cb([...res.data]);
+  };
+
+  useEffect(() => {
+    if (locations.division) {
+      getLocationData(
+        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDistrict&ParentRegionID=',
+        locations.division,
+        setDistrict
+      );
+    }
+  }, [locations.division]);
+
+  useEffect(() => {
+    if (locations.district) {
+      getLocationData(
+        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionThana&ParentRegionID=',
+        locations.district,
+        setThana
+      );
+    }
+  }, [locations.district]);
 
   const handleChange = e => {
     setFormData({
@@ -187,42 +227,28 @@ const page = () => {
               <div>
                 <label
                   className="block text-sm font-bold mb-1"
-                  htmlFor="RegionArea"
+                  htmlFor="Division"
                 >
-                  Region/Area:
+                  Division:
                 </label>
                 <select
                   className="w-full rounded-md"
-                  id="RegionArea"
-                  name="regionArea"
-                  value={formData.regionArea}
-                  onChange={handleChange}
+                  id="Division"
+                  name="division"
+                  onChange={e => {
+                    setLocations({
+                      ...locations,
+                      division: e.target.value,
+                    });
+                  }}
                 >
-                  <option value="" disabled={true} selected>
-                    Dhaka Division
-                  </option>
-                  <option value="">Dhaka Division</option>
-                  <option value="">Dhaka Division</option>
-                  <option value="">Dhaka Division</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-bold mb-1" htmlFor="Thana">
-                  Thana:
-                </label>
-                <select
-                  id="Thana"
-                  name="thana"
-                  className="w-full rounded-md"
-                  value={formData.thana}
-                  onChange={handleChange}
-                >
-                  <option value="" disabled={true} selected>
-                    Dhaka Division
-                  </option>
-                  <option value="">Dhaka Division</option>
-                  <option value="">Dhaka Division</option>
-                  <option value="">Dhaka Division</option>
+                  <option value="" disabled={true} selected></option>
+                  {data.length &&
+                    data.map(item => (
+                      <option value={item.RegionID} key={item.RegionID}>
+                        {item.RegionName}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div>
@@ -234,17 +260,53 @@ const page = () => {
                 </label>
                 <select
                   id="District"
-                  name="district"
+                  name="District"
                   className="w-full rounded-md"
-                  value={formData.district}
-                  onChange={handleChange}
+                  value={formData.thana}
+                  onChange={e => {
+                    setLocations({
+                      ...locations,
+                      district: e.target.value,
+                    });
+                  }}
+                  disabled={locations.division ? false : true}
                 >
-                  <option value="" disabled={true} selected>
-                    Dhaka Division
-                  </option>
-                  <option value="">Dhaka Division</option>
-                  <option value="">Dhaka Division</option>
-                  <option value="">Dhaka Division</option>
+                  <option value="" disabled={true} selected></option>
+                  {district.length &&
+                    district.map(item => (
+                      <option value={item.RegionID} key={item.RegionID}>
+                        {item.RegionName}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-1" htmlFor="Thana">
+                  Thana:
+                </label>
+                <select
+                  id="Thana"
+                  name="Thana"
+                  className="w-full rounded-md"
+                  onChange={e => {
+                    setLocations({
+                      ...locations,
+                      thana: e.target.value,
+                    });
+                    setFormData({
+                      ...formData,
+                      RegionID: e.target.value,
+                    });
+                  }}
+                  disabled={locations.district ? false : true}
+                >
+                  <option value="" disabled={true} selected></option>
+                  {thana.length &&
+                    thana.map(item => (
+                      <option value={item.RegionID} key={item.RegionID}>
+                        {item.RegionName}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
