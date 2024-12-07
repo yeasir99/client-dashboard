@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 const page = () => {
   const [formData, setFormData] = useState({
     PartyName: '',
@@ -32,14 +33,74 @@ const page = () => {
     });
   };
 
+  const router = useRouter();
+
   const handleSubmit = async e => {
     e.preventDefault();
+    let dataWillBeSubmitted = {
+      PartyName: formData.PartyName,
+      Address: formData.Address,
+      RegionID: formData.RegionID,
+    };
+
+    if (formData.ContactPersonName) {
+      dataWillBeSubmitted.ContactPersonName = formData.ContactPersonName;
+    }
+    if (formData.ContactNumber) {
+      dataWillBeSubmitted.ContactNumber = formData.ContactNumber;
+    }
+    if (formData.Email) {
+      dataWillBeSubmitted.Email = formData.Email;
+    }
+    if (formData.Website) {
+      dataWillBeSubmitted.Website = formData.Website;
+    }
+    if (formData.CreditLimit) {
+      dataWillBeSubmitted.CreditLimit = formData.CreditLimit;
+    }
+    if (formData.DepositAmount) {
+      dataWillBeSubmitted.DepositAmount = formData.DepositAmount;
+    }
+    if (formData.OpeningBalance) {
+      dataWillBeSubmitted.OpeningBalance = formData.OpeningBalance;
+    }
+    if (formData.OwnerName) {
+      dataWillBeSubmitted.OwnerName = formData.OwnerName;
+    }
+    if (formData.ownerContact) {
+      dataWillBeSubmitted.ownerContact = formData.ownerContact;
+    }
+    if (formData.OwnerCurrentAddress) {
+      dataWillBeSubmitted.OwnerCurrentAddress = formData.OwnerCurrentAddress;
+    }
+    if (formData.OwnerPermanentAddress) {
+      dataWillBeSubmitted.OwnerPermanentAddress =
+        formData.OwnerPermanentAddress;
+    }
+    if (formData.OwnerDateOfBirth) {
+      dataWillBeSubmitted.OwnerDateOfBirth = formData.OwnerDateOfBirth;
+    }
+    if (formData.BusinessStartYear) {
+      dataWillBeSubmitted.BusinessStartYear = formData.BusinessStartYear;
+    }
+    if (formData.NoOfThana) {
+      dataWillBeSubmitted.NoOfThana = formData.NoOfThana;
+    }
+    if (formData.NoOfDistrict) {
+      dataWillBeSubmitted.NoOfDistrict = formData.NoOfDistrict;
+    }
+    if (formData.IsSamityMember) {
+      dataWillBeSubmitted.IsSamityMember = formData.IsSamityMember;
+    }
+    if (formData.WayOfSendingLetters) {
+      dataWillBeSubmitted.WayOfSendingLetters = formData.WayOfSendingLetters;
+    }
+
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_party',
-      formData
+      dataWillBeSubmitted
     );
-    console.log(res);
-    console.log(formData);
+    router.push('/dashboard/party-management');
   };
 
   return (
@@ -73,6 +134,7 @@ const page = () => {
                 name="PartyName"
                 value={formData.PartyName}
                 onChange={handleChange}
+                required
               />
             </div>
             <div>
@@ -118,6 +180,7 @@ const page = () => {
                 name="Address"
                 value={formData.Address}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="grid grid-cols-3 gap-2">
