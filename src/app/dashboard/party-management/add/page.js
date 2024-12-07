@@ -27,8 +27,6 @@ const page = () => {
     WayOfSendingLetters: '',
   });
 
-  console.log(formData);
-
   const [locations, setLocations] = useState({
     division: '',
     district: '',
