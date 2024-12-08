@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import useGetData from '@/utils/useGetData';
 import axios from 'axios';
 
-const MappingRegion = () => {
+const MappingRegion = ({ mappingUser, setMappingUser }) => {
   const [allArea, setAllArea] = useState({
     division: '',
     district: '',
     thana: '',
     location: [],
   });
+
   const [district, setDistrict] = useState([]);
   const [thana, setThana] = useState([]);
   const [locations, setLocations] = useState([]);
@@ -24,7 +25,7 @@ const MappingRegion = () => {
 
   const getlocations = async (url, id, cb) => {
     const res = await axios.get(`${url}${id}`);
-    cb(res.data.data);
+    cb(res.data);
   };
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const MappingRegion = () => {
   useEffect(() => {
     if (allArea.thana) {
       getlocations(
-        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_location&RegionID=`,
+        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionArea&ParentRegionID=`,
         allArea.thana,
         setLocations
       );
@@ -145,30 +146,38 @@ const MappingRegion = () => {
         <div>
           {locations.length > 0 &&
             locations.map(item => (
-              <div key={item.AreaID}>
+              <div key={item.RegionID}>
                 <label>
                   <input
                     type="checkbox"
                     value={item.AreaID}
-                    checked={allArea.location.includes(item.AreaID)}
+                    checked={allArea.location.includes(item.RegionID)}
                     onChange={() => {
-                      if (allArea.location.includes(item.AreaID)) {
+                      if (allArea.location.includes(item.RegionID)) {
                         setAllArea({
                           ...allArea,
                           location: allArea.location.filter(
-                            ele => ele !== item.AreaID
+                            ele => ele !== item.RegionID
                           ),
+                        });
+                        setMappingUser({
+                          ...mappingUser,
+                          region: '',
                         });
                       } else {
                         setAllArea({
                           ...allArea,
-                          location: [...allArea.location, item.AreaID],
+                          location: [...allArea.location, item.RegionID],
+                        });
+                        setMappingUser({
+                          ...mappingUser,
+                          region: item.RegionID,
                         });
                       }
                     }}
                     className="mx-2 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                   />
-                  {item.AreaName}
+                  {item.RegionName}
                 </label>
               </div>
             ))}

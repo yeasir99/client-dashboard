@@ -5,6 +5,8 @@ const Employees = ({
   selectedUser,
   setSelectedUser,
   getUserDataById,
+  mappingUser,
+  setMappingUser,
 }) => {
   const [employee, setEmployee] = useState([]);
   const [activeUsers, setActiveUsers] = useState('');
@@ -27,18 +29,30 @@ const Employees = ({
               <label>
                 <input
                   type="checkbox"
-                  value={item.EmployeeID}
-                  checked={activeUsers === item.EmployeeID}
+                  value={item.UserID}
+                  checked={activeUsers == item.UserID}
                   onChange={e => {
-                    if (activeUsers === e.target.value) {
+                    if (activeUsers == e.target.value) {
                       setActiveUsers('');
+                      setMappingUser({
+                        ...mappingUser,
+                        user: '',
+                      });
+                      setSelectedUser({
+                        ...selectedUser,
+                        userId: '',
+                      });
                     } else {
                       setActiveUsers(e.target.value);
+                      setMappingUser({
+                        ...mappingUser,
+                        user: e.target.value,
+                      });
+                      setSelectedUser({
+                        ...selectedUser,
+                        userId: e.target.value,
+                      });
                     }
-                    setSelectedUser({
-                      ...selectedUser,
-                      userId: e.target.value,
-                    });
                   }}
                   className="mx-2 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />

@@ -1,9 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
+import useGetData from '@/utils/useGetData';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import useGetData from '@/utils/useGetData';
-const page = () => {
+import Location from '../partymanagement/Location';
+
+const PartyManagementEdit = ({ id }) => {
   const [formData, setFormData] = useState({
     PartyName: '',
     ContactPersonName: '',
@@ -27,42 +29,18 @@ const page = () => {
     WayOfSendingLetters: '',
   });
 
-  const [locations, setLocations] = useState({
-    division: '',
-    district: '',
-    thana: '',
-  });
-  const [district, setDistrict] = useState([]);
-  const [thana, setThana] = useState([]);
-
-  const { status, data } = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'
-  );
-
-  const getLocationData = async (url, id, cb) => {
-    const res = await axios.get(`${url}${id}`);
-    cb([...res.data]);
-  };
+  async function getPreviousData() {
+    const res = await axios.get(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_party&PartyID=${id}`
+    );
+    setFormData({
+      ...res.data,
+    });
+  }
 
   useEffect(() => {
-    if (locations.division) {
-      getLocationData(
-        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDistrict&ParentRegionID=',
-        locations.division,
-        setDistrict
-      );
-    }
-  }, [locations.division]);
-
-  useEffect(() => {
-    if (locations.district) {
-      getLocationData(
-        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionThana&ParentRegionID=',
-        locations.district,
-        setThana
-      );
-    }
-  }, [locations.district]);
+    getPreviousData();
+  }, []);
 
   const handleChange = e => {
     setFormData({
@@ -221,93 +199,9 @@ const page = () => {
                 required
               />
             </div>
-            <div className="grid grid-cols-3 gap-2">
-              <div>
-                <label
-                  className="block text-sm font-bold mb-1"
-                  htmlFor="Division"
-                >
-                  Division:
-                </label>
-                <select
-                  className="w-full rounded-md"
-                  id="Division"
-                  name="division"
-                  onChange={e => {
-                    setLocations({
-                      ...locations,
-                      division: e.target.value,
-                    });
-                  }}
-                >
-                  <option value="" disabled={true} selected></option>
-                  {data.length &&
-                    data.map(item => (
-                      <option value={item.RegionID} key={item.RegionID}>
-                        {item.RegionName}
-                      </option>
-                    ))}
-                </select>
-              </div>
-              <div>
-                <label
-                  className="block text-sm font-bold mb-1"
-                  htmlFor="District"
-                >
-                  District:
-                </label>
-                <select
-                  id="District"
-                  name="District"
-                  className="w-full rounded-md"
-                  value={formData.thana}
-                  onChange={e => {
-                    setLocations({
-                      ...locations,
-                      district: e.target.value,
-                    });
-                  }}
-                  disabled={locations.division ? false : true}
-                >
-                  <option value="" disabled={true} selected></option>
-                  {district.length &&
-                    district.map(item => (
-                      <option value={item.RegionID} key={item.RegionID}>
-                        {item.RegionName}
-                      </option>
-                    ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-bold mb-1" htmlFor="Thana">
-                  Thana:
-                </label>
-                <select
-                  id="Thana"
-                  name="Thana"
-                  className="w-full rounded-md"
-                  onChange={e => {
-                    setLocations({
-                      ...locations,
-                      thana: e.target.value,
-                    });
-                    setFormData({
-                      ...formData,
-                      RegionID: e.target.value,
-                    });
-                  }}
-                  disabled={locations.district ? false : true}
-                >
-                  <option value="" disabled={true} selected></option>
-                  {thana.length &&
-                    thana.map(item => (
-                      <option value={item.RegionID} key={item.RegionID}>
-                        {item.RegionName}
-                      </option>
-                    ))}
-                </select>
-              </div>
-            </div>
+            {formData.RegionID && (
+              <Location formData={formData} setFormData={setFormData} />
+            )}
 
             <div>
               <label
@@ -561,7 +455,7 @@ const page = () => {
             className="capitalize bg-primary px-7 py-1 text-white rounded-md"
             type="submit"
           >
-            Save Party
+            Update Party
           </button>
         </div>
       </form>
@@ -569,4 +463,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default PartyManagementEdit;

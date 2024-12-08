@@ -6,7 +6,7 @@ import DSM from './DSM';
 import ASM from './ASM';
 import Employees from './Employees';
 
-const MappingUser = () => {
+const MappingUser = ({ mappingUser, setMappingUser }) => {
   const [selectedUser, setSelectedUser] = useState({
     nsmId: '',
     rsmId: '',
@@ -48,6 +48,8 @@ const MappingUser = () => {
         selectedUser={selectedUser}
         setSelectedUser={setSelectedUser}
         getUserDataById={getUserDataById}
+        mappingUser={mappingUser}
+        setMappingUser={setMappingUser}
       />
     </div>
   );

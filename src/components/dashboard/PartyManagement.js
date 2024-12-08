@@ -116,7 +116,11 @@ const PartyManagement = () => {
                       </span>{' '}
                       |
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
-                        <FaRegEdit className="text-white text-xl" />
+                        <Link
+                          href={`/dashboard/party-management/edit/${item.PartyID}`}
+                        >
+                          <FaRegEdit className="text-white text-xl" />
+                        </Link>
                       </span>{' '}
                       |
                       <Link
