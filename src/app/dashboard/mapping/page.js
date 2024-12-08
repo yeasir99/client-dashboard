@@ -4,12 +4,15 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 import MappingUser from '@/components/dashboard/mappingInternals/MappingUser';
 import MappingRegion from '@/components/dashboard/mappingInternals/MappingRegion';
 import axios from 'axios';
+import MappedViewList from '@/components/dashboard/mappingInternals/MappedViewList';
 
 const page = () => {
   const [mappingUser, setMappingUser] = useState({
     user: '',
     region: '',
   });
+
+  console.log(mappingUser);
 
   const handleSubmit = async () => {
     if (mappingUser.user && mappingUser.region) {
@@ -61,6 +64,8 @@ const page = () => {
       >
         Submit
       </button>
+
+      {mappingUser.user ? <MappedViewList id={mappingUser.user} /> : ''}
     </div>
   );
 };
