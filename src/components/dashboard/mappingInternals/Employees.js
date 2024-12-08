@@ -22,7 +22,7 @@ const Employees = ({
   return (
     <div>
       <h1 className="text-lg font-semibold">List of the Employee:</h1>
-      <div>
+      <div className="max-h-[350px] overflow-y-auto bottom-[1px] border-gray-400 border-solid p-[10px]">
         {employee.length > 0 &&
           employee.map(item => (
             <div key={item.UserID}>

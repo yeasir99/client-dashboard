@@ -30,7 +30,7 @@ const DSM = ({ rsmId, selectedUser, setSelectedUser, getUserDataById }) => {
         <option value="" disabled={true} selected></option>
         {dsm.length &&
           dsm.map(item => (
-            <option value={item.DesignationID} key={item.DesignationID}>
+            <option value={item.DesignationID} key={item.UserID}>
               {item.EmpName}
             </option>
           ))}

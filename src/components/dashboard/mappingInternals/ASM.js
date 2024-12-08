@@ -30,7 +30,7 @@ const ASM = ({ dsmId, selectedUser, setSelectedUser, getUserDataById }) => {
         <option value="" disabled={true} selected></option>
         {asm.length &&
           asm.map(item => (
-            <option value={item.DesignationID} key={item.DesignationID}>
+            <option value={item.DesignationID} key={item.UserID}>
               {item.EmpName}
             </option>
           ))}

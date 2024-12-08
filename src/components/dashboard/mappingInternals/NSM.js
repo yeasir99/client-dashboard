@@ -25,7 +25,7 @@ const NSM = ({ selectedUser, setSelectedUser }) => {
         <option value="" disabled={true} selected></option>
         {nsmData.data.data.length &&
           nsmData.data.data.map(item => (
-            <option value={item.DesignationID} key={item.DesignationID}>
+            <option value={item.DesignationID} key={item.UserID}>
               {item.EmpName}
             </option>
           ))}

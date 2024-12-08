@@ -56,7 +56,7 @@ const page = () => {
         </div>
       </div>
       <button
-        className="capitalize bg-primary px-5 py-1 text-white rounded-md w-full"
+        className="capitalize bg-primary px-5 py-1 text-white rounded-md w-full my-5"
         onClick={handleSubmit}
       >
         Submit
