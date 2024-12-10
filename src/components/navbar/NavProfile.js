@@ -1,10 +1,10 @@
-import { RxAvatar } from 'react-icons/rx';
+import Avatar from './Avatar';
 import Logout from './Logout';
 const NavProfile = ({ session }) => {
   return (
     <div className="flex items-center space-x-2 text-surface1">
       <div>
-        <RxAvatar className="text-5xl" />
+        <Avatar userAvatar={session.user.avatar} />
       </div>
       <div>
         <p className="text-sm">Welcome</p>

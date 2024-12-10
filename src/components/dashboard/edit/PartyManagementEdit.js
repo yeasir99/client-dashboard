@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useGetData from '@/utils/useGetData';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import Location from '../partymanagement/Location';
+import Locations from '@/components/location/Locations';
 
 const PartyManagementEdit = ({ id }) => {
   const [formData, setFormData] = useState({
@@ -200,7 +200,15 @@ const PartyManagementEdit = ({ id }) => {
               />
             </div>
             {formData.RegionID && (
-              <Location formData={formData} setFormData={setFormData} />
+              <Locations
+                updateState={(key, value) =>
+                  setFormData(prevState => ({
+                    ...prevState,
+                    [key]: value,
+                  }))
+                }
+                fieldKey="RegionID"
+              />
             )}
 
             <div>

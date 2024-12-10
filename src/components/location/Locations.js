@@ -2,12 +2,19 @@ import { useState, useEffect } from 'react';
 import useGetData from '@/utils/useGetData';
 import axios from 'axios';
 
-const Locations = ({ updateState, fieldKey }) => {
+const Locations = ({
+  updateState,
+  fieldKey,
+  divisionID = '',
+  districtID = '',
+  thanaID = '',
+  areaID = '',
+}) => {
   const [locationID, setLocationID] = useState({
     divisionID: '',
     districtID: '',
     thanaID: '',
-    areaID: '',
+    areaID: areaID,
   });
 
   const [district, setDistrict] = useState([]);
@@ -79,7 +86,9 @@ const Locations = ({ updateState, fieldKey }) => {
               updateState(fieldKey, '');
             }}
           >
-            <option value="" disabled={true} selected></option>
+            <option value="" disabled={true} selected>
+              {divisionID}
+            </option>
             {data.length &&
               data.map(item => (
                 <option value={item.RegionID} key={item.RegionID}>
@@ -108,7 +117,9 @@ const Locations = ({ updateState, fieldKey }) => {
             }}
             disabled={locationID.divisionID ? false : true}
           >
-            <option value="" disabled={true} selected></option>
+            <option value="" disabled={true} selected>
+              {districtID}
+            </option>
             {district.length &&
               district.map(item => (
                 <option value={item.RegionID} key={item.RegionID}>
@@ -136,7 +147,9 @@ const Locations = ({ updateState, fieldKey }) => {
             }}
             disabled={locationID.districtID ? false : true}
           >
-            <option value="" disabled={true} selected></option>
+            <option value="" disabled={true} selected>
+              {thanaID}
+            </option>
             {thana.length &&
               thana.map(item => (
                 <option value={item.RegionID} key={item.RegionID}>
@@ -164,7 +177,9 @@ const Locations = ({ updateState, fieldKey }) => {
           }}
           disabled={locationID.thanaID ? false : true}
         >
-          <option value="" disabled={true} selected></option>
+          <option value="" disabled={true} selected>
+            {areaID}
+          </option>
           {area.length &&
             area.map(item => (
               <option value={item.RegionID} key={item.RegionID}>

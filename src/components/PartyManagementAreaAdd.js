@@ -14,12 +14,9 @@ const PartyManagementAreaAdd = ({ id }) => {
     locationWithName: [],
   });
 
-  console.log(allArea);
   const [district, setDistrict] = useState([]);
   const [thana, setThana] = useState([]);
   const [locations, setLocations] = useState([]);
-
-  console.log(locations);
 
   const { status, data } = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'

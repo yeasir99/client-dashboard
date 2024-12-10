@@ -15,6 +15,7 @@ export const authOptions = {
             'https://kblsf.site/DLogicKBL/salesforce_api.php?action=login',
             { Username, Password }
           );
+          console.log(res);
           if (!res.data.success) {
             return null;
           }
@@ -24,6 +25,7 @@ export const authOptions = {
             Username: res.data.user.Username,
             email: res.data.user.Email,
             Phone: res.data.user.Phone,
+            avatar: res.data.user.Userpicture,
           };
           return user;
         } catch (error) {
@@ -45,6 +47,7 @@ export const authOptions = {
       session.user.employeeId = userData.EmployeeID;
       session.user.email = userData.Email;
       session.user.name = userData.EmpName;
+      session.user.avatar = userData.Userpicture;
       return session;
     },
   },
