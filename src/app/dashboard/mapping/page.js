@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import { FaPlus, FaMinus } from 'react-icons/fa';
 import MappingUser from '@/components/dashboard/mappingInternals/MappingUser';
 import MappingRegion from '@/components/dashboard/mappingInternals/MappingRegion';
 import axios from 'axios';
@@ -12,10 +11,11 @@ const page = () => {
     region: '',
   });
 
-  console.log(mappingUser);
+  const [status, setStatus] = useState('idle');
 
   const handleSubmit = async () => {
     if (mappingUser.user && mappingUser.region) {
+      setStatus('pending');
       const res = await axios.post(
         'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_mapping',
         {
@@ -23,7 +23,7 @@ const page = () => {
           RegionID: mappingUser.region,
         }
       );
-      console.log(res);
+      setStatus('idle');
     }
   };
 
@@ -62,10 +62,18 @@ const page = () => {
         className="capitalize bg-primary px-5 py-1 text-white rounded-md w-full my-5"
         onClick={handleSubmit}
       >
-        Submit
+        {status === 'pending' ? 'Saveing...' : 'Submit'}
       </button>
 
-      {mappingUser.user ? <MappedViewList id={mappingUser.user} /> : ''}
+      {mappingUser.user ? (
+        status === 'pending' ? (
+          ''
+        ) : (
+          <MappedViewList id={mappingUser.user} />
+        )
+      ) : (
+        ''
+      )}
     </div>
   );
 };
