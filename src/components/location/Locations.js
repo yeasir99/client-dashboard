@@ -10,7 +10,6 @@ const Locations = ({ updateState, fieldKey }) => {
     areaID: '',
   });
 
-  console.log(locationID);
   const [district, setDistrict] = useState([]);
   const [thana, setThana] = useState([]);
   const [area, setArea] = useState([]);

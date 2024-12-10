@@ -5,6 +5,7 @@ import useGetData from '@/utils/useGetData';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import Locations from '@/components/location/Locations';
 
 const page = () => {
   const classInfo = useGetData(
@@ -16,14 +17,6 @@ const page = () => {
 
   const institution = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutiontypes'
-  );
-
-  const regions = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regions'
-  );
-
-  const regionsData = regions.data.filter(
-    item => Boolean(item.AreaID) === true
   );
 
   const [formData, setFormData] = useState({
@@ -252,28 +245,15 @@ const page = () => {
             onChange={handleChange}
             value={formData.address}
           />
-          <div>
-            <label className="capitalize flex font-semibold text-md py-1">
-              Region/Area:
-            </label>
-
-            <select
-              name="regionArea"
-              className="w-full rounded-md"
-              defaultValue=""
-              onChange={handleChange}
-              value={formData.regionArea}
-              required
-            >
-              <option value="" disabled={true} selected></option>
-              {regionsData.length &&
-                regionsData.map(item => (
-                  <option value={item.AreaID} key={item.AreaID}>
-                    {item.AreaName}
-                  </option>
-                ))}
-            </select>
-          </div>
+          <Locations
+            updateState={(key, value) =>
+              setFormData(prevState => ({
+                ...prevState,
+                [key]: value,
+              }))
+            }
+            fieldKey="regionArea"
+          />
 
           <div>
             <label
