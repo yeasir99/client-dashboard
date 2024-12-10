@@ -58,33 +58,79 @@ const InstitutionManagementView = ({ id }) => {
             <h1 className="text-lg">status:</h1>
             <h1>{data.status ? 'Active' : 'Deactive'}</h1>
           </div>
-          <div>
-            <h1 className="text-xl py-3 ">Details:</h1>
-            {data.details.length
-              ? data.details.map((item, index) => (
-                  <div key={index} className="py-3">
-                    <div className="flex items-center gap-2">
-                      <h1 className="text-lg">Teacher Name:</h1>
-                      <h1>{item.TeacherName}</h1>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <h1 className="text-lg">Contact Phone:</h1>
-                      <h1>{item.ContactPhone}</h1>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <h1 className="text-lg">Designation:</h1>
-                      <h1>{item.Designation}</h1>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <h1 className="text-lg">Class Name:</h1>
-                      <h1>{item.ClassName}</h1>
-                    </div>
-                  </div>
-                ))
-              : 'No details to display'}
-          </div>
         </div>
       </div>
+      {data.details.length && (
+        <div className="flex flex-col">
+          <div className="overflow-x-auto">
+            <div className="inline-block max-w-full w-full pt-5">
+              <div className="overflow-hidden">
+                <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+                  <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
+                    <tr className="bg-text1 text-white">
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Teacher Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Designation
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Mobile Number
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Class Name
+                      </th>
+                      <th scope="col" className="px-6 py-4">
+                        Subject Name
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.details.map(item => (
+                      <tr
+                        className="border-b border-neutral-200 dark:border-white/10"
+                        key={item.id}
+                      >
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.TeacherName}
+                        </td>
+
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.Designation}
+                        </td>
+
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.ContactPhone}
+                        </td>
+
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.ClassName}
+                        </td>
+
+                        <td className="whitespace-nowrap px-6 py-4 flex justify-center items-end h-full gap-3">
+                          {item.SubjectName}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
