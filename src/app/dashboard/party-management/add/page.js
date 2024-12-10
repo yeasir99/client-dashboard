@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import useGetData from '@/utils/useGetData';
+import Locations from '@/components/location/Locations';
 const page = () => {
   const [formData, setFormData] = useState({
     PartyName: '',
@@ -27,42 +28,44 @@ const page = () => {
     WayOfSendingLetters: '',
   });
 
-  const [locations, setLocations] = useState({
-    division: '',
-    district: '',
-    thana: '',
-  });
-  const [district, setDistrict] = useState([]);
-  const [thana, setThana] = useState([]);
+  console.log(formData);
 
-  const { status, data } = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'
-  );
+  // const [locations, setLocations] = useState({
+  //   division: '',
+  //   district: '',
+  //   thana: '',
+  // });
+  // const [district, setDistrict] = useState([]);
+  // const [thana, setThana] = useState([]);
 
-  const getLocationData = async (url, id, cb) => {
-    const res = await axios.get(`${url}${id}`);
-    cb([...res.data]);
-  };
+  // const { status, data } = useGetData(
+  //   'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'
+  // );
 
-  useEffect(() => {
-    if (locations.division) {
-      getLocationData(
-        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDistrict&ParentRegionID=',
-        locations.division,
-        setDistrict
-      );
-    }
-  }, [locations.division]);
+  // const getLocationData = async (url, id, cb) => {
+  //   const res = await axios.get(`${url}${id}`);
+  //   cb([...res.data]);
+  // };
 
-  useEffect(() => {
-    if (locations.district) {
-      getLocationData(
-        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionThana&ParentRegionID=',
-        locations.district,
-        setThana
-      );
-    }
-  }, [locations.district]);
+  // useEffect(() => {
+  //   if (locations.division) {
+  //     getLocationData(
+  //       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDistrict&ParentRegionID=',
+  //       locations.division,
+  //       setDistrict
+  //     );
+  //   }
+  // }, [locations.division]);
+
+  // useEffect(() => {
+  //   if (locations.district) {
+  //     getLocationData(
+  //       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionThana&ParentRegionID=',
+  //       locations.district,
+  //       setThana
+  //     );
+  //   }
+  // }, [locations.district]);
 
   const handleChange = e => {
     setFormData({
@@ -221,7 +224,17 @@ const page = () => {
                 required
               />
             </div>
-            <div className="grid grid-cols-3 gap-2">
+            <Locations
+              state={formData}
+              updateState={(key, value) =>
+                setFormData(prevState => ({
+                  ...prevState,
+                  [key]: value,
+                }))
+              }
+              fieldKey="RegionID"
+            />
+            {/* <div className="grid grid-cols-3 gap-2">
               <div>
                 <label
                   className="block text-sm font-bold mb-1"
@@ -307,7 +320,7 @@ const page = () => {
                     ))}
                 </select>
               </div>
-            </div>
+            </div> */}
 
             <div>
               <label
