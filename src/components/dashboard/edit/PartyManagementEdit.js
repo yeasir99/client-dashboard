@@ -30,7 +30,7 @@ const PartyManagementEdit = ({ id }) => {
   });
 
   const [newRegion, setNewRegion] = useState('');
-  console.log(newRegion);
+
   const division = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'
   );
@@ -122,7 +122,6 @@ const PartyManagementEdit = ({ id }) => {
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_party&PartyID=${id}`,
       dataWillBeSubmitted
     );
-    console.log(res);
     router.push('/dashboard/party-management');
   };
 

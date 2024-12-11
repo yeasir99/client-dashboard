@@ -1,17 +1,51 @@
 import useGetData from '@/utils/useGetData';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const PartyCoveredAreaView = ({ id }) => {
-  const { status, data } = useGetData(
-    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_partydetailsAreas&PartyID=${id}`
-  );
-  if (status === 'pending') {
+  const [state, setState] = useState({
+    status: 'pending',
+    data: [],
+  });
+
+  const getData = async () => {
+    try {
+      const res = await axios.get(
+        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_partydetailsAreas&PartyID=${id}`
+      );
+      const { PartyAreas } = res.data;
+      setState({
+        ...state,
+        status: 'idle',
+        data: PartyAreas,
+      });
+    } catch (error) {
+      setState({
+        ...state,
+        status: 'idle',
+      });
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  if (state.status === 'pending') {
     return (
       <div className="my-3 text-center text-xl font-semibold">Loading...</div>
     );
   }
+  if (state.data.length === 0) {
+    return (
+      <div className="my-3 text-center text-xl font-semibold">
+        User not assign any area yet
+      </div>
+    );
+  }
   return (
     <>
-      {data.PartyAreas.length ? (
+      {state.data.length ? (
         <div className="flex flex-col">
           <div>
             <div className="inline-block max-w-full w-full pt-5">
@@ -32,7 +66,7 @@ const PartyCoveredAreaView = ({ id }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.PartyAreas.map(item => (
+                    {state.data.map(item => (
                       <tr
                         className="border-b border-neutral-200 dark:border-white/10"
                         key={item.RegionID}
