@@ -205,11 +205,13 @@ const PartyManagementEdit = ({ id }) => {
                 required
               />
             </div>
-            <LocationEdit
-              updateState={setNewRegion}
-              regionId={formData.RegionID}
-              division={division}
-            />
+            {division.status !== 'pending' && (
+              <LocationEdit
+                updateState={setNewRegion}
+                regionId={formData.RegionID}
+                division={division}
+              />
+            )}
 
             <div>
               <label
