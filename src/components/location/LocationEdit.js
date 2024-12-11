@@ -2,16 +2,37 @@ import { useState, useEffect } from 'react';
 import useGetData from '@/utils/useGetData';
 import axios from 'axios';
 
-const Locations = ({ updateState, fieldKey }) => {
+const LocationEdit = ({ updateState, regionId = '', division }) => {
   const [locationID, setLocationID] = useState({
     divisionID: '',
     districtID: '',
     thanaID: '',
     areaID: '',
   });
-  const { status, data } = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'
-  );
+  const { status, data } = division;
+
+  async function getPrevLocation() {
+    if (regionId) {
+      const res = await axios.get(
+        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_singlearealocation&RegionID=${regionId}`
+      );
+      if (res.data.data.length) {
+        const locData = res.data.data[0];
+        console.log(locData);
+        setLocationID({
+          ...locationID,
+          divisionID: locData.DivisionID,
+          districtID: locData.DistrictID,
+          thanaID: locData.ThanaID,
+          areaID: locData.AreaID,
+        });
+      }
+    }
+  }
+
+  useEffect(() => {
+    getPrevLocation();
+  }, [data]);
 
   const [district, setDistrict] = useState([]);
   const [thana, setThana] = useState([]);
@@ -75,7 +96,6 @@ const Locations = ({ updateState, fieldKey }) => {
                 thanaID: '',
                 areaID: '',
               });
-              updateState(fieldKey, '');
             }}
           >
             <option value="" disabled={true} selected></option>
@@ -103,7 +123,6 @@ const Locations = ({ updateState, fieldKey }) => {
                 thanaID: '',
                 areaID: '',
               });
-              updateState(fieldKey, '');
             }}
             disabled={locationID.divisionID ? false : true}
           >
@@ -131,7 +150,6 @@ const Locations = ({ updateState, fieldKey }) => {
                 thanaID: e.target.value,
                 areaID: '',
               });
-              updateState(fieldKey, '');
             }}
             disabled={locationID.districtID ? false : true}
           >
@@ -159,7 +177,7 @@ const Locations = ({ updateState, fieldKey }) => {
               ...locationID,
               areaID: e.target.value,
             });
-            updateState(fieldKey, e.target.value);
+            updateState(e.target.value);
           }}
           disabled={locationID.thanaID ? false : true}
         >
@@ -176,4 +194,4 @@ const Locations = ({ updateState, fieldKey }) => {
   );
 };
 
-export default Locations;
+export default LocationEdit;

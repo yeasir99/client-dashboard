@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useGetData from '@/utils/useGetData';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import Locations from '@/components/location/Locations';
+import LocationEdit from '@/components/location/LocationEdit';
 
 const PartyManagementEdit = ({ id }) => {
   const [formData, setFormData] = useState({
@@ -28,6 +28,12 @@ const PartyManagementEdit = ({ id }) => {
     IsSamityMember: '',
     WayOfSendingLetters: '',
   });
+
+  const [newRegion, setNewRegion] = useState('');
+  console.log(newRegion);
+  const division = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'
+  );
 
   async function getPreviousData() {
     const res = await axios.get(
@@ -56,7 +62,7 @@ const PartyManagementEdit = ({ id }) => {
     let dataWillBeSubmitted = {
       PartyName: formData.PartyName,
       Address: formData.Address,
-      RegionID: formData.RegionID,
+      RegionID: newRegion || formData.RegionID,
     };
 
     if (formData.ContactPersonName) {
@@ -112,10 +118,11 @@ const PartyManagementEdit = ({ id }) => {
       dataWillBeSubmitted.WayOfSendingLetters = formData.WayOfSendingLetters;
     }
 
-    const res = await axios.post(
-      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_party',
+    const res = await axios.put(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_party&PartyID=${id}`,
       dataWillBeSubmitted
     );
+    console.log(res);
     router.push('/dashboard/party-management');
   };
 
@@ -199,17 +206,11 @@ const PartyManagementEdit = ({ id }) => {
                 required
               />
             </div>
-            {formData.RegionID && (
-              <Locations
-                updateState={(key, value) =>
-                  setFormData(prevState => ({
-                    ...prevState,
-                    [key]: value,
-                  }))
-                }
-                fieldKey="RegionID"
-              />
-            )}
+            <LocationEdit
+              updateState={setNewRegion}
+              regionId={formData.RegionID}
+              division={division}
+            />
 
             <div>
               <label

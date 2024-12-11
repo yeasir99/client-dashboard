@@ -15,7 +15,6 @@ export const authOptions = {
             'https://kblsf.site/DLogicKBL/salesforce_api.php?action=login',
             { Username, Password }
           );
-          console.log(res);
           if (!res.data.success) {
             return null;
           }
