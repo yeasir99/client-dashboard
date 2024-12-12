@@ -104,7 +104,7 @@ const NavItem = () => {
           href: '/dashboard/ta-da',
         },
         {
-          name: 'Purpose Category',
+          name: 'Marketing Activity List',
           href: '/dashboard/purpose-management',
         },
         {

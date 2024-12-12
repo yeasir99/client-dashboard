@@ -28,7 +28,7 @@ const page = () => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">purposes management</h1>
+        <h1 className="text-2xl capitalize mb-3">Add New Activity</h1>
         <form>
           <input
             name="search"

@@ -31,7 +31,7 @@ const PurposeManagement = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Purpose
+                    Marketing Activity List
                   </th>
 
                   <th scope="col" className="px-6 py-4">

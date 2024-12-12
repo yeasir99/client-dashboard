@@ -11,14 +11,14 @@ const PurposeView = ({ id }) => {
     <div className="flex justify-center">
       <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
         <h1 className="text-center text-xl font-semibold mb-3">
-          Purposes Management Information
+          Marketing Activity List
         </h1>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Id:</h1>
           <h1>{data.ID}</h1>
         </div>
         <div className="flex items-center gap-2">
-          <h1 className="text-lg">visit Purpose:</h1>
+          <h1 className="text-lg">Activity:</h1>
           <h1>{data.CategoryName}</h1>
         </div>
       </div>
