@@ -100,7 +100,7 @@ const NavItem = () => {
           href: '/dashboard/party-management',
         },
         {
-          name: 'TA/DA & Others Allowance',
+          name: 'Marketing Expense',
           href: '/dashboard/ta-da',
         },
         {
@@ -244,7 +244,7 @@ const NavItem = () => {
           href: '/dashboard/party-management',
         },
         {
-          name: 'TA/DA allowance type',
+          name: 'Sales & Distribution Expense Ledger',
           href: '/dashboard/ta-da',
         },
         {

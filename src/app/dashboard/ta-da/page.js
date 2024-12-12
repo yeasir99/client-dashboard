@@ -5,12 +5,12 @@ const page = () => {
   return (
     <div>
       <h1 className="text-2xl capitalize mb-3">
-        tA-DA &amp; other allowance management
+        Sales &amp; Distribution Expense Ledger
       </h1>
       <div className="flex justify-between items-center">
         <Link href="/dashboard/ta-da/add">
           <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
-            add new TA/DA
+            Add New Expense Ledger
           </button>
         </Link>
         <form>

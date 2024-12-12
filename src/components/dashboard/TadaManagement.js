@@ -31,7 +31,7 @@ const TadaManagement = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    TA/DA Allowance Type
+                    Expense Ledger
                   </th>
 
                   <th scope="col" className="px-6 py-4">

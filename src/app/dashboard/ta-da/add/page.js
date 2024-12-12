@@ -28,7 +28,9 @@ const page = () => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">TA/DA Allowance management</h1>
+        <h1 className="text-2xl capitalize mb-3">
+          Sales & Distribution Expense Ledger
+        </h1>
         <form>
           <input
             name="search"
@@ -39,12 +41,9 @@ const page = () => {
         </form>
       </div>
       <div className="max-w-2xl bg-gray-200 rounded-md px-4 py-4">
-        <h2 className="text-lg font-semibold mb-2 capitalize">
-          TA/DA &amp; Others Allowance Management
-        </h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="TaDa" className="block text-sm font-bold mb-1">
-            TA/DA &amp; Others Allowance:
+            Sales & Distribution Expense Ledger:
           </label>
           <input
             type="text"
@@ -62,7 +61,7 @@ const page = () => {
               className="capitalize bg-primary px-5 py-1 text-white rounded-md"
               type="submit"
             >
-              Save TA/DA
+              Save Expense Ledger
             </button>
           </div>
         </form>
