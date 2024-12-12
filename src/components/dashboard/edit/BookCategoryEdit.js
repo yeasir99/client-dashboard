@@ -39,7 +39,7 @@ const BookCategoryEdit = ({ id }) => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">book-Category management</h1>
+        <h1 className="text-2xl capitalize mb-3">Books Group management</h1>
         <form>
           <input
             name="search"
@@ -51,14 +51,14 @@ const BookCategoryEdit = ({ id }) => {
       </div>
       <div className="max-w-2xl bg-gray-200 rounded-md px-4 py-4">
         <h2 className="text-lg font-semibold mb-2 capitalize">
-          add new books-Category
+          add new Books Group
         </h2>
         <form onSubmit={handleSubmit}>
           <label
             htmlFor="bookCategory"
             className="block text-sm font-bold mb-1"
           >
-            Books-Category:
+            Books Group:
           </label>
           <input
             type="text"
@@ -73,7 +73,7 @@ const BookCategoryEdit = ({ id }) => {
           />
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
-              Save Books-Category
+              Save Books Group
             </button>
           </div>
         </form>

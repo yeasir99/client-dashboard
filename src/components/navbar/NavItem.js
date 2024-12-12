@@ -88,7 +88,7 @@ const NavItem = () => {
           href: '/dashboard/institution',
         },
         {
-          name: 'Book Category',
+          name: 'Books Group',
           href: '/dashboard/book-category',
         },
         {
@@ -111,14 +111,14 @@ const NavItem = () => {
           name: 'Employee VS Region Mapping',
           href: '/dashboard/mapping',
         },
-        {
-          name: 'Class Information',
-          href: '/dashboard/class-management',
-        },
-        {
-          name: 'Subject Information',
-          href: '/dashboard/subject-management',
-        },
+        // {
+        //   name: 'Class Information',
+        //   href: '/dashboard/class-management',
+        // },
+        // {
+        //   name: 'Subject Information',
+        //   href: '/dashboard/subject-management',
+        // },
       ],
     },
     {

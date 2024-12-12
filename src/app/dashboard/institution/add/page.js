@@ -326,13 +326,13 @@ const page = () => {
                           scope="col"
                           className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                         >
-                          Class Name
+                          Books Group
                         </th>
                         <th
                           scope="col"
                           className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                         >
-                          Subject Name
+                          Books Name
                         </th>
 
                         <th scope="col" className="px-6 py-4">
@@ -347,7 +347,7 @@ const page = () => {
                             className="border-b border-neutral-200 dark:border-white/10"
                             key={item.id}
                           >
-                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
                               <input
                                 type="text"
                                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
@@ -359,7 +359,7 @@ const page = () => {
                               />
                             </td>
 
-                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
                               <input
                                 type="text"
                                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
@@ -371,7 +371,7 @@ const page = () => {
                               />
                             </td>
 
-                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
                               <input
                                 type="text"
                                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
@@ -383,7 +383,7 @@ const page = () => {
                               />
                             </td>
 
-                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
                               <select
                                 name="classNameInfo"
                                 className="w-full rounded-md"
@@ -406,7 +406,7 @@ const page = () => {
                                   ))}
                               </select>
                             </td>
-                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium ">
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium ">
                               <select
                                 name="subjectName"
                                 className="w-full rounded-md"

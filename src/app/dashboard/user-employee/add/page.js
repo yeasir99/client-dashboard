@@ -49,7 +49,7 @@ const page = () => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">User Management</h1>
+        <h1 className="text-2xl capitalize mb-3">Employee Registration</h1>
         <form>
           <input
             name="search"
@@ -71,7 +71,7 @@ const page = () => {
               htmlFor="EmployeeID"
               className="capitalize flex font-semibold text-md py-1"
             >
-              employeeID:
+              employee ID:
             </label>
 
             <input
@@ -102,7 +102,7 @@ const page = () => {
           </div>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
-              Dasignation/Role:
+              Designation/Role:
             </label>
             <select
               name="dasignationRole"
@@ -200,7 +200,7 @@ const page = () => {
               htmlFor="Phone"
               className="capitalize flex font-semibold text-md py-1"
             >
-              Phone:
+              Mobile Number:
             </label>
 
             <input

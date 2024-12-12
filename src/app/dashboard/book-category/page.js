@@ -4,11 +4,11 @@ import BookCategory from '@/components/dashboard/BookCategory';
 const page = () => {
   return (
     <div>
-      <h1 className="text-2xl capitalize mb-3">book-Category management</h1>
+      <h1 className="text-2xl capitalize mb-3">Books Group management</h1>
       <div className="flex justify-between items-center">
         <Link href="/dashboard/book-category/add">
           <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
-            add new book category
+            add new Books Group
           </button>
         </Link>
         <form>
