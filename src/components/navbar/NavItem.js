@@ -141,11 +141,11 @@ const NavItem = () => {
       href: '/dashboard/visit-approval-inital',
       status: 'main',
     },
-    {
-      name: 'Production Order',
-      href: '/dashboard/production-order',
-      status: 'main',
-    },
+    // {
+    //   name: 'Production Order',
+    //   href: '/dashboard/production-order',
+    //   status: 'main',
+    // },
     {
       name: 'Product Receipt',
       href: '/dashboard/product-receipt',

@@ -8,6 +8,7 @@ const BookManagementEdit = ({ id }) => {
   const [formData, setFormData] = useState({
     category: '',
     bookTitle: '',
+    status: '',
   });
 
   const [prevData, setPrevData] = useState({});
@@ -37,6 +38,7 @@ const BookManagementEdit = ({ id }) => {
         setFormData({
           category: filterItem[0].ID,
           bookTitle: prevData.ProductName,
+          status: prevData.status,
         });
       }
     }
@@ -58,6 +60,7 @@ const BookManagementEdit = ({ id }) => {
       {
         Categoryid: formData.category,
         ProductName: formData.bookTitle,
+        status: formData.status,
       }
     );
     router.push('/dashboard/book-management');
@@ -83,7 +86,7 @@ const BookManagementEdit = ({ id }) => {
         <form onSubmit={handleSubmit}>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
-              Category:
+              Books Group:
             </label>
 
             <select
@@ -103,7 +106,7 @@ const BookManagementEdit = ({ id }) => {
             </select>
           </div>
           <label htmlFor="BookTitle" className="block text-sm font-bold mb-1">
-            Book Title :
+            Book Name :
           </label>
           <input
             type="text"
@@ -113,6 +116,22 @@ const BookManagementEdit = ({ id }) => {
             onChange={handleChange}
             value={formData.bookTitle}
           />
+          <div>
+            <label className="capitalize flex font-semibold text-md py-1">
+              Status
+            </label>
+
+            <select
+              name="status"
+              className="w-full rounded-md"
+              value={formData.status}
+              onChange={handleChange}
+              required
+            >
+              <option value="1">active</option>
+              <option value="0">disable</option>
+            </select>
+          </div>
 
           <div className="mt-5">
             <button

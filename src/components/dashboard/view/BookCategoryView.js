@@ -3,7 +3,7 @@ import useGetData from '@/utils/useGetData';
 
 const BookCategoryView = ({ id }) => {
   const { status, data } = useGetData(
-    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategory&ID=${id}`
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_product&ProductID=${id}`
   );
   if (status === 'pending') {
     return <div>Loading...</div>;
@@ -16,11 +16,19 @@ const BookCategoryView = ({ id }) => {
         </h1>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Id:</h1>
-          <h1>{data.ID}</h1>
+          <h1>{data.ProductID}</h1>
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Books Group:</h1>
-          <h1>{data.CategoryName}</h1>
+          <h1>{data.Category}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Books Name:</h1>
+          <h1>{data.ProductName}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Status:</h1>
+          <h1>{Number(data.status) ? 'Active' : 'Deactive'}</h1>
         </div>
       </div>
     </div>

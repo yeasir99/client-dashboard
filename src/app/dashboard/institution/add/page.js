@@ -9,10 +9,10 @@ import Locations from '@/components/location/Locations';
 
 const page = () => {
   const classInfo = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_classinfos'
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys'
   );
   const subjectInfo = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_subjectinfos'
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productcategorywise&Categoryid=176'
   );
 
   const institution = useGetData(
@@ -423,8 +423,11 @@ const page = () => {
                                 ></option>
                                 {subjectInfo.data.length &&
                                   subjectInfo.data.map(item => (
-                                    <option value={item.ID} key={item.ID}>
-                                      {item.SubjectName}
+                                    <option
+                                      value={item.ProductID}
+                                      key={item.ProductID}
+                                    >
+                                      {item.ProductName}
                                     </option>
                                   ))}
                               </select>
