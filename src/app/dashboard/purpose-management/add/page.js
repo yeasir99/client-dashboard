@@ -39,12 +39,9 @@ const page = () => {
         </form>
       </div>
       <div className="max-w-2xl bg-gray-200 rounded-md px-4 py-4">
-        <h2 className="text-lg font-semibold mb-2 capitalize">
-          add new purpose
-        </h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="Purpose" className="block text-sm font-bold mb-1">
-            purpose:
+            Activity:
           </label>
           <input
             type="text"
@@ -59,7 +56,7 @@ const page = () => {
           />
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
-              Save purposes
+              Save
             </button>
           </div>
         </form>
