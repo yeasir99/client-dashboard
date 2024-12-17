@@ -1,5 +1,6 @@
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import useGetData from '@/utils/useGetData';
+import Link from 'next/link';
 
 const SaleOrderList = () => {
   const {status, data} = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_salesorders')
@@ -93,7 +94,9 @@ if(status === 'pending'){
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                       <span className="bg-cyan-500 p-1 inline-block rounded-md">
+                      <Link href={`/dashboard/sales-order/view/sales/${item.SalesOrderID}`}>
                         <FaEye className="text-white text-xl" />
+                      </Link>
                       </span>{' '}
                       |
                       <span className="bg-amber-600 p-1 inline-block rounded-md">

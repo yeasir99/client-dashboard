@@ -1,95 +1,10 @@
 import { FaEye, FaRegEdit } from 'react-icons/fa';
+import useGetData from '@/utils/useGetData';
+import Link from 'next/link';
+
 const Specimen = () => {
-  let data = [
-    {
-      id: 1,
-      orderList: 'Bangla',
-      name: 'Class One',
-      orderDate: '2024-09-13',
-      status: 'Pending',
-      totalAmount: 5000,
-    },
-    {
-      id: 2,
-      orderList: 'English',
-      name: 'Class One',
-      orderDate: '2024-09-14',
-      status: 'Completed',
-      totalAmount: 6000,
-    },
-    {
-      id: 3,
-      orderList: 'Mathematics',
-      name: 'Class Two',
-      orderDate: '2024-09-15',
-      status: 'Pending',
-      totalAmount: 5500,
-    },
-    {
-      id: 4,
-      orderList: 'Science',
-      name: 'Class Two',
-      orderDate: '2024-09-16',
-      status: 'Pending',
-      totalAmount: 7000,
-    },
-    {
-      id: 5,
-      orderList: 'History',
-      name: 'Class Three',
-      orderDate: '2024-09-17',
-      status: 'Completed',
-      totalAmount: 8000,
-    },
-    {
-      id: 6,
-      orderList: 'Geography',
-      name: 'Class Three',
-      orderDate: '2024-09-18',
-      status: 'Pending',
-      totalAmount: 4500,
-    },
-    {
-      id: 7,
-      orderList: 'Computer Science',
-      name: 'Class Four',
-      orderDate: '2024-09-19',
-      status: 'Pending',
-      totalAmount: 6500,
-    },
-    {
-      id: 8,
-      orderList: 'Art',
-      name: 'Class Four',
-      orderDate: '2024-09-20',
-      status: 'Completed',
-      totalAmount: 4000,
-    },
-    {
-      id: 9,
-      orderList: 'Physical Education',
-      name: 'Class Five',
-      orderDate: '2024-09-21',
-      status: 'Pending',
-      totalAmount: 3000,
-    },
-    {
-      id: 10,
-      orderList: 'Music',
-      name: 'Class Five',
-      orderDate: '2024-09-22',
-      status: 'Completed',
-      totalAmount: 3500,
-    },
-    {
-      id: 11,
-      orderList: 'Islamic Studies',
-      name: 'Class Six',
-      orderDate: '2024-09-23',
-      status: 'Pending',
-      totalAmount: 5000,
-    },
-  ];
+  const {status, data} = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_specimenorders')
+  console.log(data)
   return (
     <div className="flex flex-col">
       <div>
@@ -107,7 +22,7 @@ const Specimen = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Specimen order list
+                    Specimen order No
                   </th>
                   <th
                     scope="col"
@@ -143,30 +58,32 @@ const Specimen = () => {
                 {data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.SalesOrderID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.SalesOrderID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.orderList}
+                      {item.SalesOrderNo}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.name}
+                      {item.UserName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.orderDate}
+                      {item.OrderDate}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.status}
+                      {item.Status}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.totalAmount}
+                      {item.TotalAmount}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                       <span className="bg-cyan-500 p-1 inline-block rounded-md">
+                      <Link href={`/dashboard/sales-order/view/speciman/${item.SalesOrderID}`}>
                         <FaEye className="text-white text-xl" />
+                      </Link>
                       </span>{' '}
                       |
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
