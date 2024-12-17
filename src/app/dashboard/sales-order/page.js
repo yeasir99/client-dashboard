@@ -63,13 +63,13 @@ const page = () => {
       </div>
       <div className="flex justify-between items-center">
         {current === 'sales' ? (
-          <Link href="/dashboard/sales-order/add">
+          <Link href="/dashboard/sales-order/add/sales">
             <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
               Add Sales Order
             </button>
           </Link>
         ) : (
-          <Link href="/dashboard/sales-order/add">
+          <Link href="/dashboard/sales-order/add/speciman">
             <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
               Add Speciman Order
             </button>

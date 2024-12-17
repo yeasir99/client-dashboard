@@ -393,11 +393,7 @@ const page = () => {
                                 }
                                 value={formData.teachers.classNameInfo}
                               >
-                                <option
-                                  value=""
-                                  disabled={true}
-                                  selected
-                                ></option>
+                                <option value="" disabled={true}></option>
                                 {classInfo.data.length &&
                                   classInfo.data.map(item => (
                                     <option value={item.ID} key={item.ID}>
@@ -416,11 +412,7 @@ const page = () => {
                                 }
                                 value={formData.teachers.subjectName}
                               >
-                                <option
-                                  value=""
-                                  disabled={true}
-                                  selected
-                                ></option>
+                                <option value="" disabled={true}></option>
                                 {subjectInfo.data.length &&
                                   subjectInfo.data.map(item => (
                                     <option
