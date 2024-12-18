@@ -43,7 +43,7 @@ const SalesOrderForm = ({ session }) => {
   }, [formData.orderDetails]);
 
   const allParties = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_parties'
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_parties_users&UserID=${session.user.id}`
   );
 
   const fiscalYear = useGetData(

@@ -1,3 +1,4 @@
+'use client'
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import useGetData from '@/utils/useGetData';
 import Link from 'next/link';
