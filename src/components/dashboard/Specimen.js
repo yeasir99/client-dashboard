@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 const Specimen = () => {
   const {status, data} = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_specimenorders')
-  console.log(data)
   return (
     <div className="flex flex-col">
       <div>

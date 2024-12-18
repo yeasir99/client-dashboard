@@ -29,7 +29,6 @@ const SpecimanOrderForm = ({ session }) => {
       },
     ],
   });
-  console.log(formData);
 
   useEffect(() => {
     const total = formData.orderDetails.reduce(
@@ -169,33 +168,6 @@ const SpecimanOrderForm = ({ session }) => {
               className="rounded-md"
             />
           </div>
-          {/* <div>
-            <label className="capitalize flex font-semibold text-md py-1">
-              Party Name:
-            </label>
-
-            <select
-              name="PartyID"
-              className="w-full rounded-md"
-              onChange={e => {
-                setFormData({
-                  ...formData,
-                  PartyID: e.target.value,
-                });
-              }}
-              value={formData.PartyID}
-              required
-            >
-              <option value=""></option>
-              {allParties.data.length &&
-                allParties.data.map(item => (
-                  <option value={item.PartyID} key={item.PartyID}>
-                    {item.PartyName}
-                  </option>
-                ))}
-            </select>
-          </div> */}
-
           <div className="flex flex-col">
             {/* table Start */}
             <h2 className="text-xl font-semibold my-2 capitalize">
