@@ -30,8 +30,6 @@ const SalesOrderForm = ({ session }) => {
     ],
   });
 
-  console.log(formData);
-
   useEffect(() => {
     const total = formData.orderDetails.reduce(
       (sum, item) => sum + (item.TotalPrice || 0),
@@ -69,7 +67,7 @@ const SalesOrderForm = ({ session }) => {
   const getPrice = async (item, { name, value }) => {
     try {
       const res = await axios.get(
-        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productrate&FinancialYearID=${item.FinancialYearID}&ProductID=${event.target.value}`
+        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productrate&FinancialYearID=${item.FinancialYearID}&ProductID=${value}`
       );
 
       setFormData({
@@ -79,7 +77,7 @@ const SalesOrderForm = ({ session }) => {
             ? {
                 ...detail,
                 [name]: value,
-                Price: res.data.Rates.length ? res.data.Rates[0] : '',
+                Price: res.data.Rate ? res.data.Rate : '',
               }
             : detail
         ),

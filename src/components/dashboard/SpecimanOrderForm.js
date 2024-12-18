@@ -78,7 +78,7 @@ const SpecimanOrderForm = ({ session }) => {
             ? {
                 ...detail,
                 [name]: value,
-                Price: res.data.Rates.length ? res.data.Rates[0] : '',
+                Price: res.data.Rate ? res.data.Rate : '',
               }
             : detail
         ),
