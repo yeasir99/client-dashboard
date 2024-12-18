@@ -22,6 +22,12 @@ const ProductReceiptList = () => {
             <table className="max-w-full w-full overflow-x-scroll border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
               <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
                 <tr className="bg-text1 text-white">
+                <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Receipt Id
+                  </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
@@ -84,6 +90,9 @@ const ProductReceiptList = () => {
                       className="border-b border-neutral-200 dark:border-white/10"
                       key={item.ProductReceiptNo}
                     >
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                        {item.ProductReceiptID}
+                      </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.ProductReceiptNo}
                       </td>
@@ -112,7 +121,7 @@ const ProductReceiptList = () => {
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                         <span className="bg-cyan-500 p-1 inline-block rounded-md">
                           <Link
-                            href={`/dashboard/product-receipt/view/${item.ProductID}`}
+                            href={`/dashboard/product-receipt/view/${item.ProductReceiptID}`}
                           >
                             <FaEye className="text-white text-xl" />
                           </Link>
