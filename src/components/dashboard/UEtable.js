@@ -108,7 +108,7 @@ const UEtable = () => {
                       {item.EmpName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.DesignationID}
+                      {item.Designation}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                       {item.Email}
