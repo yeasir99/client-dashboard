@@ -1,10 +1,15 @@
+'use client'
+import { useState } from 'react';
 import Link from 'next/link';
+
 const page = () => {
+  const [current, setCurrent] = useState('sales');
+
   return (
     <div>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl capitalize mb-3">
-          visit entry approval system
+          Sales Order approval system
         </h1>
         <form>
           <input
@@ -15,6 +20,62 @@ const page = () => {
           />
         </form>
       </div>
+      <div>
+      <div className="flex gap-8 items-center mb-5">
+        <div className="flex gap-4">
+          <div
+            className="flex gap-2 items-center"
+            onClick={() => {
+              if (current !== 'sales') {
+                setCurrent('sales');
+              }
+            }}
+          >
+            <input
+              id="sales"
+              type="checkbox"
+              checked={current === 'sales'}
+              className="rounded-full"
+            />
+            <label
+              className={`${
+                current === 'sales' ? 'text-xl font-semibold' : 'text-xl'
+              }`}
+              htmlFor="sales"
+            >
+              Sales Order
+            </label>
+          </div>
+          <div
+            className="flex gap-2 items-center"
+            onClick={() => {
+              if (current !== 'speciman') {
+                setCurrent('speciman');
+              }
+            }}
+          >
+            <input
+              id="speciman"
+              type="checkbox"
+              checked={current === 'speciman'}
+              className="rounded-full"
+            />
+            <label
+              className={`${
+                current === 'speciman' ? 'text-xl font-semibold' : 'text-xl'
+              }`}
+              htmlFor="speciman"
+            >
+              Speciman Order
+            </label>
+          </div>
+        </div>
+      </div>
+      <h1 className="text-2xl capitalize text-center py-3">
+          {current === 'sales' ? 'sales order list' : 'Speciman Order List'}
+        </h1>
+      </div>
+      
       {/* start */}
       <div className="flex flex-col">
         <div>
@@ -51,23 +112,16 @@ const page = () => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                    >
                       Total Amount
                     </th>
                     <th
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Checking
+                      Approval Status
                     </th>
-
                     <th scope="col" className="px-6 py-4">
-                      Approval
+                      Approval Action
                     </th>
                   </tr>
                 </thead>
@@ -86,27 +140,23 @@ const page = () => {
                       Mr. Rahman
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Library-1
+                    20000
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                       Pending
                     </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      20000
-                    </td>
-
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
                       <Link href="sales-order-approval/check">
                         <button className="bg-gray-300 px-1 py-[2px]">
-                          Checking Approval
+                          Authorization
                         </button>
                       </Link>
 
-                      <Link href="sales-order-approval/final">
+                      {/* <Link href="sales-order-approval/final">
                         <button className="bg-gray-300 px-1 py-[2px]">
-                          Final Approval
+                          Approval
                         </button>
-                      </Link>
+                      </Link> */}
                     </td>
                   </tr>
                 </tbody>
@@ -116,7 +166,7 @@ const page = () => {
         </div>
       </div>
       {/* end */}
-      <h1 className="text-2xl capitalize mb-2">Completed visit list</h1>
+      <h1 className="text-2xl capitalize mb-2">Completed / Rejected list</h1>
       {/* start */}
       <div className="flex flex-col">
         <div>
@@ -135,45 +185,32 @@ const page = () => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Plan ID
+                      Sales Order No
                     </th>
                     <th
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Visit Date
+                      Order Date
                     </th>
                     <th
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Employee Name
+                      Party Name
                     </th>
                     <th
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Place
+                      Total Amount
                     </th>
                     <th
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Visit Area
+                      Approval Status
                     </th>
-                    <th
-                      scope="col"
-                      className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                    >
-                      purpose
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                    >
-                      Comment
-                    </th>
-
                     <th scope="col" className="px-6 py-4">
                       Action
                     </th>
@@ -195,21 +232,14 @@ const page = () => {
                       Mr. Rahman
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Library-1
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Pending
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                       20000
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Comment
+                      Rejected
                     </td>
-
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
                       <button className="bg-gray-300 px-1 py-[2px]">
-                        Un-Reject
+                        View
                       </button>
                     </td>
                   </tr>

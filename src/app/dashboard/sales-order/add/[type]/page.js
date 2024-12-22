@@ -4,7 +4,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 const page = async ({ params }) => {
   const session = await getServerSession(authOptions);
-  console.log(params);
   return params.type === 'sales' ? (
     <SalesOrderForm session={session} />
   ) : (
