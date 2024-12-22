@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const BookCategory = () => {
   const url =
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_products';
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys';
   const { status, data } = useGetData(url);
   if (status === 'pending') {
     return <div>Loading....</div>;
@@ -33,18 +33,8 @@ const BookCategory = () => {
                   >
                     Books Group
                   </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Books Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Status
-                  </th>
+                  
+                  
 
                   <th scope="col" className="px-6 py-4">
                     Action
@@ -55,25 +45,18 @@ const BookCategory = () => {
                 {data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.ProductID}
+                    key={item.ID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.ProductID}
+                      {item.ID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.Category}
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.ProductName}
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {Boolean(Number(item.status)) ? 'Active' : 'Deactive'}
-                    </td>
-
+                      {item.CategoryName}
+                    </td>                   
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                       <span className="bg-cyan-500 p-1 inline-block rounded-md">
                         <Link
-                          href={`/dashboard/book-category/view/${item.ProductID}`}
+                          href={`/dashboard/book-category/view/${item.ID}`}
                         >
                           <FaEye className="text-white text-xl" />
                         </Link>
@@ -81,7 +64,7 @@ const BookCategory = () => {
                       |
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
                         <Link
-                          href={`/dashboard/book-category/edit/${item.ProductID}`}
+                          href={`/dashboard/book-category/edit/${item.ID}`}
                         >
                           <FaRegEdit className="text-white text-xl" />
                         </Link>
