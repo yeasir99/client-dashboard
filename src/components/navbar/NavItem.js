@@ -186,16 +186,16 @@ const NavItem = () => {
       href: '/dashboard/money-receipt',
       status: 'main',
     },
-    {
-      name: 'Specimen Order',
-      href: '/dashboard/specimen',
-      status: 'main',
-    },
-    {
-      name: 'Specimen Approval',
-      href: '/dashboard/',
-      status: 'main',
-    },
+    // {
+    //   name: 'Specimen Order',
+    //   href: '/dashboard/specimen',
+    //   status: 'main',
+    // },
+    // {
+    //   name: 'Specimen Approval',
+    //   href: '/dashboard/',
+    //   status: 'main',
+    // },
   ];
   let allLinks = [
     {

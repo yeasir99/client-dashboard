@@ -80,6 +80,18 @@ const page = () => {
     }
   }, [formData.ProductCategoryID]);
 
+  useEffect(() => {
+    const total = formData.orderDetails.reduce(
+      (sum, item) => sum + (item.TotalPrice || 0),
+      0
+    );
+
+    setFormData(prevState => ({
+      ...prevState,
+      TotalAmount: total,
+    }));
+  }, [formData.orderDetails]);
+
   const handleChange = e => {
     setFormData({
       ...formData,
@@ -96,6 +108,29 @@ const page = () => {
           : detail
       ),
     });
+  };
+
+  const getPrice = async (item, { name, value }) => {
+    try {
+      const res = await axios.get(
+        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productrate&FinancialYearID=${item.FinancialYearID}&ProductID=${event.target.value}`
+      );
+
+      setFormData({
+        ...formData,
+        orderDetails: formData.orderDetails.map(detail =>
+          detail.id === item.id
+            ? {
+                ...detail,
+                [name]: value,
+                Price: res.data.Rate ? res.data.Rate : '',
+              }
+            : detail
+        ),
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateOrderDetailBook = (event, item) => {
