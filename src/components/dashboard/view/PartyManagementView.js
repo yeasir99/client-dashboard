@@ -6,6 +6,7 @@ const PartyManagementView = ({ id }) => {
   const { status, data } = useGetData(
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_party&PartyID=${id}`
   );
+  console.log(data)
   if (status === 'pending') {
     return <div>Loading...</div>;
   }

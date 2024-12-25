@@ -17,13 +17,8 @@ const page = () => {
     BindingPartyID: '',
     ChallanNumber: '',
     PrintEdition: '',
-    FinancialYearID: '',
-    ProductCategoryID: '',
-    ProductID: '',
-    Quantity: '',
-    Rate: '',
-    ProductionOrderQty: '',
     UserID: '',
+    ProductionOrderQty: '',
     ChallanCopyPath: '',
     orderDetails: [
       {
@@ -148,6 +143,8 @@ const page = () => {
     e.preventDefault();
     const dataWillBeSubmitted = new FormData();
 
+    console.log(formData)
+
     for (const key in formData) {
       if (key === 'ChallanCopyPath' && formData[key]) {
         dataWillBeSubmitted.append(key, formData[key], formData[key].name);
@@ -159,14 +156,29 @@ const page = () => {
       } else if (key === 'UserID') {
         const id = session.data.user.id;
         dataWillBeSubmitted.append(key, id);
+      } else if (key === 'orderDetails'){
+        const allDetails = formData.orderDetails.map(item => ({
+            FinancialYearID: item.FinancialYearID,
+            ProductCategoryID: item.ProductCategoryID,
+            ProductID: item.ProductID,
+            Quantity: item.Quantity,
+            Rate: 200,
+        }))
+        const detailsJson = JSON.stringify(allDetails)
+        dataWillBeSubmitted.append('Details', detailsJson);
+      } else if (key === 'TotalAmount'){
+        console.log(key)
       } else {
         dataWillBeSubmitted.append(key, formData[key]);
       }
     }
     const res = await axios.post(
-      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_preceipt',
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_ppreceiptall',
       dataWillBeSubmitted
     );
+
+    console.log(res)
+
     router.push('/dashboard/product-receipt');
   };
 
@@ -348,7 +360,7 @@ const page = () => {
                           scope="col"
                           className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                         >
-                          T.Amount
+                          Total
                         </th>
 
                         <th scope="col" className="px-6 py-4">
@@ -420,9 +432,6 @@ const page = () => {
                                               ...detail,
                                               [event.target.name]:
                                                 event.target.value,
-                                              TotalPrice:
-                                                Number(event.target.value) *
-                                                Number(item.Price),
                                             }
                                           : detail
                                     ),
@@ -433,7 +442,31 @@ const page = () => {
                               />
                             </td>
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                              {item.Price && item.Price}
+                            <input
+                                type="text"
+                                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                                name="Price"
+                                onChange={event =>
+                                  setFormData({
+                                    ...formData,
+                                    orderDetails: formData.orderDetails.map(
+                                      detail =>
+                                        detail.id === item.id
+                                          ? {
+                                              ...detail,
+                                              [event.target.name]:
+                                                event.target.value,
+                                              TotalPrice:
+                                                Number(event.target.value) *
+                                                Number(item.Quantity),
+                                            }
+                                          : detail
+                                    ),
+                                  })
+                                }
+                                value={item.Price}
+                                required
+                              />
                             </td>
 
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
