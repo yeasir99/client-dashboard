@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import LocationEdit from '@/components/location/LocationEdit';
 
 const InstitutionManagementEdit = ({ id }) => {
   // const fileInputRef = useRef(null);
@@ -30,9 +31,24 @@ const InstitutionManagementEdit = ({ id }) => {
     ],
   });
 
+  const [newRegion, setNewRegion] = useState('');
+
+  const division = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDivision'
+  );
+
   const { status, data } = useGetData(
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institution&institutionID=${id}`
   );
+
+  useEffect(()=>{
+if(newRegion){
+  setFormData({
+    ...formData,
+    regionArea: newRegion
+  })
+}
+  }, [newRegion])
 
   useEffect(() => {
     if (data.InstitutionID) {
@@ -48,7 +64,6 @@ const InstitutionManagementEdit = ({ id }) => {
         status: data.status,
         teachers: data.details.length
           ? data.details.map(item => {
-              console.log(item);
               return {
                 id: uuidv4(),
                 teacherName: item.TeacherName,
@@ -71,22 +86,13 @@ const InstitutionManagementEdit = ({ id }) => {
   }, [data]);
 
   const classInfo = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_classinfos'
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys'
   );
   const subjectInfo = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_subjectinfos'
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productcategorywise&Categoryid=176'
   );
-
   const institution = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutiontypes'
-  );
-
-  const regions = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regions'
-  );
-
-  const regionsData = regions.data.filter(
-    item => Boolean(item.AreaID) === true
   );
 
   const handleChange = e => {
@@ -111,54 +117,30 @@ const InstitutionManagementEdit = ({ id }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-
-    let dataWillBeSubmit = new FormData();
-    dataWillBeSubmit.append('institutionTypeID', formData.institutionType);
-    dataWillBeSubmit.append('institutionName', formData.institutionName);
-    dataWillBeSubmit.append('ContactPersonName', formData.contactPersonName);
-    dataWillBeSubmit.append('TotalStudents', formData.totalStudent);
-    dataWillBeSubmit.append('Designation', formData.designation);
-    dataWillBeSubmit.append('ContactPhone', formData.phone);
-    dataWillBeSubmit.append('Address', formData.address);
-    dataWillBeSubmit.append('RegionID', formData.regionArea);
-
-    if (formData.teachers.length) {
-      formData.teachers.forEach((teacher, index) => {
-        dataWillBeSubmit.append(
-          `details[${index}].TeacherName`,
-          teacher.teacherName
-        );
-        dataWillBeSubmit.append(
-          `details[${index}].Designation`,
-          teacher.designation
-        );
-        dataWillBeSubmit.append(
-          `details[${index}].ContactPhone`,
-          teacher.phone
-        );
-        dataWillBeSubmit.append(
-          `details[${index}].sndClassID`,
-          teacher.classNameInfo
-        );
-        dataWillBeSubmit.append(
-          `details[${index}].sndSubjectID`,
-          teacher.subjectName
-        );
-      });
+    let dataWillBeSubmit = {
+      institutionTypeID: formData.institutionType,
+      institutionName: formData.institutionName,
+      ContactPersonName: formData.contactPersonName,
+      TotalStudents: formData.totalStudent,
+      Designation: formData.designation,
+      ContactPhone: formData.phone,
+      Address: formData.address,
+      RegionID: formData.regionArea,
+      details: []
     }
-
-    const res = await axios.put(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_institution&institutionID=${id}`,
-      dataWillBeSubmit,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+    formData.teachers.forEach((teacher, index) => {
+      let modifiedData = {
+        TeacherName: teacher.teacherName,
+        Designation: teacher.designation,
+        ContactPhone: teacher.phone,
+        sndClassID: teacher.classNameInfo,
+        sndSubjectID: teacher.subjectName
       }
-    );
+      dataWillBeSubmit.details = [...dataWillBeSubmit.details, modifiedData]
+    })
 
-    console.log(res);
-    router.push('/dashboard/institution');
+const res = await axios.put(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_institutionwithoutimage&institutionID=${id}`, dataWillBeSubmit)   
+router.push('/dashboard/institution');
   };
 
   return (
@@ -275,7 +257,7 @@ const InstitutionManagementEdit = ({ id }) => {
             onChange={handleChange}
             value={formData.address}
           />
-          <div>
+          {/* <div>
             <label className="capitalize flex font-semibold text-md py-1">
               Region/Area:
             </label>
@@ -295,7 +277,15 @@ const InstitutionManagementEdit = ({ id }) => {
                   </option>
                 ))}
             </select>
-          </div>
+          </div> */}
+
+          {division.status !== 'pending' && (
+              <LocationEdit
+                updateState={setNewRegion}
+                regionId={formData.regionArea}
+                division={division}
+              />
+            )}
 
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
@@ -348,13 +338,13 @@ const InstitutionManagementEdit = ({ id }) => {
                           scope="col"
                           className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                         >
-                          Class Name
+                          Books Group
                         </th>
                         <th
                           scope="col"
                           className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                         >
-                          Subject Name
+                          Books Name
                         </th>
 
                         <th scope="col" className="px-6 py-4">
@@ -445,8 +435,8 @@ const InstitutionManagementEdit = ({ id }) => {
                                 ></option>
                                 {subjectInfo.data.length &&
                                   subjectInfo.data.map(item => (
-                                    <option value={item.ID} key={item.ID}>
-                                      {item.SubjectName}
+                                    <option value={item.ProductID} key={item.ProductID}>
+                                      {item.ProductName}
                                     </option>
                                   ))}
                               </select>

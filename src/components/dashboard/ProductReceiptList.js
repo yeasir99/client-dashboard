@@ -5,8 +5,10 @@ import Link from 'next/link';
 
 const ProductReceiptList = () => {
   const { status, data } = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_preceipts'
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_ppreceipts'
   );
+
+console.log(data)
 
   if (status === 'pending') {
     return (
@@ -45,37 +47,25 @@ const ProductReceiptList = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Print
+                    Print Edition
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Financial Year
+                    Challan Number
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Books Group
+                    Challan Copy
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Books Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Price
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Quantity
+                    Pro.Order QTY
                   </th>
 
                   <th scope="col" className="px-6 py-4">
@@ -103,21 +93,15 @@ const ProductReceiptList = () => {
                         {item.PrintEdition}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.FinancialYearName}
+                        {item.ChallanNumber}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.ProductCategoryName}
+                        <a href={item.ChallanCopyPath} download target='_blank'>Download</a>
                       </td>
+                      
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.ProductName}
+                        {item.ProductionOrderQty}
                       </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.Quantity}
-                      </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.Rate}
-                      </td>
-
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                         <span className="bg-cyan-500 p-1 inline-block rounded-md">
                           <Link
