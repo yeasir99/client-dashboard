@@ -17,7 +17,6 @@ const InstitutionManagementEdit = ({ id }) => {
     phone: '',
     address: '',
     regionArea: '',
-    institutionImage: '',
     status: '',
     teachers: [
       {
@@ -35,25 +34,6 @@ const InstitutionManagementEdit = ({ id }) => {
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institution&institutionID=${id}`
   );
 
-  console.log(data);
-
-  const getImageBlob = async () => {
-    let config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: 'https://kblsf.site/DLogicKBL/uploads/institution_images/Institution_674b7b2157e754.71926424.jpg',
-      headers: {},
-    };
-    const response = await axios.request(config);
-    response
-      .then(fileData => {
-        console.log(fileData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
     if (data.InstitutionID) {
       setFormData({
@@ -65,7 +45,6 @@ const InstitutionManagementEdit = ({ id }) => {
         phone: data.ContactPhone,
         address: data.Address,
         regionArea: data.RegionID,
-        institutionImage: '',
         status: data.status,
         teachers: data.details.length
           ? data.details.map(item => {
@@ -88,7 +67,6 @@ const InstitutionManagementEdit = ({ id }) => {
               subjectName: '',
             },
       });
-      getImageBlob();
     }
   }, [data]);
 
@@ -144,20 +122,6 @@ const InstitutionManagementEdit = ({ id }) => {
     dataWillBeSubmit.append('Address', formData.address);
     dataWillBeSubmit.append('RegionID', formData.regionArea);
 
-    let updatedImage;
-
-    let image = formData.institutionImage;
-
-    // Handle institution image
-    if (formData.institutionImage) {
-      dataWillBeSubmit.append(
-        'InstitutionScanImage',
-        formData.institutionImage,
-        formData.institutionImage.name
-      );
-    }
-
-    dataWillBeSubmit.append('InstitutionScanImagePath', updatedImage);
     if (formData.teachers.length) {
       formData.teachers.forEach((teacher, index) => {
         dataWillBeSubmit.append(
@@ -182,8 +146,6 @@ const InstitutionManagementEdit = ({ id }) => {
         );
       });
     }
-
-    console.log(Array.from(dataWillBeSubmit));
 
     const res = await axios.put(
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_institution&institutionID=${id}`,
@@ -335,29 +297,6 @@ const InstitutionManagementEdit = ({ id }) => {
             </select>
           </div>
 
-          <div>
-            <label
-              className="capitalize flex font-semibold text-md py-1"
-              htmlFor="InstitutionImage"
-            >
-              Institution Image:
-            </label>
-            <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-              <input
-                id="InstitutionImage"
-                type="file"
-                className="file-input file-input-bordered w-full max-w-xs"
-                name="institutionImage"
-                onChange={e => {
-                  const file = e.target.files[0];
-                  setFormData({
-                    ...formData,
-                    [e.target.name]: file,
-                  });
-                }}
-              />
-            </div>
-          </div>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
               Status:

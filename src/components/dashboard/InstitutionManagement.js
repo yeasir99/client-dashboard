@@ -7,6 +7,7 @@ const InstitutionManagement = () => {
   const url =
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutions';
   const { status, data } = useGetData(url);
+  console.log(data);
   if (status === 'pending') {
     return <div>Loading....</div>;
   }
@@ -89,7 +90,7 @@ const InstitutionManagement = () => {
                     </td>
 
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.InstitutionTypeID}
+                      {item.InstitutionTypeName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                       {item.TotalStudents}
