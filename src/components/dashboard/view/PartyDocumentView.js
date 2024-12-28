@@ -3,7 +3,6 @@ import getFileTypeFromUrl from '@/utils/getFileTypeFromUrl';
 import ImageWithDownload from '../ImageWithDownload';
 import PdfWithDownload from '../PdfWithDownload';
 const PartyDocumentView = ({ partydoc }) => {
-  console.log(partydoc);
   if (partydoc.status === 'pending') {
     return (
       <h1 className="text-xl text-center py-5 font-semibold">Loading...</h1>
@@ -12,6 +11,7 @@ const PartyDocumentView = ({ partydoc }) => {
 
   return (
     <div className="py-6">
+      <h1 className="text-center py-6 font-semibold text-xl">Documents</h1>
       {partydoc.data.Documents.length ? (
         <div className="flex gap-3">
           {partydoc.data.Documents.map(item => {

@@ -11,6 +11,10 @@ const PartyManagementDocumentAdd = ({ id }) => {
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_partydoctypes'
   );
 
+  const partyDocument = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_partyDocs&PartyID=${id}`
+  );
+
   const [formData, setFormData] = useState([
     {
       id: uuidv4(),
@@ -184,6 +188,67 @@ const PartyManagementDocumentAdd = ({ id }) => {
             </button>
           </div>
         </form>
+      </div>
+
+      <div>
+        {partyDocument.status === 'pending' ? (
+          <div>Loading...</div>
+        ) : partyDocument.data.Documents.length === 0 ? (
+          <div>No Document Added To Display</div>
+        ) : (
+          <div className="flex flex-col">
+            <h1 className="text-xl font-semibold pt-6 pb-3 text-center">
+              Document Already Added
+            </h1>
+            <div>
+              <div className="inline-block max-w-full w-full pt-5">
+                <div className="overflow-x-scroll">
+                  <table className="max-w-full w-full overflow-x-scroll border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+                    <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
+                      <tr className="bg-text1 text-white">
+                        <th
+                          scope="col"
+                          className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                        >
+                          Document Name
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                        >
+                          Document Type
+                        </th>
+
+                        <th scope="col" className="px-6 py-4">
+                          Status
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {partyDocument.data.Documents.map(item => (
+                        <tr
+                          className="border-b border-neutral-200 dark:border-white/10"
+                          key={item.PartyDocsID}
+                        >
+                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            {item.PartyDocName}
+                          </td>
+                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            {item.PartyDocsPath.split('.').pop()}
+                          </td>
+
+                          <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
+                            Added
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
