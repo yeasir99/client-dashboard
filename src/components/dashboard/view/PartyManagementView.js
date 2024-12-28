@@ -1,12 +1,15 @@
 'use client';
 import useGetData from '@/utils/useGetData';
 import PartyCoveredAreaView from './PartyCoveredAreaView';
+import PartyDocumentView from './PartyDocumentView';
 
 const PartyManagementView = ({ id }) => {
   const { status, data } = useGetData(
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_party&PartyID=${id}`
   );
-  console.log(data)
+  const partyDocument = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_partyDocs&PartyID=${id}`
+  );
   if (status === 'pending') {
     return <div>Loading...</div>;
   }
@@ -166,6 +169,9 @@ const PartyManagementView = ({ id }) => {
           </h1>
           <PartyCoveredAreaView id={id} />
         </div>
+      </div>
+      <div>
+        <PartyDocumentView partydoc={partyDocument} />
       </div>
     </>
   );
