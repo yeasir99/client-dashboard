@@ -8,7 +8,6 @@ const UserEmployeeEdit = ({ id }) => {
   const [reportingTo, setReportingTo] = useState([]);
   const [formData, setFormData] = useState({
     image: '',
-    employeeId: '',
     employeeName: '',
     dasignationRole: '',
     password: '',
@@ -28,7 +27,6 @@ const UserEmployeeEdit = ({ id }) => {
     if (status !== 'pending') {
       setFormData({
         image: '',
-        employeeId: data.EmployeeID,
         employeeName: data.EmpName,
         dasignationRole: data.DesignationID,
         password: '',
@@ -95,25 +93,6 @@ const UserEmployeeEdit = ({ id }) => {
       >
         <input name="id" value={id} readonly className="hidden" />
         <div className="mb-5">
-          <div>
-            <label
-              htmlFor="EmployeeID"
-              className="capitalize flex font-semibold text-md py-1"
-            >
-              employeeID:
-            </label>
-
-            <input
-              id="EmployeeID"
-              name="employeeId"
-              type="text"
-              className="w-full rounded-md mb-1"
-              onChange={handleChange}
-              value={formData.employeeId}
-              required
-            />
-          </div>
-
           <div>
             <label
               htmlFor="EmployeeName"

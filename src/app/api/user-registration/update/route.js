@@ -3,7 +3,6 @@ export const POST = async request => {
   try {
     const formData = await request.formData();
     const userId = formData.get('id');
-    const employeeId = formData.get('employeeId');
     const employeeName = formData.get('employeeName');
     const dasignationRole = formData.get('dasignationRole');
     const userName = formData.get('userName');
@@ -25,7 +24,6 @@ export const POST = async request => {
     }
 
     let newUser = {
-      EmployeeID: employeeId,
       EmpName: employeeName,
       DesignationID: dasignationRole,
       Username: userName,
@@ -33,7 +31,7 @@ export const POST = async request => {
       Phone: phone,
       Address: address,
       ReportingToUserID: reportingTo,
-      status: Boolean(Number(status)),
+      Status: Boolean(Number(status))
     };
     if (updatedImage) {
       newUser.Userpicture = updatedImage;
