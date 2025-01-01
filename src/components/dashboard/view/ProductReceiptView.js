@@ -124,7 +124,7 @@ const ProductReceiptView = ({ id }) => {
                     Total
                   </td>
 
-                  <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
+                  <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3 font-medium">
                     {data.details.reduce(
                       (accumulator, currentValue) =>
                         accumulator + Number(currentValue.Total),

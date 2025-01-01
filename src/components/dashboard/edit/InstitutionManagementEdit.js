@@ -41,20 +41,21 @@ const InstitutionManagementEdit = ({ id }) => {
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institution&institutionID=${id}`
   );
 
-  useEffect(()=>{
-if(newRegion){
-  setFormData({
-    ...formData,
-    regionArea: newRegion
-  })
-}
-  }, [newRegion])
+  useEffect(() => {
+    if (newRegion) {
+      setFormData({
+        ...formData,
+        regionArea: newRegion,
+      });
+    }
+  }, [newRegion]);
 
   useEffect(() => {
     if (data.InstitutionID) {
       setFormData({
         institutionType: data.InstitutionTypeID,
         institutionName: data.InstitutionName,
+        eiinNo: data.EIINNo,
         totalStudent: data.TotalStudents,
         contactPersonName: data.ContactPersonName,
         designation: data.Designation,
@@ -120,27 +121,31 @@ if(newRegion){
     let dataWillBeSubmit = {
       institutionTypeID: formData.institutionType,
       institutionName: formData.institutionName,
+      EIINNo: formData.eiinNo,
       ContactPersonName: formData.contactPersonName,
       TotalStudents: formData.totalStudent,
       Designation: formData.designation,
       ContactPhone: formData.phone,
       Address: formData.address,
       RegionID: formData.regionArea,
-      details: []
-    }
+      details: [],
+    };
     formData.teachers.forEach((teacher, index) => {
       let modifiedData = {
         TeacherName: teacher.teacherName,
         Designation: teacher.designation,
         ContactPhone: teacher.phone,
         sndClassID: teacher.classNameInfo,
-        sndSubjectID: teacher.subjectName
-      }
-      dataWillBeSubmit.details = [...dataWillBeSubmit.details, modifiedData]
-    })
+        sndSubjectID: teacher.subjectName,
+      };
+      dataWillBeSubmit.details = [...dataWillBeSubmit.details, modifiedData];
+    });
 
-const res = await axios.put(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_institutionwithoutimage&institutionID=${id}`, dataWillBeSubmit)   
-router.push('/dashboard/institution');
+    const res = await axios.put(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_institutionwithoutimage&institutionID=${id}`,
+      dataWillBeSubmit
+    );
+    router.push('/dashboard/institution');
   };
 
   return (
@@ -195,6 +200,18 @@ router.push('/dashboard/institution');
             name="institutionName"
             onChange={handleChange}
             value={formData.institutionName}
+          />
+          <label htmlFor="EiinNo" className="block text-sm font-bold mb-1">
+            Institution EIIN number :
+          </label>
+          <input
+            type="text"
+            id="EiinNo"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            name="eiinNo"
+            onChange={handleChange}
+            value={formData.eiinNo}
+            required
           />
           <label
             className="block text-sm font-bold mb-1"
@@ -280,12 +297,12 @@ router.push('/dashboard/institution');
           </div> */}
 
           {division.status !== 'pending' && (
-              <LocationEdit
-                updateState={setNewRegion}
-                regionId={formData.regionArea}
-                division={division}
-              />
-            )}
+            <LocationEdit
+              updateState={setNewRegion}
+              regionId={formData.regionArea}
+              division={division}
+            />
+          )}
 
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
@@ -435,7 +452,10 @@ router.push('/dashboard/institution');
                                 ></option>
                                 {subjectInfo.data.length &&
                                   subjectInfo.data.map(item => (
-                                    <option value={item.ProductID} key={item.ProductID}>
+                                    <option
+                                      value={item.ProductID}
+                                      key={item.ProductID}
+                                    >
                                       {item.ProductName}
                                     </option>
                                   ))}

@@ -1,6 +1,9 @@
 import UEtable from '@/components/dashboard/UEtable';
 import Link from 'next/link';
-const page = () => {
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+const page = async () => {
+  const session = await getServerSession(authOptions);
   return (
     <div>
       <h1 className="text-2xl capitalize mb-3">Employee Registration</h1>
@@ -19,7 +22,7 @@ const page = () => {
           />
         </form>
       </div>
-      <UEtable />
+      {session.user.id && <UEtable userId={session.user.id} />}
     </div>
   );
 };

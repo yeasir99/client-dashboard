@@ -12,7 +12,7 @@ const PartyDocumentView = ({ partydoc }) => {
   return (
     <div className="py-6">
       <h1 className="text-center py-6 font-semibold text-xl">Documents</h1>
-      {partydoc.data.Documents.length ? (
+      {partydoc.data.Documents?.length ? (
         <div className="flex gap-3">
           {partydoc.data.Documents.map(item => {
             const extentionType = getFileTypeFromUrl(item.PartyDocsPath);

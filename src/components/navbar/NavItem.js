@@ -111,6 +111,10 @@ const NavItem = () => {
           name: 'Employee VS Region Mapping',
           href: '/dashboard/mapping',
         },
+        {
+          name: 'Mapping V2',
+          href: '/dashboard/mappingv2',
+        },
         // {
         //   name: 'Class Information',
         //   href: '/dashboard/class-management',

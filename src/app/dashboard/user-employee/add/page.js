@@ -30,7 +30,7 @@ const page = () => {
 
   const getReporting = async cb => {
     const res = await axios.get(
-      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_reporttoUsers'
+      `https://kblsf.site/DLogicKBL/spsalesforce_api.php?action=get_all_ReportUser&DesignationID=${formData.dasignationRole}`
     );
     if (res.status === 200) {
       cb(res.data);
@@ -39,8 +39,13 @@ const page = () => {
 
   useEffect(() => {
     getDesig(setDesigs);
-    getReporting(setReportingTo);
   }, []);
+
+  useEffect(() => {
+    if (formData.dasignationRole) {
+      getReporting(setReportingTo);
+    }
+  }, [formData.dasignationRole]);
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

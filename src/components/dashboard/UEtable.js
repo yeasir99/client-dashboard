@@ -4,9 +4,8 @@ import useGetData from '@/utils/useGetData';
 import axios from 'axios';
 import Link from 'next/link';
 
-const UEtable = () => {
-  const url =
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_sndUsers';
+const UEtable = ({userId}) => {
+  const url = `https://kblsf.site/DLogicKBL/spsalesforceuser_api.php?action=sndListoftheUserview&UserID=${userId}`;
   const { status, data } = useGetData(url);
   if (status === 'pending') {
     return <div>Loading....</div>;

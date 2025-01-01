@@ -32,13 +32,19 @@ const InstitutionManagement = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
+                    Institution Type
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
                     Institution Name
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Institution Type
+                    EIIN
                   </th>
                   <th
                     scope="col"
@@ -86,11 +92,13 @@ const InstitutionManagement = () => {
                       {item.InstitutionID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.InstitutionTypeName}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                       {item.InstitutionName}
                     </td>
-
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.InstitutionTypeName}
+                      {item.EIINNo}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                       {item.TotalStudents}

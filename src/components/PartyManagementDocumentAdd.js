@@ -193,7 +193,7 @@ const PartyManagementDocumentAdd = ({ id }) => {
       <div>
         {partyDocument.status === 'pending' ? (
           <div>Loading...</div>
-        ) : partyDocument.data.Documents.length === 0 ? (
+        ) : partyDocument.data.Documents?.length === 0 ? (
           <div>No Document Added To Display</div>
         ) : (
           <div className="flex flex-col">
@@ -225,23 +225,24 @@ const PartyManagementDocumentAdd = ({ id }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {partyDocument.data.Documents.map(item => (
-                        <tr
-                          className="border-b border-neutral-200 dark:border-white/10"
-                          key={item.PartyDocsID}
-                        >
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            {item.PartyDocName}
-                          </td>
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            {item.PartyDocsPath.split('.').pop()}
-                          </td>
+                      {partyDocument.data.Documents?.length &&
+                        partyDocument.data.Documents.map(item => (
+                          <tr
+                            className="border-b border-neutral-200 dark:border-white/10"
+                            key={item.PartyDocsID}
+                          >
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              {item.PartyDocName}
+                            </td>
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              {item.PartyDocsPath.split('.').pop()}
+                            </td>
 
-                          <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
-                            Added
-                          </td>
-                        </tr>
-                      ))}
+                            <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
+                              Added
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>

@@ -39,6 +39,10 @@ const InstitutionManagementView = ({ id }) => {
             <h1>{data.InstitutionName}</h1>
           </div>
           <div className="flex items-center gap-2">
+            <h1 className="text-lg">Institution EIIN:</h1>
+            <h1>{data.EIINNo}</h1>
+          </div>
+          <div className="flex items-center gap-2">
             <h1 className="text-lg">Total Students:</h1>
             <h1>{data.TotalStudents}</h1>
           </div>

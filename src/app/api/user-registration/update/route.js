@@ -2,6 +2,7 @@ import axios from 'axios';
 export const POST = async request => {
   try {
     const formData = await request.formData();
+    const userId = formData.get('id');
     const employeeId = formData.get('employeeId');
     const employeeName = formData.get('employeeName');
     const dasignationRole = formData.get('dasignationRole');
@@ -40,10 +41,15 @@ export const POST = async request => {
     if (password) {
       newUser.Password = password;
     }
+    
+    console.log(newUser)
+
     const res = await axios.put(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_sndUser&UserID=${employeeId}`,
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_sndUserWithoutImage&UserID=${userId}`,
       newUser
     );
+
+    console.log(res);
 
     return Response.redirect(
       `${process.env.URL_DOMAIN}/dashboard/user-employee`

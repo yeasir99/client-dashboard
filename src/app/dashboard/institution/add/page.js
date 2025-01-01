@@ -22,6 +22,7 @@ const page = () => {
   const [formData, setFormData] = useState({
     institutionType: '',
     institutionName: '',
+    eiinNo: '',
     totalStudent: '',
     contactPersonName: '',
     designation: '',
@@ -68,6 +69,7 @@ const page = () => {
     // Create FormData object
     let dataWillBeSubmit = new FormData();
     dataWillBeSubmit.append('institutionName', formData.institutionName);
+    dataWillBeSubmit.append('EIINNo', formData.eiinNo);
     dataWillBeSubmit.append('institutionTypeID', formData.institutionType);
     dataWillBeSubmit.append('RegionID', formData.regionArea);
     if (formData.totalStudent) {
@@ -182,6 +184,18 @@ const page = () => {
             name="institutionName"
             onChange={handleChange}
             value={formData.institutionName}
+            required
+          />
+          <label htmlFor="EiinNo" className="block text-sm font-bold mb-1">
+            Institution EIIN number :
+          </label>
+          <input
+            type="text"
+            id="EiinNo"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            name="eiinNo"
+            onChange={handleChange}
+            value={formData.eiinNo}
             required
           />
           <label
