@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 import LocationEdit from '@/components/location/LocationEdit';
 
 const InstitutionManagementEdit = ({ id }) => {
-  // const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
     institutionType: '',
     institutionName: '',

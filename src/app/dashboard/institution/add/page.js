@@ -6,8 +6,12 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Locations from '@/components/location/Locations';
+import { useSession } from "next-auth/react"
 
 const page = () => {
+  const { data: session, status } = useSession()
+
+  console.log(session)
   const classInfo = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys'
   );
@@ -71,6 +75,10 @@ const page = () => {
     dataWillBeSubmit.append('institutionName', formData.institutionName);
     dataWillBeSubmit.append('EIINNo', formData.eiinNo);
     dataWillBeSubmit.append('institutionTypeID', formData.institutionType);
+    dataWillBeSubmit.append('RegionID', formData.regionArea);
+    if(session.user){
+      dataWillBeSubmit.append('UserID', session.user.id);
+    }
     dataWillBeSubmit.append('RegionID', formData.regionArea);
     if (formData.totalStudent) {
       dataWillBeSubmit.append('TotalStudents', formData.totalStudent);

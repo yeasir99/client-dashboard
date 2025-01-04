@@ -39,8 +39,6 @@ export const POST = async request => {
     if (password) {
       newUser.Password = password;
     }
-    
-    console.log(newUser)
 
     const res = await axios.put(
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_sndUserWithoutImage&UserID=${userId}`,

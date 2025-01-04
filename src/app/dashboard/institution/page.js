@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import InstitutionManagement from '@/components/dashboard/InstitutionManagement';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-const page = () => {
+const page = async () => {
+  const session = await getServerSession(authOptions);
   return (
     <div>
       <h1 className="text-2xl capitalize mb-3">institution management</h1>
@@ -20,7 +23,8 @@ const page = () => {
           />
         </form>
       </div>
-      <InstitutionManagement />
+      {session?.user && <InstitutionManagement session={session} />}
+      
     </div>
   );
 };

@@ -7,7 +7,6 @@ const UserEmployeeEdit = ({ id }) => {
   const [desigs, setDesigs] = useState([]);
   const [reportingTo, setReportingTo] = useState([]);
   const [formData, setFormData] = useState({
-    image: '',
     employeeName: '',
     dasignationRole: '',
     password: '',
@@ -26,7 +25,6 @@ const UserEmployeeEdit = ({ id }) => {
   useEffect(() => {
     if (status !== 'pending') {
       setFormData({
-        image: '',
         employeeName: data.EmpName,
         dasignationRole: data.DesignationID,
         password: '',
@@ -166,27 +164,6 @@ const UserEmployeeEdit = ({ id }) => {
               onChange={handleChange}
               value={formData.password}
             />
-          </div>
-          <div>
-            <label
-              htmlFor="Image"
-              className="capitalize flex font-semibold text-md py-1"
-            >
-              User's Picture:
-            </label>
-            <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-              <input
-                id="Image"
-                type="file"
-                name="image"
-                className="w-full rounded-md mb-1"
-                onChange={e => {
-                  const file = e.target.files[0];
-                  setFormData({ ...formData, [e.target.name]: file });
-                }}
-                value={formData.image}
-              />
-            </div>
           </div>
 
           <div>

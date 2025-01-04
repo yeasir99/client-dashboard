@@ -10,6 +10,7 @@ const MappedViewList = ({ id }) => {
     const res = await axios.get(
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_usermapregion&UserID=${id}`
     );
+    console.log(res.data);
     setMappedData([...res.data.data]);
     setLoading(false);
   };

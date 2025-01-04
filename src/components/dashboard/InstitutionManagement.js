@@ -3,9 +3,8 @@ import { FaEye, FaRegEdit } from 'react-icons/fa';
 import useGetData from '@/utils/useGetData';
 import Link from 'next/link';
 
-const InstitutionManagement = () => {
-  const url =
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutions';
+const InstitutionManagement = ({session}) => {
+  const url = `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutions&UserID=${session?.user.id}`
   const { status, data } = useGetData(url);
   console.log(data);
   if (status === 'pending') {

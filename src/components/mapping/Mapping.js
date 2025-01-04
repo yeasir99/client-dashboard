@@ -1,6 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import MappedViewList from '../dashboard/mappingInternals/MappedViewList';
 
 const Mapping = () => {
   const [land, setLand] = useState('first');
@@ -27,8 +29,6 @@ const Mapping = () => {
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedThana, setSelectedThana] = useState('');
   const [location, setLocation] = useState([]);
-
-  console.log(location);
 
   // location end
 
@@ -96,11 +96,69 @@ const Mapping = () => {
     setDivisionData(res.data);
   };
 
+  const getDistrictData = async () => {
+    const res = await axios.get(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionDistrict&ParentRegionID=${selectedDivision}`
+    );
+    setDistrictData(res.data);
+  };
+
+  const getThanaData = async () => {
+    const res = await axios.get(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionThana&ParentRegionID=${selectedDistrict}`
+    );
+    setThanaData(res.data);
+  };
+
+  const getZoneData = async () => {
+    const res = await axios.get(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_regionArea&ParentRegionID=${selectedThana}`
+    );
+    setZoneData(res.data);
+  };
+
   useEffect(() => {
     if (locationType) {
       getDivisionData();
     }
   }, [locationType]);
+
+  useEffect(() => {
+    if (selectedDivision) {
+      getDistrictData();
+    }
+  }, [selectedDivision]);
+
+  useEffect(() => {
+    if (selectedDistrict) {
+      getThanaData();
+    }
+  }, [selectedDistrict]);
+
+  useEffect(() => {
+    if (selectedThana) {
+      getZoneData();
+    }
+  }, [selectedThana]);
+
+  const router = useRouter();
+
+  const handleAssign = async () => {
+    if (!location.length) {
+      return;
+    }
+    const dataWillBeSubmit = location.map(item => {
+      return {
+        UserID: employeeData.UserID,
+        RegionID: item,
+      };
+    });
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_mapping',
+      dataWillBeSubmit
+    );
+    router.push('/dashboard/mapping');
+  };
 
   return (
     <div>
@@ -418,7 +476,7 @@ const Mapping = () => {
               )}
               <div className="flex justify-end pt-6">
                 <button
-                  className="px-6 py-1 bg-primary text-xl text-white rounded-md"
+                  className="px-6 py-1 bg-primary text-lg text-white rounded-md"
                   disabled={employeeData ? false : true}
                   onClick={() => {
                     setLand('area');
@@ -447,6 +505,7 @@ const Mapping = () => {
               value={locationType}
               onChange={event => {
                 setLocationType(event.target.value);
+                setLocation([]);
               }}
             >
               <option value="" disabled>
@@ -474,12 +533,9 @@ const Mapping = () => {
                             value={item.RegionID}
                             checked={location.includes(item.RegionID)}
                             onChange={e => {
-                              console.log(location.includes(item.RegionID));
                               if (location.includes(item.RegionID)) {
                                 setLocation(
-                                  location.filter(
-                                    ele => ele.RegionID != item.RegionID
-                                  )
+                                  location.filter(ele => ele != item.RegionID)
                                 );
                               } else {
                                 setLocation([
@@ -516,12 +572,221 @@ const Mapping = () => {
                       ))}
                     </select>
                   </div>
+                  {selectedDivision && districtData.length && (
+                    <div>
+                      <h1 className="capitalize py-2 pl-2 font-semibold">
+                        List of the District:
+                      </h1>
+                      {districtData.map(item => (
+                        <div key={item.RegionID}>
+                          <label>
+                            <input
+                              type="checkbox"
+                              value={item.RegionID}
+                              checked={location.includes(item.RegionID)}
+                              onChange={e => {
+                                if (location.includes(item.RegionID)) {
+                                  setLocation(
+                                    location.filter(ele => ele != item.RegionID)
+                                  );
+                                } else {
+                                  setLocation([
+                                    ...location,
+                                    Number(e.target.value),
+                                  ]);
+                                }
+                              }}
+                              className="mx-2 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            />
+                            {item.RegionName}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : locationType === 'thana' ? (
+                <div>
+                  <div className="max-w-md mx-auto mt-3">
+                    <select
+                      name="Division"
+                      className="w-full rounded-md"
+                      value={selectedDivision}
+                      onChange={event => {
+                        setSelectedDivision(event.target.value);
+                      }}
+                    >
+                      <option value="" disabled>
+                        Select Division
+                      </option>
+                      {divisionData.map(item => (
+                        <option value={item.RegionID} key={item.RegionID}>
+                          {item.RegionName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {selectedDivision && districtData.length && (
+                    <div className="max-w-md mx-auto mt-3">
+                      <select
+                        name="Division"
+                        className="w-full rounded-md"
+                        value={selectedDistrict}
+                        onChange={event => {
+                          setSelectedDistrict(event.target.value);
+                        }}
+                      >
+                        <option value="" disabled>
+                          Select District
+                        </option>
+                        {districtData.map(item => (
+                          <option value={item.RegionID} key={item.RegionID}>
+                            {item.RegionName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                  {selectedDistrict && thanaData.length && (
+                    <div>
+                      <h1 className="capitalize py-2 pl-2 font-semibold">
+                        List of the Thana:
+                      </h1>
+                      {thanaData.map(item => (
+                        <div key={item.RegionID}>
+                          <label>
+                            <input
+                              type="checkbox"
+                              value={item.RegionID}
+                              checked={location.includes(item.RegionID)}
+                              onChange={e => {
+                                if (location.includes(item.RegionID)) {
+                                  setLocation(
+                                    location.filter(ele => ele != item.RegionID)
+                                  );
+                                } else {
+                                  setLocation([
+                                    ...location,
+                                    Number(e.target.value),
+                                  ]);
+                                }
+                              }}
+                              className="mx-2 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            />
+                            {item.RegionName}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ) : (
-                <div>show others</div>
+                <div>
+                  <div className="max-w-md mx-auto mt-3">
+                    <select
+                      name="Division"
+                      className="w-full rounded-md"
+                      value={selectedDivision}
+                      onChange={event => {
+                        setSelectedDivision(event.target.value);
+                      }}
+                    >
+                      <option value="" disabled>
+                        Select Division
+                      </option>
+                      {divisionData.map(item => (
+                        <option value={item.RegionID} key={item.RegionID}>
+                          {item.RegionName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {selectedDivision && districtData.length && (
+                    <div className="max-w-md mx-auto mt-3">
+                      <select
+                        name="Division"
+                        className="w-full rounded-md"
+                        value={selectedDistrict}
+                        onChange={event => {
+                          setSelectedDistrict(event.target.value);
+                        }}
+                      >
+                        <option value="" disabled>
+                          Select District
+                        </option>
+                        {districtData.map(item => (
+                          <option value={item.RegionID} key={item.RegionID}>
+                            {item.RegionName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                  {selectedDistrict && thanaData.length && (
+                    <div className="max-w-md mx-auto mt-3">
+                      <select
+                        name="Division"
+                        className="w-full rounded-md"
+                        value={selectedThana}
+                        onChange={event => {
+                          setSelectedThana(event.target.value);
+                        }}
+                      >
+                        <option value="" disabled>
+                          Select Thana
+                        </option>
+                        {thanaData.map(item => (
+                          <option value={item.RegionID} key={item.RegionID}>
+                            {item.RegionName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                  {selectedThana && zoneData.length && (
+                    <div>
+                      <h1 className="capitalize py-2 pl-2 font-semibold">
+                        List of the Zone:
+                      </h1>
+                      {zoneData.map(item => (
+                        <div key={item.RegionID}>
+                          <label>
+                            <input
+                              type="checkbox"
+                              value={item.RegionID}
+                              checked={location.includes(item.RegionID)}
+                              onChange={e => {
+                                if (location.includes(item.RegionID)) {
+                                  setLocation(
+                                    location.filter(ele => ele != item.RegionID)
+                                  );
+                                } else {
+                                  setLocation([
+                                    ...location,
+                                    Number(e.target.value),
+                                  ]);
+                                }
+                              }}
+                              className="mx-2 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            />
+                            {item.RegionName}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           )}
+          <div className="flex justify-end pt-6">
+            <button
+              className="px-6 py-1 bg-primary text-lg text-white rounded-md"
+              onClick={handleAssign}
+            >
+              Submit
+            </button>
+          </div>
         </div>
       )}
     </div>
