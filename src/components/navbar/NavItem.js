@@ -19,8 +19,6 @@ const NavItem = ({ session }) => {
   const [displayLink, setDisplayLink] = useState([]);
   const [userPermission, setUserPermission] = useState([]);
 
-  console.log(userPermission);
-
   const { status, data } = useGetData(
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_UserMenuPermissions&UserID=${session.user.id}`
   );
@@ -109,7 +107,7 @@ const NavItem = ({ session }) => {
           href: '/dashboard/book-category',
         },
         {
-          name: 'Book/Product',
+          name: 'Books Products',
           href: '/dashboard/book-management',
         },
         {
@@ -173,12 +171,12 @@ const NavItem = ({ session }) => {
       status: 'main',
     },
     {
-      name: 'Sales Order',
+      name: 'Sales orders',
       href: '/dashboard/sales-order',
       status: 'main',
     },
     {
-      name: 'Sales Order Approval',
+      name: 'Sales order approval process',
       href: '/dashboard/sales-order-approval',
       status: 'main',
     },
