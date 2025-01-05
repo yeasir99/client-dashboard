@@ -1,4 +1,5 @@
 'use client';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { BiQrScan } from 'react-icons/bi';
 import { MdOutlineEqualizer } from 'react-icons/md';
@@ -12,9 +13,25 @@ import {
   AccordionItemButton,
   AccordionItemPanel,
 } from 'react-accessible-accordion';
+import useGetData from '@/utils/useGetData';
 
-const NavItem = () => {
-  const pathName = usePathname();
+const NavItem = ({ session }) => {
+  const [displayLink, setDisplayLink] = useState([]);
+  const [userPermission, setUserPermission] = useState([]);
+
+  console.log(userPermission);
+
+  const { status, data } = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_UserMenuPermissions&UserID=${session.user.id}`
+  );
+
+  useEffect(() => {
+    if (data.length) {
+      const { permissions } = data[0];
+      setUserPermission(permissions);
+    }
+  }, [data]);
+
   let updatedLink = [
     {
       name: 'Home',
@@ -26,7 +43,7 @@ const NavItem = () => {
       status: 'accordion',
       internalLinks: [
         {
-          name: 'Emoloyee Registration',
+          name: 'User-Employee registration',
           href: '/dashboard/user-employee',
         },
         {
@@ -111,10 +128,10 @@ const NavItem = () => {
           name: 'Employee VS Region Mapping',
           href: '/dashboard/mapping',
         },
-        {
-          name: 'Mapping V2',
-          href: '/dashboard/mappingv2',
-        },
+        // {
+        //   name: 'Mapping V2',
+        //   href: '/dashboard/mappingv2',
+        // },
         // {
         //   name: 'Class Information',
         //   href: '/dashboard/class-management',
@@ -201,6 +218,48 @@ const NavItem = () => {
     //   status: 'main',
     // },
   ];
+
+  const filterLinksByPermissions = (links, permissions) => {
+    return links
+      .map(link => {
+        // Check if it has internal links
+        if (link.internalLinks) {
+          const filteredInternalLinks = link.internalLinks.filter(
+            internalLink =>
+              permissions.some(permission =>
+                internalLink.name
+                  .toLowerCase()
+                  .includes(permission.toLowerCase())
+              )
+          );
+
+          // Include the section only if it has filtered internal links
+          if (filteredInternalLinks.length > 0) {
+            return { ...link, internalLinks: filteredInternalLinks };
+          }
+          return null;
+        } else if (
+          permissions.some(permission =>
+            link.name.toLowerCase().includes(permission.toLowerCase())
+          )
+        ) {
+          return link;
+        }
+        return null;
+      })
+      .filter(link => link !== null);
+  };
+
+  useEffect(() => {
+    if (userPermission.length) {
+      const filteredPermission = filterLinksByPermissions(
+        updatedLink,
+        userPermission
+      );
+      setDisplayLink(filteredPermission);
+    }
+  }, [userPermission]);
+
   let allLinks = [
     {
       section: 'Basic',
@@ -348,43 +407,44 @@ const NavItem = () => {
   ];
   return (
     <div>
-      {updatedLink.map((item, index) =>
-        item.status === 'main' ? (
-          <div key={index}>
-            <Link
-              className="capitalize block text-sm text-white py-[2px] pl-12"
-              href={item.href}
-            >
-              {item.name}
-            </Link>
-          </div>
-        ) : (
-          <Accordion key={index} allowZeroExpanded={true}>
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton className="text-white">
-                  <div className="flex gap-2 items-center pl-12">
-                    <FaArrowRightLong /> {item.name}
-                  </div>
-                </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                {item.internalLinks.map((ele, id) => (
-                  <div key={id}>
-                    <Link
-                      className="capitalize block text-sm text-white py-[2px] pl-12"
-                      href={ele.href}
-                    >
-                      {ele.name}
-                    </Link>
-                  </div>
-                ))}
-                <div className="border border-gray-300 border-dashed my-2"></div>
-              </AccordionItemPanel>
-            </AccordionItem>
-          </Accordion>
-        )
-      )}
+      {displayLink.length &&
+        displayLink.map((item, index) =>
+          item.status === 'main' ? (
+            <div key={index}>
+              <Link
+                className="capitalize block text-sm text-white py-[2px] pl-12"
+                href={item.href}
+              >
+                {item.name}
+              </Link>
+            </div>
+          ) : (
+            <Accordion key={index} allowZeroExpanded={true}>
+              <AccordionItem>
+                <AccordionItemHeading>
+                  <AccordionItemButton className="text-white">
+                    <div className="flex gap-2 items-center pl-12">
+                      <FaArrowRightLong /> {item.name}
+                    </div>
+                  </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  {item.internalLinks.map((ele, id) => (
+                    <div key={id}>
+                      <Link
+                        className="capitalize block text-sm text-white py-[2px] pl-12"
+                        href={ele.href}
+                      >
+                        {ele.name}
+                      </Link>
+                    </div>
+                  ))}
+                  <div className="border border-gray-300 border-dashed my-2"></div>
+                </AccordionItemPanel>
+              </AccordionItem>
+            </Accordion>
+          )
+        )}
     </div>
   );
 };

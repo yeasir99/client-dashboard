@@ -1,7 +1,7 @@
 import SarinaFontWrapper from '../sarinaF/sarinaFontWrapper';
 import NavItem from './NavItem';
 import Image from 'next/image';
-const Navbar = () => {
+const Navbar = ({ session }) => {
   return (
     <div className="flex flex-col justify-between h-full">
       <div>
@@ -14,7 +14,7 @@ const Navbar = () => {
           />
         </div>
         <div>
-          <NavItem />
+          <NavItem session={session} />
         </div>
       </div>
       <div className="bg-white">
