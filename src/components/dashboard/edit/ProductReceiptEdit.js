@@ -1,43 +1,42 @@
-'use client';
-import { useState, useEffect } from 'react';
+'use client'
+import {useState, useEffect} from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import useGetData from '@/utils/useGetData';
-import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
-import { v4 as uuidv4 } from 'uuid';
 import BookById from '@/components/dashboard/BookById';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-const page = () => {
-  const [formData, setFormData] = useState({
-    ProductReceiptNo: '',
-    ReceiptDate: new Date(),
-    BindingPartyID: '',
-    ChallanNumber: '',
-    PrintEdition: '',
-    UserID: '',
-    ProductionOrderQty: '',
-    ChallanCopyPath: '',
-    orderDetails: [
-      {
-        id: uuidv4(),
-        FinancialYearID: '',
-        ProductCategoryID: '',
-        ProductID: '',
-        Quantity: '',
-        Price: '',
-        TotalPrice: 0,
-      },
-    ],
-  });
+const ProductReceiptEdit = ({id}) => {
+    const [formData, setFormData] = useState({
+        ProductReceiptNo: '',
+        ReceiptDate: new Date(),
+        BindingPartyID: '',
+        ChallanNumber: '',
+        PrintEdition: '',
+        UserID: '',
+        ProductionOrderQty: '',
+        ChallanCopyPath: '',
+        orderDetails: [
+          {
+            id: uuidv4(),
+            FinancialYearID: '',
+            ProductCategoryID: '',
+            ProductID: '',
+            Quantity: '',
+            Price: '',
+            TotalPrice: 0,
+          },
+        ],
+      });
 
-  const [booksName, setBooksName] = useState([]);
+const [booksName, setBooksName] = useState([]);
 
-  const session = useSession();
+const orginalData = useGetData(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_ppreceiptall&ProductReceiptID=${id}`)
 
-  const { status, data } = useGetData(
+const { status, data } = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bindingparties'
   );
   const fiscalYear = useGetData(
@@ -48,16 +47,6 @@ const page = () => {
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys'
   );
 
-  const generateReceiptId = async () => {
-    const res = await axios.post(
-      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=generate_new_product_receipt_number'
-    );
-    setFormData({
-      ...formData,
-      ProductReceiptNo: res.data.NewProductReceiptNo,
-    });
-  };
-
   const getBooksNameById = async () => {
     const res = await axios.get(
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productcategorywise&Categoryid=${formData.ProductCategoryID}`
@@ -65,11 +54,34 @@ const page = () => {
     setBooksName(res.data);
   };
 
-  useEffect(() => {
-    generateReceiptId();
-  }, []);
+useEffect(()=>{
+if(orginalData.data.success){
+    const {receipt, details} = orginalData.data
+    setFormData({
+        ProductReceiptNo: receipt.ProductReceiptNo,
+        ReceiptDate: receipt.ReceiptDate,
+        BindingPartyID: receipt.BindingPartyID,
+        BindingPartyName: receipt.BindingPartyName,
+        PrintEdition: receipt.PrintEdition,
+        ChallanNumber: receipt.ChallanNumber,
+        ProductionOrderQty: receipt.ProductionOrderQty,
+        UserID: receipt.UserID,
+        orderDetails: details.length ? details.map(item =>{
+            return {
+            id: item.SL,
+            FinancialYearID: item.FinancialYearID,
+            ProductCategoryID: item.ProductCategoryID,
+            ProductID: item.ProductID,
+            Quantity: item.ProductID,
+            Price: item.Rate,
+            TotalPrice: item.Total,
+            }
+        }) : formData.orderDetails
+    })
+}
+}, [orginalData.data])
 
-  useEffect(() => {
+useEffect(() => {
     if (formData.ProductCategoryID) {
       getBooksNameById();
     }
@@ -77,7 +89,7 @@ const page = () => {
 
   useEffect(() => {
     const total = formData.orderDetails.reduce(
-      (sum, item) => sum + (item.TotalPrice || 0),
+      (sum, item) => sum + (Number(item.TotalPrice) || 0),
       0
     );
 
@@ -141,51 +153,26 @@ const page = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const dataWillBeSubmitted = new FormData();
 
-    console.log(formData)
-
+const dataWillBeSubmitted = {}
     for (const key in formData) {
-      if (key === 'ChallanCopyPath' && formData[key]) {
-        dataWillBeSubmitted.append(key, formData[key], formData[key].name);
-      } else if (key === 'ReceiptDate') {
-        dataWillBeSubmitted.append(
-          key,
-          formData[key].toISOString().split('T')[0]
-        );
-      } else if (key === 'UserID') {
-        const id = session.data.user.id;
-        dataWillBeSubmitted.append(key, id);
-      } else if (key === 'orderDetails'){
-        const allDetails = formData.orderDetails.map(item => ({
-            FinancialYearID: item.FinancialYearID,
-            ProductCategoryID: item.ProductCategoryID,
-            ProductID: item.ProductID,
-            Quantity: item.Quantity,
-            Rate: 200,
-        }))
-        const detailsJson = JSON.stringify(allDetails)
-        dataWillBeSubmitted.append('Details', detailsJson);
-      } else if (key === 'TotalAmount'){
-        console.log(key)
-      } else {
-        dataWillBeSubmitted.append(key, formData[key]);
+      if(key === 'orderDetails'){
       }
     }
-    const res = await axios.post(
-      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_ppreceiptall',
-      dataWillBeSubmitted
-    );
+    // const res = await axios.put(
+    //   `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_ppreceiptall&ProductReceiptID=${id}`,
+    //   dataWillBeSubmitted
+    // );
 
     console.log(res)
 
-    router.push('/dashboard/product-receipt');
+    // router.push('/dashboard/product-receipt');
   };
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">Product Receipt List</h1>
+        <div className="flex justify-between items-center">
+        <h1 className="text-2xl capitalize mb-3">Update Product Receipt</h1>
         <form>
           <input
             name="search"
@@ -276,27 +263,6 @@ const page = () => {
             value={formData.ChallanNumber}
             onChange={handleChange}
           />
-
-          <div>
-            <label
-              className="capitalize flex font-semibold text-md py-1"
-              htmlFor="ChallanCopyPath"
-            >
-              Challan Copy Upload:
-            </label>
-            <div className="border-[1px] border-[#6b7280] p-1 rounded-md bg-white">
-              <input
-                id="ChallanCopyPath"
-                type="file"
-                name="ChallanCopyPath"
-                className="w-full rounded-md mb-1"
-                onChange={e => {
-                  const file = e.target.files[0];
-                  setFormData({ ...formData, ChallanCopyPath: file });
-                }}
-              />
-            </div>
-          </div>
 
           <label
             htmlFor="ProductionOrderQty"
@@ -542,13 +508,13 @@ const page = () => {
 
           <div className="mt-5" type="submit">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
-              Save Receipt
+              Update Receipt
             </button>
           </div>
         </form>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default page;
+export default ProductReceiptEdit

@@ -141,12 +141,12 @@ const NavItem = ({ session }) => {
       ],
     },
     {
-      name: 'Assign Visit Plans',
+      name: 'Visit Plan Requisition',
       href: '/dashboard/visit-plan',
       status: 'main',
     },
     {
-      name: 'Visit Plans Approval',
+      name: 'Visit plan approval',
       href: '/dashboard/visit-approval',
       status: 'main',
     },
@@ -205,8 +205,18 @@ const NavItem = ({ session }) => {
       href: '/dashboard/money-receipt',
       status: 'main',
     },
+    {
+      name: 'BD Expense Requisition',
+      href: '/dashboard/expense-requisition',
+      status: 'main',
+    },
+    {
+      name: 'BD Expense Approval',
+      href: '/dashboard/expense-requisition',
+      status: 'main',
+    },
     // {
-    //   name: 'Specimen Order',
+    //   name: 'Specimen Order', BD Expense Requisition
     //   href: '/dashboard/specimen',
     //   status: 'main',
     // },

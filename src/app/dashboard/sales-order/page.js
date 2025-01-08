@@ -1,23 +1,11 @@
 "use client";
+import {useState} from 'react'
 import Link from "next/link";
 import SaleOrderList from "@/components/dashboard/SaleOrderList";
-import { useState } from "react";
 import Specimen from "@/components/dashboard/Specimen";
-import useGetData from "@/utils/useGetData";
 
 const page = () => {
-	const [current, setCurrent] = useState("sales");
-	const [salesOrderList, setsalesOrderList] = useState([]);
-	const [spacimenOrderList, setSpacimenOrderList] = useState([]);
-
-	const salesOrderListdata = useGetData(
-		"https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_salesorders"
-	);
-	const spacimenOrderListdata = useGetData(
-		"https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_specimenorders"
-	);
-	setsalesOrderList(salesOrderListdata.data);
-	setSpacimenOrderList(spacimenOrderListdata.data);
+	const [current, setCurrent] = useState("sales")
 
 	return (
 		<div>
@@ -98,19 +86,8 @@ const page = () => {
 					/>
 				</form>
 			</div>
-			{current === "sales" ? (
-				salesOrderListdata.status === "pending" ? (
-					<div className='text-xl font-semibold text-center py-6'>
-						...loading
-					</div>
-				) : (
-					<SaleOrderList salesOrderList={salesOrderList} />
-				)
-			) : spacimenOrderListdata.status === "pending" ? (
-				<div className='text-xl font-semibold text-center py-6'>...loading</div>
-			) : (
-				<Specimen spacimenOrderList={spacimenOrderList} />
-			)}
+			{current === "sales" ? <SaleOrderList />
+			 : <Specimen />}
 		</div>
 	);
 };

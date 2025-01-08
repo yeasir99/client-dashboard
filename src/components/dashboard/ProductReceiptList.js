@@ -112,7 +112,9 @@ console.log(data)
                         </span>{' '}
                         |
                         <span className="bg-amber-600 p-1 inline-block rounded-md">
+                        <Link href={`/dashboard/product-receipt/edit/${item.ProductReceiptID}`}>
                           <FaRegEdit className="text-white text-xl" />
+                        </Link>
                         </span>{' '}
                       </td>
                     </tr>

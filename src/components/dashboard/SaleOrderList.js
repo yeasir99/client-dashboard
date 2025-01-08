@@ -1,8 +1,16 @@
 "use client";
 import { FaEye, FaRegEdit } from "react-icons/fa";
 import Link from "next/link";
+import useGetData from "@/utils/useGetData";
 
-const SaleOrderList = ({ salesOrderList }) => {
+const SaleOrderList = () => {
+	const { status, data } = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_salesorders'
+  );
+
+  if(status === 'pending'){
+	return <div className="text-xl font-semibold text-center py-6">Loading...</div>
+  }
 	return (
 		<div className='flex flex-col'>
 			<div>
@@ -60,9 +68,8 @@ const SaleOrderList = ({ salesOrderList }) => {
 								</tr>
 							</thead>
 							<tbody>
-								{salesOrderList &&
-									salesOrderList.length > 0 &&
-									salesOrderList.map((item) => (
+								{	data.length > 0 &&
+									data.map((item) => (
 										<tr
 											className='border-b border-neutral-200 dark:border-white/10'
 											key={item.salesOrderId}
