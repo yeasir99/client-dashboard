@@ -230,6 +230,12 @@ const NavItem = ({ session }) => {
       status: 'main',
     },
     {
+      name: 'Money receipt Approval',
+      displayName: 'Collection Approval',
+      href: '/dashboard/money-receipt',
+      status: 'main',
+    },
+    {
       name: 'BD Expense Requisition',
       displayName: 'BD Expense Requisition',
       href: '/dashboard/expense-requisition',
