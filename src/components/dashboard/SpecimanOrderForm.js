@@ -42,10 +42,6 @@ const SpecimanOrderForm = ({ session }) => {
     }));
   }, [formData.orderDetails]);
 
-  const allParties = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_parties'
-  );
-
   const fiscalYear = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_financialyear'
   );
@@ -67,7 +63,7 @@ const SpecimanOrderForm = ({ session }) => {
   const getPrice = async (item, { name, value }) => {
     try {
       const res = await axios.get(
-        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productrate&FinancialYearID=${item.FinancialYearID}&ProductID=${event.target.value}`
+        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productrate&FinancialYearID=${item.FinancialYearID}&ProductID=${value}`
       );
 
       setFormData({

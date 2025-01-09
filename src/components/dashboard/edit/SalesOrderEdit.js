@@ -129,7 +129,7 @@ const router = useRouter();
 
 const handleSubmit = async e => {
   e.preventDefault();
-
+console.log(formData)
   // come back and call API update Data
 
 //   const res = await axios.post(
