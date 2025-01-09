@@ -97,7 +97,12 @@ const Specimen = () => {
                         </span>{' '}
                         |
                         <span className="bg-amber-600 p-1 inline-block rounded-md">
+						 <Link
+                            href={`/dashboard/sales-order/edit/speciman/${item.SalesOrderID}`}
+                          >
+
                           <FaRegEdit className="text-white text-xl" />
+						  </Link>
                         </span>{' '}
                       </td>
                     </tr>

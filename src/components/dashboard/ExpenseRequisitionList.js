@@ -1,6 +1,15 @@
-import React from 'react';
+'use client'
+import useGetData from "@/utils/useGetData";
+import { FaEye, FaRegEdit } from "react-icons/fa";
+import Link from 'next/link';
 
 const ExpenseRequisitionList = () => {
+  const { status, data } = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_BDExpReqs'
+  );
+  if(status === 'pending'){
+    return <div className="text-xl font-semibold text-center py-6">Loading....</div>
+  }
   return (
     <div>
       <div className="inline-block max-w-full w-full pt-5">
@@ -38,40 +47,53 @@ const ExpenseRequisitionList = () => {
                 >
                   Total Amount
                 </th>
-                <th
-                  scope="col"
-                  className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                >
-                  Status
-                </th>
+
                 <th scope="col" className="px-6 py-4">
                   Action
                 </th>
               </tr>
             </thead>
             <tbody>
-              {/* {data.map(item => (
+              {data.length &&
+                data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.BDExpReqID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.BDExpReqID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.name}
+                      {item.BDExpReqNo}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.OpeningDate.date.split(' ')[0]}
+                      {item.InstitutionName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.ClosingDate.date.split(' ')[0]}
+                      {item.BDExpReqDate}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.TotalAmount}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
-                      {item.YearClosingStatus}
+                      <span className="bg-cyan-500 p-1 inline-block rounded-md">
+                        <Link
+                          href={`/dashboard/expense-requisition/view/${item.BDExpReqID}`}
+                        >
+                          <FaEye className="text-white text-xl" />
+                        </Link>
+                      </span>{' '}
+                      |
+                      <span className="bg-amber-600 p-1 inline-block rounded-md">
+                        <Link
+                          href={`/dashboard/expense-requisition/edit/${item.BDExpReqID}`}
+                        >
+                          <FaRegEdit className="text-white text-xl" />
+                        </Link>
+                      </span>{' '}
                     </td>
                   </tr>
-                ))} */}
+                ))}
             </tbody>
           </table>
         </div>

@@ -106,7 +106,9 @@ const SaleOrderList = () => {
 												</span>{" "}
 												|
 												<span className='bg-amber-600 p-1 inline-block rounded-md'>
+												<Link href={`/dashboard/sales-order/edit/sales/${item.SalesOrderID}`}>
 													<FaRegEdit className='text-white text-xl' />
+												</Link>
 												</span>{" "}
 											</td>
 										</tr>
