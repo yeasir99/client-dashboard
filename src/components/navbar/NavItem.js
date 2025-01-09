@@ -33,97 +33,120 @@ const NavItem = ({ session }) => {
   let updatedLink = [
     {
       name: 'Home',
+      displayName: 'Home',
       href: '/dashboard/',
       status: 'main',
     },
     {
       name: 'Security & Setting',
+      displayName: 'Security & Setting',
       status: 'accordion',
       internalLinks: [
         {
           name: 'User-Employee registration',
+          displayName: 'User-Employee registration',
           href: '/dashboard/user-employee',
         },
         {
           name: 'User Role',
+          displayName: 'User Role',
           href: '/dashboard/',
         },
         {
           name: 'Menu Entry',
+          displayName: 'Menu Entry',
           href: '/dashboard/',
         },
         {
           name: 'User Role Mapping',
+          displayName: 'User Role Mapping',
           href: '/dashboard/',
         },
         {
           name: 'Role Menu Privileges',
+          displayName: 'Role Menu Privileges',
           href: '/dashboard/',
         },
         {
           name: 'Approvals',
+          displayName: 'Approvals',
           href: '/dashboard/',
         },
         {
           name: 'Approvals Menu',
+          displayName: 'Approvals Menu',
           href: '/dashboard/',
         },
         {
           name: 'User Approvals Privileges',
+          displayName: 'User Approvals Privileges',
           href: '/dashboard/',
         },
       ],
     },
     {
       name: 'Master Setup',
+      displayName: 'Master Setup',
       status: 'accordion',
       internalLinks: [
         {
           name: 'Financial Year',
+          displayName: 'Financial Year',
           href: '/dashboard/financial-year',
         },
         {
           name: 'Designation',
+          displayName: 'Designation',
           href: '/dashboard/designation',
         },
         {
           name: 'Region Type',
+          displayName: 'Region Type',
           href: '/dashboard/region-type',
         },
         {
           name: 'Region Area',
+          displayName: 'Region Area',
           href: '/dashboard/region-area',
         },
         {
           name: 'Institution Type',
+          displayName: 'Institution Type',
           href: '/dashboard/institution-type',
         },
         {
           name: 'Institution',
+          displayName: 'Institution',
           href: '/dashboard/institution',
         },
         {
           name: 'Books Group',
+          displayName: 'Books Group',
           href: '/dashboard/book-category',
         },
         {
           name: 'Books Products',
+          displayName: 'Books Products',
           href: '/dashboard/book-management',
         },
         {
           name: 'Party Management',
+          displayName: 'Party Management',
           href: '/dashboard/party-management',
         },
         {
           name: 'Marketing Expense',
+          displayName: 'Marketing Expense',
           href: '/dashboard/ta-da',
         },
         {
           name: 'Marketing Activity List',
+          displayName: 'Marketing Activity List',
           href: '/dashboard/purpose-management',
         },
         {
           name: 'Employee VS Region Mapping',
+          displayName: 'Employee VS Region Mapping',
           href: '/dashboard/mapping',
         },
         // {
@@ -142,76 +165,79 @@ const NavItem = ({ session }) => {
     },
     {
       name: 'Visit Plan Requisition',
+      displayName: 'Visit Plan Requisition',
       href: '/dashboard/visit-plan',
       status: 'main',
     },
     {
       name: 'Visit plan approval',
+      displayName: 'Visit plan approval',
       href: '/dashboard/visit-approval',
       status: 'main',
     },
     {
       name: 'Visit Entry',
+      displayName: 'Visit Entry',
       href: '/dashboard/visit-entry',
       status: 'main',
     },
     {
       name: 'Visit Entry Approval',
+      displayName: 'Visit Entry Approval',
       href: '/dashboard/visit-approval-inital',
       status: 'main',
     },
-    // {
-    //   name: 'Production Order',
-    //   href: '/dashboard/production-order',
-    //   status: 'main',
-    // },
     {
       name: 'Product Receipt',
+      displayName: 'Product Receipt',
       href: '/dashboard/product-receipt',
       status: 'main',
     },
     {
       name: 'Sales orders',
+      displayName: 'Sales orders',
       href: '/dashboard/sales-order',
       status: 'main',
     },
     {
       name: 'Sales order approval process',
+      displayName: 'Sales order approval process',
       href: '/dashboard/sales-order-approval',
       status: 'main',
     },
     {
       name: 'Sales Return',
+      displayName: 'Sales Return',
       href: '/dashboard/sales-return',
       status: 'main',
     },
     {
       name: 'Delivery Chalan',
+      displayName: 'Delivery Chalan',
       href: '/dashboard/delivery-challan',
       status: 'main',
     },
     {
       name: 'Invoice/Bill',
+      displayName: 'Invoice/Bill',
       href: '/dashboard/invoice-bill',
       status: 'main',
     },
     {
-      name: 'Invoice/Bill Approval',
-      href: '/dashboard/',
-      status: 'main',
-    },
-    {
       name: 'Money Receipt',
+      displayName: 'Collection',
       href: '/dashboard/money-receipt',
       status: 'main',
     },
     {
       name: 'BD Expense Requisition',
+      displayName: 'BD Expense Requisition',
       href: '/dashboard/expense-requisition',
       status: 'main',
     },
     {
       name: 'BD Expense Approval',
+      displayName: 'BD Expense Approval',
       href: '/dashboard/expense-requisition',
       status: 'main',
     },
@@ -423,7 +449,7 @@ const NavItem = ({ session }) => {
                 className="capitalize block text-sm text-white py-[2px] pl-12"
                 href={item.href}
               >
-                {item.name}
+                {item.displayName}
               </Link>
             </div>
           ) : (
@@ -432,7 +458,7 @@ const NavItem = ({ session }) => {
                 <AccordionItemHeading>
                   <AccordionItemButton className="text-white">
                     <div className="flex gap-2 items-center pl-12">
-                      <FaArrowRightLong /> {item.name}
+                      <FaArrowRightLong /> {item.displayName}
                     </div>
                   </AccordionItemButton>
                 </AccordionItemHeading>
