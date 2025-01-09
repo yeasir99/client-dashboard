@@ -129,14 +129,12 @@ const router = useRouter();
 
 const handleSubmit = async e => {
   e.preventDefault();
-console.log(formData)
-  // come back and call API update Data
 
-//   const res = await axios.post(
-//     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_order',
-//     formData
-//   );
-//   router.push('/dashboard/sales-order');
+  const res = await axios.post(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_SalesOrders&SalesOrderID=${id}`,
+    formData
+  );
+  router.push('/dashboard/sales-order');
 };
 
   return (

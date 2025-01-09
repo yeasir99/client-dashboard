@@ -125,13 +125,12 @@ const SpecimanOrderEdit = ({ id }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(formData)
-    // const res = await axios.post(
-    //   'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_order',
-    //   formData
-    // );
-    // console.log(res);
-    // router.push('/dashboard/sales-order');
+    const res = await axios.post(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_SalesOrders&SalesOrderID=${id}`,
+      formData
+    );
+    console.log(res);
+    router.push('/dashboard/sales-order');
   };
   return <>
   <div className="flex justify-between items-center">

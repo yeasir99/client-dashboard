@@ -156,7 +156,7 @@ const NavItem = ({ session }) => {
       status: 'main',
     },
     {
-      name: 'Visit Approval',
+      name: 'Visit Entry Approval',
       href: '/dashboard/visit-approval-inital',
       status: 'main',
     },
