@@ -212,8 +212,8 @@ const NavItem = ({ session }) => {
       status: 'main',
     },
     {
-      name: 'Delivery Chalan',
-      displayName: 'Delivery Chalan',
+      name: 'Delivery Challan',
+      displayName: 'Delivery Challan',
       href: '/dashboard/delivery-challan',
       status: 'main',
     },
@@ -247,6 +247,12 @@ const NavItem = ({ session }) => {
       href: '/dashboard/expense-requisition',
       status: 'main',
     },
+    {
+      name: 'Damage product/Book',
+      displayName: 'Damage product/Book',
+      href: '/dashboard/expense-requisition',
+      status: 'main',
+    }
     // {
     //   name: 'Specimen Order', BD Expense Requisition
     //   href: '/dashboard/specimen',
