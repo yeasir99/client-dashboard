@@ -157,17 +157,25 @@ useEffect(() => {
 const dataWillBeSubmitted = {}
     for (const key in formData) {
       if(key === 'orderDetails'){
-        dataWillBeSubmitted.Details = formData.orderDetails
+        dataWillBeSubmitted.Details = formData.orderDetails.map(item => {
+          return {FinancialYearID: item.FinancialYearID,
+            ProductCategoryID: item.ProductCategoryID,
+            ProductID: item.ProductID,
+            Quantity: item.Quantity,
+            Rate: item.Price}
+        })
       } else {
         dataWillBeSubmitted[key] = formData[key]
       }
     }
+    console.log(formData)
+    console.log(dataWillBeSubmitted)
     const res = await axios.put(
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_ppreceiptall&ProductReceiptID=${id}`,
       dataWillBeSubmitted
     );
 
-    console.log(res)
+    
 
     router.push('/dashboard/product-receipt');
   };
@@ -340,7 +348,7 @@ const dataWillBeSubmitted = {}
                     <tbody>
                       {formData.orderDetails.length &&
                         formData.orderDetails.map(item => (
-                          <tr className="border-b border-neutral-200 dark:border-white/10">
+                          <tr className="border-b border-neutral-200 dark:border-white/10" key={item.id}>
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                               <select
                                 id="FinancialYearID"
