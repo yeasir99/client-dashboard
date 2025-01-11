@@ -1,5 +1,5 @@
-'use client'
-import {useState, useEffect} from 'react'
+'use client';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useGetData from '@/utils/useGetData';
 import axios from 'axios';
@@ -9,34 +9,36 @@ import { useRouter } from 'next/navigation';
 import BookById from '@/components/dashboard/BookById';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-const ProductReceiptEdit = ({id}) => {
-    const [formData, setFormData] = useState({
-        ProductReceiptNo: '',
-        ReceiptDate: new Date(),
-        BindingPartyID: '',
-        ChallanNumber: '',
-        PrintEdition: '',
-        UserID: '',
-        ProductionOrderQty: '',
-        ChallanCopyPath: '',
-        orderDetails: [
-          {
-            id: uuidv4(),
-            FinancialYearID: '',
-            ProductCategoryID: '',
-            ProductID: '',
-            Quantity: '',
-            Price: '',
-            TotalPrice: 0,
-          },
-        ],
-      });
+const ProductReceiptEdit = ({ id }) => {
+  const [formData, setFormData] = useState({
+    ProductReceiptNo: '',
+    ReceiptDate: new Date(),
+    BindingPartyID: '',
+    ChallanNumber: '',
+    PrintEdition: '',
+    UserID: '',
+    ProductionOrderQty: '',
+    ChallanCopyPath: '',
+    orderDetails: [
+      {
+        id: uuidv4(),
+        FinancialYearID: '',
+        ProductCategoryID: '',
+        ProductID: '',
+        Quantity: '',
+        Price: '',
+        TotalPrice: 0,
+      },
+    ],
+  });
 
-const [booksName, setBooksName] = useState([]);
+  const [booksName, setBooksName] = useState([]);
 
-const orginalData = useGetData(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_ppreceiptall&ProductReceiptID=${id}`)
+  const orginalData = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_ppreceiptall&ProductReceiptID=${id}`
+  );
 
-const { status, data } = useGetData(
+  const { status, data } = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bindingparties'
   );
   const fiscalYear = useGetData(
@@ -54,10 +56,11 @@ const { status, data } = useGetData(
     setBooksName(res.data);
   };
 
-useEffect(()=>{
-if(orginalData.data.success){
-    const {receipt, details} = orginalData.data
-    setFormData({
+  useEffect(() => {
+    if (orginalData.data.success) {
+      const { receipt, details } = orginalData.data;
+      console.log(details);
+      setFormData({
         ProductReceiptNo: receipt.ProductReceiptNo,
         ReceiptDate: receipt.ReceiptDate,
         BindingPartyID: receipt.BindingPartyID,
@@ -66,22 +69,24 @@ if(orginalData.data.success){
         ChallanNumber: receipt.ChallanNumber,
         ProductionOrderQty: receipt.ProductionOrderQty,
         UserID: receipt.UserID,
-        orderDetails: details.length ? details.map(item =>{
-            return {
-            id: item.SL,
-            FinancialYearID: item.FinancialYearID,
-            ProductCategoryID: item.ProductCategoryID,
-            ProductID: item.ProductID,
-            Quantity: item.ProductID,
-            Price: item.Rate,
-            TotalPrice: item.Total,
-            }
-        }) : formData.orderDetails
-    })
-}
-}, [orginalData.data])
+        orderDetails: details.length
+          ? details.map(item => {
+              return {
+                id: item.SL,
+                FinancialYearID: item.FinancialYearID,
+                ProductCategoryID: item.ProductCategoryID,
+                ProductID: item.ProductID,
+                Quantity: item.ProductID,
+                Price: item.Rate,
+                TotalPrice: item.Total,
+              };
+            })
+          : formData.orderDetails,
+      });
+    }
+  }, [orginalData.data]);
 
-useEffect(() => {
+  useEffect(() => {
     if (formData.ProductCategoryID) {
       getBooksNameById();
     }
@@ -154,35 +159,35 @@ useEffect(() => {
   const handleSubmit = async e => {
     e.preventDefault();
 
-const dataWillBeSubmitted = {}
+    const dataWillBeSubmitted = {};
     for (const key in formData) {
-      if(key === 'orderDetails'){
+      if (key === 'orderDetails') {
         dataWillBeSubmitted.Details = formData.orderDetails.map(item => {
-          return {FinancialYearID: item.FinancialYearID,
+          return {
+            FinancialYearID: item.FinancialYearID,
             ProductCategoryID: item.ProductCategoryID,
             ProductID: item.ProductID,
             Quantity: item.Quantity,
-            Rate: item.Price}
-        })
+            Rate: item.Price,
+          };
+        });
       } else {
-        dataWillBeSubmitted[key] = formData[key]
+        dataWillBeSubmitted[key] = formData[key];
       }
     }
-    console.log(formData)
-    console.log(dataWillBeSubmitted)
+    console.log(formData);
+    console.log(dataWillBeSubmitted);
     const res = await axios.put(
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_ppreceiptall&ProductReceiptID=${id}`,
       dataWillBeSubmitted
     );
-
-    
 
     router.push('/dashboard/product-receipt');
   };
 
   return (
     <>
-        <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center">
         <h1 className="text-2xl capitalize mb-3">Update Product Receipt</h1>
         <form>
           <input
@@ -249,7 +254,7 @@ const dataWillBeSubmitted = {}
             htmlFor="PrintEdition"
             className="capitalize flex font-semibold text-md py-1"
           >
-            Print:
+            Print Edition:
           </label>
           <input
             type="text"
@@ -259,7 +264,7 @@ const dataWillBeSubmitted = {}
             value={formData.PrintEdition}
             onChange={handleChange}
           />
-          
+
           <label
             htmlFor="ChallanNumber"
             className="capitalize flex font-semibold text-md py-1"
@@ -290,9 +295,7 @@ const dataWillBeSubmitted = {}
             onChange={handleChange}
           />
 
-
-
-<div className="flex flex-col">
+          <div className="flex flex-col">
             {/* table Start */}
             <h2 className="text-xl font-semibold my-2 capitalize">
               add Product details
@@ -348,7 +351,10 @@ const dataWillBeSubmitted = {}
                     <tbody>
                       {formData.orderDetails.length &&
                         formData.orderDetails.map(item => (
-                          <tr className="border-b border-neutral-200 dark:border-white/10" key={item.id}>
+                          <tr
+                            className="border-b border-neutral-200 dark:border-white/10"
+                            key={item.id}
+                          >
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                               <select
                                 id="FinancialYearID"
@@ -419,7 +425,7 @@ const dataWillBeSubmitted = {}
                               />
                             </td>
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            <input
+                              <input
                                 type="text"
                                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
                                 name="Price"
@@ -525,7 +531,7 @@ const dataWillBeSubmitted = {}
         </form>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ProductReceiptEdit
+export default ProductReceiptEdit;

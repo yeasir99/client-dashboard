@@ -1,5 +1,5 @@
-'use client'
-import {useState, useEffect} from 'react'
+'use client';
+import { useState, useEffect } from 'react';
 import useGetData from '@/utils/useGetData';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
@@ -9,133 +9,135 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import BookById from '../BookById';
 
-const SalesOrderEdit = ({id, session}) => {
-    const [formData, setFormData] = useState({
-      SalesOrderNo: '',
-      OrderDate: new Date().toISOString().split('T')[0],
-      PartyID: '',
-      TotalAmount: '',
-      UserID: '',
-      SpecimenUserID: null,
-      orderDetails: [
-        {
-          id: uuidv4(),
-          FinancialYearID: '',
-          ProductCategoryID: '',
-          ProductID: '',
-          Quantity: '',
-          Price: '',
-          TotalPrice: 0,
-        },
-      ],
-    });
+const SalesOrderEdit = ({ id, session }) => {
+  const [formData, setFormData] = useState({
+    SalesOrderNo: '',
+    OrderDate: new Date().toISOString().split('T')[0],
+    PartyID: '',
+    TotalAmount: '',
+    UserID: '',
+    SpecimenUserID: null,
+    orderDetails: [
+      {
+        id: uuidv4(),
+        FinancialYearID: '',
+        ProductCategoryID: '',
+        ProductID: '',
+        Quantity: '',
+        Price: '',
+        TotalPrice: 0,
+      },
+    ],
+  });
 
-    const { status, data } = useGetData(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_order&SalesOrderID=${id}`
-    ); 
-
-    useEffect(()=>{
-        if(data.order){
-            const { order, orderDetails } = data;
-            setFormData({
-              ...formData,
-              SalesOrderNo: order.SalesOrderNo,
-              OrderDate: order.OrderDate,
-              PartyID: order.PartyID,
-              UserID: order.UserID,
-              orderDetails: orderDetails.length ? orderDetails.map(item => {
-                return {
-                  id: item.SL,
-                  FinancialYearID: item.FinancialYearID,
-                  ProductCategoryID: item.ProductCategoryID,
-                  ProductID: item.ProductID,
-                  Quantity: item.Quantity,
-                  Price: item.Price,
-                  TotalPrice: Number(item.Price) * Number(item.Quantity),
-                };
-              }) : formData.orderDetails
-            });
-        }
-    }, [data])
-
-useEffect(() => {
-  const total = formData.orderDetails.reduce(
-    (sum, item) => sum + (item.TotalPrice || 0),
-    0
+  const { status, data } = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_order&SalesOrderID=${id}`
   );
 
-  setFormData(prevState => ({
-    ...prevState,
-    TotalAmount: total,
-  }));
-}, [formData.orderDetails]);
+  useEffect(() => {
+    if (data.order) {
+      const { order, orderDetails } = data;
+      setFormData({
+        ...formData,
+        SalesOrderNo: order.SalesOrderNo,
+        OrderDate: order.OrderDate,
+        PartyID: order.PartyID,
+        UserID: order.UserID,
+        orderDetails: orderDetails.length
+          ? orderDetails.map(item => {
+              return {
+                id: item.SL,
+                FinancialYearID: item.FinancialYearID,
+                ProductCategoryID: item.ProductCategoryID,
+                ProductID: item.ProductID,
+                Quantity: item.Quantity,
+                Price: item.Price,
+                TotalPrice: Number(item.Price) * Number(item.Quantity),
+              };
+            })
+          : formData.orderDetails,
+      });
+    }
+  }, [data]);
 
-const allParties = useGetData(
-  `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_parties_users&UserID=${session.user.id}`
-);
-
-const fiscalYear = useGetData(
-  'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_financialyear'
-);
-
-const bookGroups = useGetData(
-  'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys'
-);
-
-const getPrice = async (item, { name, value }) => {
-  try {
-    const res = await axios.get(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productrate&FinancialYearID=${item.FinancialYearID}&ProductID=${value}`
+  useEffect(() => {
+    const total = formData.orderDetails.reduce(
+      (sum, item) => sum + (item.TotalPrice || 0),
+      0
     );
 
+    setFormData(prevState => ({
+      ...prevState,
+      TotalAmount: total,
+    }));
+  }, [formData.orderDetails]);
+
+  const allParties = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_parties_users&UserID=${session.user.id}`
+  );
+
+  const fiscalYear = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_financialyear'
+  );
+
+  const bookGroups = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys'
+  );
+
+  const getPrice = async (item, { name, value }) => {
+    try {
+      const res = await axios.get(
+        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productrate&FinancialYearID=${item.FinancialYearID}&ProductID=${value}`
+      );
+
+      setFormData({
+        ...formData,
+        orderDetails: formData.orderDetails.map(detail =>
+          detail.id === item.id
+            ? {
+                ...detail,
+                [name]: value,
+                Price: res.data.Rate ? res.data.Rate : '',
+              }
+            : detail
+        ),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateOrderDetails = (event, itemId) => {
     setFormData({
       ...formData,
       orderDetails: formData.orderDetails.map(detail =>
-        detail.id === item.id
-          ? {
-              ...detail,
-              [name]: value,
-              Price: res.data.Rate ? res.data.Rate : '',
-            }
+        detail.id === itemId
+          ? { ...detail, [event.target.name]: event.target.value }
           : detail
       ),
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
-const updateOrderDetails = (event, itemId) => {
-  setFormData({
-    ...formData,
-    orderDetails: formData.orderDetails.map(detail =>
-      detail.id === itemId
-        ? { ...detail, [event.target.name]: event.target.value }
-        : detail
-    ),
-  });
-};
+  const updateOrderDetailBook = (event, item) => {
+    const value = event.target.value;
+    const name = event.target.name;
 
-const updateOrderDetailBook = (event, item) => {
-  const value = event.target.value;
-  const name = event.target.name;
+    if (value) {
+      getPrice(item, { name, value });
+    }
+  };
 
-  if (value) {
-    getPrice(item, { name, value });
-  }
-};
+  const router = useRouter();
 
-const router = useRouter();
+  const handleSubmit = async e => {
+    e.preventDefault();
 
-const handleSubmit = async e => {
-  e.preventDefault();
-
-  const res = await axios.post(
-    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_SalesOrders&SalesOrderID=${id}`,
-    formData
-  );
-  router.push('/dashboard/sales-order');
-};
+    const res = await axios.put(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_SalesOrders&SalesOrderID=${id}`,
+      formData
+    );
+    router.push('/dashboard/sales-order');
+  };
 
   return (
     <>
@@ -423,6 +425,6 @@ const handleSubmit = async e => {
       </div>
     </>
   );
-}
+};
 
-export default SalesOrderEdit
+export default SalesOrderEdit;
