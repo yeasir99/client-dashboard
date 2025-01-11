@@ -157,16 +157,19 @@ useEffect(() => {
 const dataWillBeSubmitted = {}
     for (const key in formData) {
       if(key === 'orderDetails'){
+        dataWillBeSubmitted.Details = formData.orderDetails
+      } else {
+        dataWillBeSubmitted[key] = formData[key]
       }
     }
-    // const res = await axios.put(
-    //   `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_ppreceiptall&ProductReceiptID=${id}`,
-    //   dataWillBeSubmitted
-    // );
+    const res = await axios.put(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_ppreceiptall&ProductReceiptID=${id}`,
+      dataWillBeSubmitted
+    );
 
     console.log(res)
 
-    // router.push('/dashboard/product-receipt');
+    router.push('/dashboard/product-receipt');
   };
 
   return (

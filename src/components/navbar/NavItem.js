@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { BiQrScan } from 'react-icons/bi';
 import { MdOutlineEqualizer } from 'react-icons/md';
 import { TiFlowParallel } from 'react-icons/ti';
-import { usePathname } from 'next/navigation';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import {
   Accordion,
