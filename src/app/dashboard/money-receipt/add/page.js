@@ -1,4 +1,54 @@
+'use client'
+import {useState, useEffect} from 'react'
+import useGetData from '@/utils/useGetData';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import axios from 'axios'
 const page = () => {
+  const [formData, setFormData] = useState({
+    MRNo: '',
+    PartyID: '',
+    MRDate: new Date().toISOString().split('T')[0],
+    AmountReceived: '',
+    InWord: '',
+    PaymentMethodID: '',
+    ReceivedByUserID: 501
+  })
+
+  console.log(formData)
+
+  const getMoneyReceipt = async () =>{
+    const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=generate_new_money_receipt_number')
+    if(res.data?.NewMRNo){
+      setFormData({
+        ...formData,
+        MRNo: res.data.NewMRNo
+      })
+    }
+  }
+
+  const allParties = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_parties_users&UserID=501`
+  );
+
+  useEffect(()=>{
+    getMoneyReceipt()
+  }, [])
+
+  const handleChange = (e) => {
+    console.log(e.target)
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_receipt', formData)
+    console.log(res)
+  }
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -13,77 +63,104 @@ const page = () => {
         </form>
       </div>
       <div className="max-w-2xl bg-gray-200 rounded-md px-4 py-4">
-        <form>
-          <label htmlFor="designation" className="block text-sm font-bold mb-1">
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="MRNo" className="block text-sm font-bold mb-1">
             Receipt Number:
           </label>
           <input
             type="text"
-            id="designation"
+            id="MRNo"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            value={formData.MRNo}
+            readOnly
           />
-          <div>
+          <div className="w-full">
+                    <label className="capitalize flex font-semibold text-md py-1">
+                      Receipt Date:
+                    </label>
+          
+                    <DatePicker
+                      selected={formData.MRDate}
+                      onChange={date =>
+                        setFormData({
+                          ...formData,
+                          MRDate: date.toISOString().split('T')[0],
+                        })
+                      }
+                      className="rounded-md"
+                    />
+                  </div>
+                  <div>
             <label className="capitalize flex font-semibold text-md py-1">
               Party Name:
             </label>
 
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                Library 1
-              </option>
-              <option value="Zone one">Library 1</option>
-              <option value="Zone two">Library 1</option>
-              <option value="Zone three">Library 1</option>
+            <select
+              name="PartyID"
+              className="w-full rounded-md"
+              onChange={e => {
+                setFormData({
+                  ...formData,
+                  PartyID: e.target.value,
+                });
+              }}
+              value={formData.PartyID}
+              required
+            >
+              <option value=""></option>
+              {allParties.data.length &&
+                allParties.data.map(item => (
+                  <option value={item.PartyID} key={item.PartyID}>
+                    {item.PartyName}
+                  </option>
+                ))}
             </select>
           </div>
-          <div>
-            <label className="capitalize flex font-semibold text-md py-1">
-              Receipt Date:
-            </label>
-
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                18/02/2024
-              </option>
-              <option value="Zone one">18/02/2024</option>
-              <option value="Zone two">18/02/2024</option>
-              <option value="Zone three">18/02/2024</option>
-            </select>
-          </div>
-          <label htmlFor="designation" className="block text-sm font-bold mb-1">
+          <label htmlFor="AmountReceived" className="block text-sm font-bold mb-1">
             Amount Received:
           </label>
           <input
             type="text"
-            id="designation"
+            id="AmountReceived"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            onChange={(event) =>{
+              setFormData({
+                ...formData,
+                AmountReceived: event.target.value
+              })
+            }}
+            value={formData.AmountReceived}
+          />
+          <label htmlFor="InWord" className="block text-sm font-bold mb-1">
+            Amount In word:
+          </label>
+          <input
+            type="text"
+            id="InWord"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            onChange={(event) =>{
+              setFormData({
+                ...formData,
+                InWord: event.target.value
+              })
+            }}
+            value={formData.InWord}
           />
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
               Payment Method:
             </label>
 
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                Cash
+            <select name="PaymentMethodID" className="w-full rounded-md" value={formData.PaymentMethodID} onChange={(event) =>{
+              setFormData({
+                ...formData,
+                PaymentMethodID: event.target.value
+              })
+            }}>
+              <option value="" disabled={true}>
               </option>
-              <option value="Zone one">Cash</option>
-              <option value="Zone two">Cash</option>
-              <option value="Zone three">Cash</option>
-            </select>
-          </div>
-          <div>
-            <label className="capitalize flex font-semibold text-md py-1">
-              Received By:
-            </label>
-
-            <select name="zone" className="w-full rounded-md">
-              <option value="" disabled={true} selected>
-                User 3
-              </option>
-              <option value="Zone one">User 3</option>
-              <option value="Zone two">User 3</option>
-              <option value="Zone three">User 3</option>
+              <option value="1">Cash</option>
+              <option value="2">Bank</option>
             </select>
           </div>
           <div className="mt-5">

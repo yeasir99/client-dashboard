@@ -35,7 +35,7 @@ const SalesOrderView = ({ id }) => {
             </div>
             <div className="flex items-center gap-2">
               <h1 className="text-lg">Party Name:</h1>
-              <h1>{order.partyname}</h1>
+              <h1>{order.PartyName}</h1>
             </div>
             <div className="flex items-center gap-2">
               <h1 className="text-lg">Total Amount:</h1>
