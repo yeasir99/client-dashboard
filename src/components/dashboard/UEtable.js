@@ -131,7 +131,7 @@ const UEtable = ({userId}) => {
                           </span>
                         </Link>
                       </div>
-                      |
+                      
                       <div>
                         <Link
                           href={`/dashboard/user-employee/edit/${item.UserID}`}
@@ -141,11 +141,11 @@ const UEtable = ({userId}) => {
                           </span>
                         </Link>
                       </div>
-                      |
+                      
                       <div>
                         {item.Status === 1 ? (
                           <button
-                            className="group relative z-0 h-10 overflow-hidden overflow-x-hidden rounded-md bg-neutral-950 px-6 py-2 text-neutral-50"
+                            className="group relative z-0 h-7 overflow-hidden overflow-x-hidden rounded-md bg-neutral-950 px-6 text-neutral-50"
                             type="button"
                             onClick={() => handleDeactive(item)}
                           >
@@ -156,7 +156,7 @@ const UEtable = ({userId}) => {
                           </button>
                         ) : (
                           <button
-                            className="group relative z-0 h-10 overflow-hidden overflow-x-hidden rounded-md bg-neutral-950 px-8 py-2 text-neutral-50"
+                            className="group relative z-0 h-7 overflow-hidden overflow-x-hidden rounded-md bg-neutral-950 px-8 text-neutral-50"
                             type="button"
                             onClick={() => handleActive(item)}
                           >
