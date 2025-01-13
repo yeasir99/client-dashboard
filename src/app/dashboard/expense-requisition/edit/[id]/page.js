@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 
 const page = ({params}) => {
   const [formData, setFormData] = useState({
+    BDExpReqID: '',
     BDExpReqNo: '',
     BDExpUserID: '',
     BDExpReqDate: new Date().toISOString().split('T')[0],
@@ -62,6 +63,7 @@ const page = ({params}) => {
     const res = await axios.get(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_BDExpReqAll&BDExpReqID=${id}`)
     
     setFormData({
+      BDExpReqID: res.data.BDExpReq.BDExpReqID,
       BDExpReqNo: res.data.BDExpReq.BDExpReqNo,
     BDExpUserID: res.data.BDExpReq.BDExpUserID,
     BDExpReqDate: res.data.BDExpReq.BDExpReqDate,
@@ -166,6 +168,7 @@ if(params.id){
     event.preventDefault();
     const dataWillbeSubmitted = {
       BDExpReq: {
+        BDExpReqID: formData.BDExpReqID,
         BDExpReqNo: formData.BDExpReqNo,
     BDExpUserID: formData.BDExpUserID,
     BDExpReqDate: formData.BDExpReqDate,
@@ -189,8 +192,7 @@ if(params.id){
     }
     console.log(dataWillbeSubmitted)
     const res = await axios.put('https://kblsf.site/DLogicKBL/salesforce_api.php?action=Update_BDExpReqAll', dataWillbeSubmitted)
-    console.log(res)
-    // router.push('/dashboard/expense-requisition')
+     router.push('/dashboard/expense-requisition')
   };
   return (
     <div>
