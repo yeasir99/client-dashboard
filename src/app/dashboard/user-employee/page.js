@@ -22,7 +22,7 @@ const page = async () => {
           />
         </form>
       </div>
-      {session.user.id && <UEtable userId={session.user.id} />}
+      {session?.user.id && <UEtable userId={session.user.id} />}
     </div>
   );
 };

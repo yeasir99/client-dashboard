@@ -97,31 +97,31 @@ const UEtable = ({userId}) => {
                     className="border-b border-neutral-200 dark:border-white/10"
                     key={item.UserID}
                   >
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-1 font-medium dark:border-white/10">
                       {item.UserID}
                     </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-1 dark:border-white/10">
                       {item.EmployeeID}
                     </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-1 dark:border-white/10">
                       {item.EmpName}
                     </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-1 dark:border-white/10">
                       {item.Designation}
                     </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-1 dark:border-white/10">
                       {item.Email}
                     </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-1 dark:border-white/10">
                       {item.Phone}
                     </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-1 dark:border-white/10">
                       {item.Username}
                     </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-1 dark:border-white/10">
                       {item.ReportingToUserID}
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
+                    <td className="whitespace-nowrap px-6 py-1 flex justify-center items-center gap-3">
                       <div>
                         <Link
                           href={`/dashboard/user-employee/view/${item.UserID}`}
