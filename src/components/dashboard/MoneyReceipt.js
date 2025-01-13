@@ -86,9 +86,11 @@ const MoneyReceipt = () => {
                         </span>{' '}
                         </Link>
                         |
+                        <Link href={`/dashboard/money-receipt/edit/${item.MRID}`}>
                         <span className="bg-amber-600 p-1 inline-block rounded-md">
                           <FaRegEdit className="text-white text-xl" />
                         </span>{' '}
+                        </Link>
                       </td>
                     </tr>
                   ))}

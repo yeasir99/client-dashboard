@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios'
 import { useRouter } from 'next/navigation';
-const page = () => {
+const page = ({params}) => {
   const [formData, setFormData] = useState({
     MRNo: '',
     PartyID: '',
@@ -16,32 +16,36 @@ const page = () => {
     ReceivedByUserID: 501
   })
 
-  console.log(formData)
-
-  const getMoneyReceipt = async () =>{
-    const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=generate_new_money_receipt_number')
-    if(res.data?.NewMRNo){
-      setFormData({
-        ...formData,
-        MRNo: res.data.NewMRNo
-      })
-    }
+  const getPreviousData = async (id) => {
+    const res = await axios.get(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_moneyreceipt&MRID=${id}`)
+    console.log(res)
+    setFormData({
+        MRNo: res.data.MRNo,
+    PartyID: res.data.PartyID,
+    MRDate: res.data.MRDate,
+    AmountReceived: res.data.AmountReceived,
+    InWord: res.data.InWord,
+    PaymentMethodID: res.data.PaymentMethodID,
+    ReceivedByUserID: res.data.ReceivedByUserID
+    })
   }
+
+  useEffect(()=>{
+if(params.id){
+    getPreviousData(params.id)
+}
+  }, [params.id])
 
   const allParties = useGetData(
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_parties_users&UserID=501`
   );
 
-  useEffect(()=>{
-    getMoneyReceipt()
-  }, [])
-
   const router = useRouter()
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_moneyreceipt', formData)
-    router.push('/dashboard/money-receipt')
+    const res = await axios.put(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_moneyreceipt&MRID=${params.id}`, formData)
+     router.push('/dashboard/money-receipt')
   }
 
   return (
@@ -160,7 +164,7 @@ const page = () => {
           </div>
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
-              Save Money Receipt
+              Update Money Receipt
             </button>
           </div>
         </form>

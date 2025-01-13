@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import BookByIdV2 from '@/components/dashboard/BookGroupIdV2';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
   const [formData, setFormData] = useState({
@@ -126,6 +127,8 @@ const page = () => {
     });
   };
 
+  const router = useRouter()
+
   const handleSubmit = async event => {
     event.preventDefault();
     const dataWillbeSubmitted = {
@@ -152,7 +155,7 @@ const page = () => {
       })
     }
     const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_BDExpReqAll', dataWillbeSubmitted)
-    console.log(res)
+    router.push('/dashboard/expense-requisition')
   };
   return (
     <div>
