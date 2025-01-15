@@ -255,7 +255,7 @@ const page = () => {
                 ))}
             </select>
           </div>
-          <div>
+          {/* <div>
             <label className="capitalize flex font-semibold text-md py-1">
               Status
             </label>
@@ -271,7 +271,7 @@ const page = () => {
               <option value="1">active</option>
               <option value="0">disable</option>
             </select>
-          </div>
+          </div> */}
         </div>
         <button
           type="submit"

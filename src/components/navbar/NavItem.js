@@ -231,7 +231,7 @@ const NavItem = ({ session }) => {
     {
       name: 'Money receipt Approval',
       displayName: 'Collection Approval',
-      href: '/dashboard/money-receipt',
+      href: '/dashboard/money-receipt-approval',
       status: 'main',
     },
     {
@@ -243,7 +243,7 @@ const NavItem = ({ session }) => {
     {
       name: 'BD Expense Approval',
       displayName: 'BD Expense Approval',
-      href: '/dashboard/expense-requisition',
+      href: '/dashboard/expense-approval',
       status: 'main',
     },
     {
