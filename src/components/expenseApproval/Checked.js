@@ -5,7 +5,7 @@ const Checked = ({viewableData}) => {
     })
 
     const handleCancel = async () =>{
-        // handle cancel
+        // handle cencel
     }
     const handleChecked = async () =>{
         // handle reject

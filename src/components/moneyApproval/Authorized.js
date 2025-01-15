@@ -1,14 +1,30 @@
 import {useState} from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 const Authorized = ({viewableData}) => {
     const [formData, setFormData] = useState({
         AuthorizedComments: ''
     })
 
+    const router = useRouter()
+
     const handleReject = async () =>{
-        // handle cancel
+        const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_CancelledMR&MRID=${viewableData.data.MRID}`, {
+                MRID: viewableData.data.MRID,
+                RejectComments: formData.AuthorizedComments,
+                UserID: 501
+        })
+        router.push('/dashboard/money-receipt-approval')
     }
     const handleChecked = async () =>{
-        // handle reject
+        const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetailsMR&MRID=${viewableData.data.MRID}`,{
+            MRID: viewableData.data.MRID,
+           CheckedComments: null,
+           AuthComments: formData.AuthorizedComments,
+           AppComments: null,
+           UserID: 501
+       })
+       router.push('/dashboard/money-receipt-approval')
     }
     if(viewableData.status === 'pending'){
         return <div className="text-xl font-semibold text-center py-5">Loading...</div>

@@ -165,7 +165,7 @@ const Approved = ({viewableData}) => {
             Reject
           </button>
           <button className="bg-primary px-6 py-2 rounded-md text-white" onClick={handleChecked}>
-            Checked
+            Approval
           </button>
         </div>
     </div>

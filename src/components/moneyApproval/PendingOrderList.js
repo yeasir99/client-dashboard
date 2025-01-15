@@ -101,7 +101,7 @@ const PendingOrderList = () => {
                             `/dashboard/money-receipt-approval/authorized/${item.MRID}`
                             }>
                             <button className="bg-gray-300 px-1 py-[2px]">
-                              Approval
+                              Authorize
                             </button>
                           </Link>
                         ): (

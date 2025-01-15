@@ -1,14 +1,30 @@
 import {useState} from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 const Approval = ({viewableData}) => {
     const [formData, setFormData] = useState({
         ApprovalComments: ''
     })
+    const router = useRouter()
 
     const handleReject = async () =>{
-        // handle cancel
+        const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_CancelledMR&MRID=${viewableData.data.MRID}`, {
+            MRID: viewableData.data.MRID,
+            RejectComments: formData.ApprovalComments,
+            UserID: 501
+    })
+    router.push('/dashboard/money-receipt-approval')
     }
     const handleChecked = async () =>{
-        // handle reject
+        const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetailsMR&MRID=${viewableData.data.MRID}`,{
+            MRID: viewableData.data.MRID,
+           CheckedComments: null,
+           AuthComments: null,
+           AppComments: formData.AuthorizedComments,
+           UserID: 501
+       })
+
+        router.push('/dashboard/money-receipt-approval')
     }
     if(viewableData.status === 'pending'){
         return <div className="text-xl font-semibold text-center py-5">Loading...</div>
@@ -55,7 +71,7 @@ const Approval = ({viewableData}) => {
             htmlFor="ApprovalComments"
             className="block text-sm font-bold mb-1"
           >
-            Authorized Comment:
+            Approval Comment:
           </label>
             <textarea id="ApprovalComments" className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm" name="ApprovalComments" type="text" value={formData.ApprovalComments} onChange={e => {
                 setFormData({

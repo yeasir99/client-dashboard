@@ -1,7 +1,7 @@
 'use client'
 import axios from 'axios'
 import {useState, useEffect} from 'react'
-import Authorized from '@/components/moneyApproval/Authorized'
+import Approval from '@/components/moneyApproval/Approval'
 
 const page = ({params}) => {
     const [viewableData, setViewableData] = useState({
@@ -21,7 +21,7 @@ if(params.id){
 }
     }, [params.id])
   return (
-    <Authorized viewableData={viewableData} />
+    <Approval viewableData={viewableData} />
   )
 }
 
