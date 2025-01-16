@@ -1,5 +1,4 @@
 'use client'
-import { useSession } from "next-auth/react"
 import {useState, useEffect} from 'react'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -7,7 +6,7 @@ import useGetData from "@/utils/useGetData";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
 
-const page = () => {
+const page = ({params}) => {
   const [name, setName] = useState('')
   const [intName ,setIntName] = useState([])
   const [formData, setFormData] = useState({
@@ -19,33 +18,30 @@ const page = () => {
     VisitUserID: '',
     UserID: ''
   })
-  const { data: session, status } = useSession()
-  useEffect(()=>{
-    if(session?.user){
-      setFormData({
-        ...formData,
-        VisitUserID: session.user.id,
-        UserID: session.user.id
-      })
-      setName(session.user.name)
+const getPreviosData = async (id) =>{
+    const res = await axios.get(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_visit_plan&VisitPlanID=${id}`)
+    setFormData({
+        VisitPlanNo: res.data.VisitPlan.VisitPlanNo,
+    VisitPlanDate: res.data.VisitPlan.VisitPlanDate,
+    InstitutionTypeID: res.data.VisitPlan.InstitutionTypeID,
+    InstitutionID: res.data.VisitPlan.InstitutionID,
+    PurposeID: res.data.VisitPlan.PurposeID,
+    VisitUserID: res.data.VisitPlan.VisitUserID,
+    UserID: res.data.VisitPlan.UserID
+    })
+    setName(res.data.VisitPlan.VisitUserName)
+}
+
+useEffect(()=>{
+    if(params.id){
+        getPreviosData(params.id)
     }
 
-  }, [session])
+}, [params.id])
 
 const instutionType = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutiontypes')
 const purposeCategory = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_visitpurposes')
 
-const getPerpouse = async () => {
-  const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=generate_new_visit_plan_number')
-  setFormData({
-    ...formData,
-    VisitPlanNo: res.data.newVisitPlanNo
-  })
-}
-
-useEffect(()=>{
-  getPerpouse()
-}, [])
 
 const getInstutionName = async id => {
   const res = await axios.get(
@@ -71,7 +67,7 @@ const handleChange = e => {
 const router = useRouter()
 const handleSubmit = async e =>{
   e.preventDefault();
-  const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_visit_plan', formData)
+  const res = await axios.put(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_visit_plan&VisitPlanID=${params.id}`, formData)
   router.push('/dashboard/visit-plan')
 }
 

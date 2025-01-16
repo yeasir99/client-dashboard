@@ -1,118 +1,14 @@
+'use client'
+import useGetData from '@/utils/useGetData';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
+import Link from 'next/link';
 
 const VisitPlan = () => {
-  let data = [
-    {
-      id: 1,
-      visitDate: '2024-09-13',
-      employeeName: 'Mr. Rahman',
-      place: 'Dhaka High School',
-      visitArea: 'Uttara',
-      purpose: 'Promotional Expense',
-      approvalStatus: 'Pending',
-      createdBy: 'loginUser',
-    },
-    {
-      id: 2,
-      visitDate: '2024-09-14',
-      employeeName: 'Ms. Akter',
-      place: 'Bashundhara School',
-      visitArea: 'Bashundhara',
-      purpose: 'Event Coordination',
-      approvalStatus: 'Approved',
-      createdBy: 'adminUser',
-    },
-    {
-      id: 3,
-      visitDate: '2024-09-15',
-      employeeName: 'Mr. Khan',
-      place: 'Gulshan College',
-      visitArea: 'Gulshan',
-      purpose: 'Promotional Expense',
-      approvalStatus: 'Pending',
-      createdBy: 'loginUser',
-    },
-    {
-      id: 4,
-      visitDate: '2024-09-16',
-      employeeName: 'Ms. Shoma',
-      place: 'Mirpur School',
-      visitArea: 'Mirpur',
-      purpose: 'Training',
-      approvalStatus: 'Completed',
-      createdBy: 'managerUser',
-    },
-    {
-      id: 5,
-      visitDate: '2024-09-17',
-      employeeName: 'Mr. Alam',
-      place: 'Banani High School',
-      visitArea: 'Banani',
-      purpose: 'Promotional Expense',
-      approvalStatus: 'Pending',
-      createdBy: 'loginUser',
-    },
-    {
-      id: 6,
-      visitDate: '2024-09-18',
-      employeeName: 'Ms. Parvin',
-      place: 'Dhanmondi Tutorial',
-      visitArea: 'Dhanmondi',
-      purpose: 'Market Research',
-      approvalStatus: 'Approved',
-      createdBy: 'adminUser',
-    },
-    {
-      id: 7,
-      visitDate: '2024-09-19',
-      employeeName: 'Mr. Saif',
-      place: 'Uttara Model College',
-      visitArea: 'Uttara',
-      purpose: 'Event Coordination',
-      approvalStatus: 'Pending',
-      createdBy: 'managerUser',
-    },
-    {
-      id: 8,
-      visitDate: '2024-09-20',
-      employeeName: 'Ms. Hossain',
-      place: 'Motijheel Ideal School',
-      visitArea: 'Motijheel',
-      purpose: 'Promotional Expense',
-      approvalStatus: 'Completed',
-      createdBy: 'loginUser',
-    },
-    {
-      id: 9,
-      visitDate: '2024-09-21',
-      employeeName: 'Mr. Islam',
-      place: 'Tejgaon College',
-      visitArea: 'Tejgaon',
-      purpose: 'Training',
-      approvalStatus: 'Pending',
-      createdBy: 'managerUser',
-    },
-    {
-      id: 10,
-      visitDate: '2024-09-22',
-      employeeName: 'Ms. Sultana',
-      place: 'Khilgaon High School',
-      visitArea: 'Khilgaon',
-      purpose: 'Promotional Expense',
-      approvalStatus: 'Approved',
-      createdBy: 'adminUser',
-    },
-    {
-      id: 11,
-      visitDate: '2024-09-23',
-      employeeName: 'Mr. Kabir',
-      place: 'Mirpur College',
-      visitArea: 'Mirpur',
-      purpose: 'Market Research',
-      approvalStatus: 'Pending',
-      createdBy: 'loginUser',
-    },
-  ];
+  const {status, data} = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_visit_plans')
+  
+  if(status === 'pending'){
+    return <div className='text-xl font-semibold text-center py-6'>Loading...</div>
+  }
   return (
     <div className="flex flex-col">
       <div>
@@ -131,92 +27,60 @@ const VisitPlan = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Visit Data
+                    Visit No
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Employee Name
+                    Date
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Place
+                    Institute Name
                   </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Visit Area
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Purpose
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Approval status
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Created By
-                  </th>
-
                   <th scope="col" className="px-6 py-4">
                     Action
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {data.map(item => (
+                {data.length ? data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.VisitPlanID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.VisitPlanID}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.visitDate}
+                      {item.VisitPlanNo}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.employeeName}
+                      {item.VisitPlanDate}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.place}
+                      {item.InstituteName}
                     </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.visitArea}
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.purpose}
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.approvalStatus}
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.createdBy}
-                    </td>
-
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
-                      <span className="bg-cyan-500 p-1 inline-block rounded-md">
+                    <Link href={`/dashboard/visit-plan/view/${item.VisitPlanID}`}>
+                    <span className="bg-cyan-500 p-1 inline-block rounded-md">
                         <FaEye className="text-white text-xl" />
-                      </span>{' '}
+                      </span>
+                    </Link>
+                    {' '}
                       |
+                      <Link href={`/dashboard/visit-plan/edit/${item.VisitPlanID}`}>
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
                         <FaRegEdit className="text-white text-xl" />
-                      </span>{' '}
+                      </span>
+                      </Link>
+                      {' '}
                     </td>
                   </tr>
-                ))}
+                )) : <div className='text-xl font-semibold text-center py-3'>No Data To Display</div>}
               </tbody>
             </table>
           </div>
