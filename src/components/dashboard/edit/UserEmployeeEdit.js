@@ -2,12 +2,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import useGetData from '@/utils/useGetData';
+import { useRouter } from 'next/navigation';
 
 const UserEmployeeEdit = ({ id }) => {
   const [desigs, setDesigs] = useState([]);
   const [reportingTo, setReportingTo] = useState([]);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     employeeName: '',
+    EmployeeID: '',
     dasignationRole: '',
     password: '',
     userName: '',
@@ -26,6 +29,7 @@ const UserEmployeeEdit = ({ id }) => {
     if (status !== 'pending') {
       setFormData({
         employeeName: data.EmpName,
+        EmployeeID: data.EmployeeID,
         dasignationRole: data.DesignationID,
         password: '',
         userName: data.Username,
@@ -67,9 +71,62 @@ const UserEmployeeEdit = ({ id }) => {
     }
   }, [formData.dasignationRole]);
 
+  const validatePassword = (pwd) => {
+    if (pwd.length === 0) {
+      return "";
+    }
+    if (pwd.length < 6) {
+      return "Password must be at least 6 characters long.";
+    }
+    if (pwd.length > 8) {
+      return "Password must be at 6 - 8 characters long.";
+    }
+    if (!/[A-Z]/.test(pwd)) {
+      return "Password must contain at least one uppercase letter.";
+    }
+    if (!/[0-9]/.test(pwd)) {
+      return "Password must contain at least one number.";
+    }
+    if (!/[!@#$%^&*]/.test(pwd)) {
+      return "Password must contain at least one special character (!@#$%^&*).";
+    }
+    return "";
+  };
+
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setFormData({
+      ...formData,
+      password: newPassword
+    })
+    const validationMessage = validatePassword(newPassword);
+    setError(validationMessage);
+  };
+
+  const router = useRouter()
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    let dataWillbeSubmitted = {}
+    dataWillbeSubmitted.EmployeeID = formData.EmployeeID
+    dataWillbeSubmitted.EmpName = formData.employeeName
+    dataWillbeSubmitted.DesignationID = formData.dasignationRole
+    dataWillbeSubmitted.Username = formData.userName
+    if(formData.password){
+      dataWillbeSubmitted.Password = formData.password 
+    }
+    dataWillbeSubmitted.Email = formData.email
+    dataWillbeSubmitted.Phone = formData.phone
+    dataWillbeSubmitted.Address = formData.address
+    dataWillbeSubmitted.ReportingToUserID = formData.reportingTo
+    dataWillbeSubmitted.Status = formData.status == 1 ? true : false
+    const res = await axios.put(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_sndUserWithoutImage&UserID=${id}`, dataWillbeSubmitted)
+    router.push('/dashboard/user-employee')
+  }
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -85,12 +142,23 @@ const UserEmployeeEdit = ({ id }) => {
       </div>
       <form
         className="w-full max-w-lg"
-        action="/api/user-registration/update"
-        method="POST"
-        encType="multipart/form-data"
+        onSubmit={handleSubmit}
       >
         <input name="id" value={id} readonly className="hidden" />
         <div className="mb-5">
+        <div>
+            <label
+              className="capitalize flex font-semibold text-md py-1"
+            >
+              employee Id:
+            </label>
+
+            <input
+              className="w-full rounded-md mb-1"
+              value={formData.EmployeeID}
+              readOnly
+            />
+          </div>
           <div>
             <label
               htmlFor="EmployeeName"
@@ -161,11 +229,11 @@ const UserEmployeeEdit = ({ id }) => {
               type="password"
               name="password"
               className="w-full rounded-md mb-1"
-              onChange={handleChange}
+              onChange={handlePasswordChange}
               value={formData.password}
             />
           </div>
-
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <div>
             <label
               htmlFor="Email"
