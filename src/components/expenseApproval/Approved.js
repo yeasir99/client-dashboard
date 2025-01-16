@@ -19,7 +19,7 @@ const router = useRouter()
             BDExpReqID: viewableData.data.BDExpReq.BDExpReqID,
             CheckedComments: null,
             AuthComments: null,
-            AppComments: formData.AuthComments,
+            AppComments: formData.ApproveComment,
             UserID: 501
         })
         router.push('/dashboard/expense-approval/')
