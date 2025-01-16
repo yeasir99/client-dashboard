@@ -8,11 +8,14 @@ const page = ({params}) => {
         data: null
     })
 
+    console.log(visitData)
+
     const getData = async id =>{
         const res = await axios.get(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_visit_plan&VisitPlanID=${id}`)
+        console.log(res)
         setVisitData({
             status: 'idle',
-            data: res.data?.VisitPlanID ? res.data : null
+            data: res.data?.VisitPlan ? res.data.VisitPlan : null
         })
     }
 

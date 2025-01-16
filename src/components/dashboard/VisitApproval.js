@@ -1,63 +1,14 @@
-import { FaEye, FaRegEdit } from 'react-icons/fa';
+'use client'
+import useGetData from '@/utils/useGetData';
+import Link from 'next/link';
 
 const VisitApproval = () => {
-  let data = [
-    {
-      id: 1,
-      employeeName: 'Mr. Rahman',
-      designation: 'ZM',
-    },
-    {
-      id: 2,
-      employeeName: 'Ms. Akter',
-      designation: 'AM',
-    },
-    {
-      id: 3,
-      employeeName: 'Mr. Khan',
-      designation: 'BM',
-    },
-    {
-      id: 4,
-      employeeName: 'Ms. Shoma',
-      designation: 'ZM',
-    },
-    {
-      id: 5,
-      employeeName: 'Mr. Alam',
-      designation: 'SM',
-    },
-    {
-      id: 6,
-      employeeName: 'Ms. Parvin',
-      designation: 'AM',
-    },
-    {
-      id: 7,
-      employeeName: 'Mr. Saif',
-      designation: 'BM',
-    },
-    {
-      id: 8,
-      employeeName: 'Ms. Hossain',
-      designation: 'ZM',
-    },
-    {
-      id: 9,
-      employeeName: 'Mr. Islam',
-      designation: 'AM',
-    },
-    {
-      id: 10,
-      employeeName: 'Ms. Sultana',
-      designation: 'BM',
-    },
-    {
-      id: 11,
-      employeeName: 'Mr. Kabir',
-      designation: 'SM',
-    },
-  ];
+  const {status, data} = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanApprovalSum&UserID=501')
+
+  if(status === 'pending'){
+    return <div className='text-xl font-semibold text-center py-6'>Loading...</div>
+  }
+    
   return (
     <div className="flex flex-col">
       <div>
@@ -78,28 +29,29 @@ const VisitApproval = () => {
                   >
                     Employee Name
                   </th>
-
                   <th scope="col" className="px-6 py-4">
-                    Designation
+                    Status
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {data.map(item => (
+                {data.length ? data.map(item => (
                   <tr
                     className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.id}
+                    key={item.SL}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.id}
+                      {item.SL}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.employeeName}
+                      <Link className="text-blue-600 font-semibold hover:underline" href={`/dashboard/visit-approval/list/${item.VisitUserID}`}>
+                      {item.VisitUserName}
+                      </Link>
                     </td>
-
-                    <td className="whitespace-nowrap">{item.designation}</td>
+                    
+                    <td className="whitespace-nowrap">{item.Status}</td>
                   </tr>
-                ))}
+                )) : <div className='text-xl font-semibold text-center py-6'>No Data To Display</div>}
               </tbody>
             </table>
           </div>
