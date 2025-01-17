@@ -20,7 +20,7 @@ const Approval = ({viewableData}) => {
             MRID: viewableData.data.receipt.MRID,
            CheckedComments: null,
            AuthComments: null,
-           AppComments: formData.AuthorizedComments,
+           AppComments: formData.ApprovalComments,
            UserID: 501
        })
 
