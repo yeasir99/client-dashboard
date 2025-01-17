@@ -59,11 +59,24 @@ const page = ({params}) => {
         </div>
         {state.data.Approvals.AuthComments ? <div>
             <div className="flex items-center gap-2">
-          <h1 className="text-lg">Auth Comments:</h1>
+          <h1 className="text-lg">Authorized Comments:</h1>
           <h1>{state.data.Approvals.AuthComments}</h1>
         </div>
         <div className="flex items-center gap-2">
-          <h1 className="text-lg">Auth By:</h1>
+          <h1 className="text-lg">Authorized By:</h1>
+          <h1>{state.data.Approvals.AuthBy}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Date:</h1>
+          <h1>{state.data.Approvals.AuthDate}</h1>
+        </div>
+        {state.data.Approvals.AppComments ? <div>
+            <div className="flex items-center gap-2">
+          <h1 className="text-lg">Approved Comments:</h1>
+          <h1>{state.data.Approvals.AuthComments}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Approved By:</h1>
           <h1>{state.data.Approvals.AuthBy}</h1>
         </div>
         <div className="flex items-center gap-2">
@@ -71,6 +84,7 @@ const page = ({params}) => {
           <h1>{state.data.Approvals.AuthDate}</h1>
         </div>
         </div> : <div>Process Is Not Approved Yet</div> }
+        </div> : <div>Process Is Not Authorized Yet</div> }
         </div> : <div>Approval Process Is Still In Unchecked</div> }
       </div>
     </div>
