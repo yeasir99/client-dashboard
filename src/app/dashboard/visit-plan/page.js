@@ -4,7 +4,7 @@ import VisitPlan from '@/components/dashboard/VisitPlan';
 const page = () => {
   return (
     <div>
-      <h1 className="text-2xl capitalize mb-3">assign visit plan</h1>
+      <h1 className="text-2xl capitalize mb-3">Visit Plan Requisition</h1>
       <div className="flex justify-between items-center">
         <Link href="/dashboard/visit-plan/add">
           <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">

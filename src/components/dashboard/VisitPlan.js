@@ -27,19 +27,43 @@ const VisitPlan = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Visit No
+                    Visit Plan No
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Date
+                    Visit Date
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Institute Name
+                    Institution/Party Type
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Institution/Party Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Purpose Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Visit User
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    App Status
                   </th>
                   <th scope="col" className="px-6 py-4">
                     Action
@@ -62,7 +86,19 @@ const VisitPlan = () => {
                       {item.VisitPlanDate}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.InstitutionTypeName}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                       {item.InstituteName}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.PurposeName}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.VisitUserName}
+                    </td>
+                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                      {item.AppStatusMeans}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                     <Link href={`/dashboard/visit-plan/view/${item.VisitPlanID}`}>

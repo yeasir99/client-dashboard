@@ -34,7 +34,7 @@ const page = ({params}) => {
     <div className="flex justify-center">
       <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
         <h1 className="text-center text-xl font-semibold mb-3">
-          Visit Plan Information
+          Visit Plan Requisition Information
         </h1>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Id:</h1>
