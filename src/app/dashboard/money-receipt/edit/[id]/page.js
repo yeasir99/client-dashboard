@@ -20,13 +20,13 @@ const page = ({params}) => {
     const res = await axios.get(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_moneyreceipt&MRID=${id}`)
     console.log(res)
     setFormData({
-        MRNo: res.data.MRNo,
-    PartyID: res.data.PartyID,
-    MRDate: res.data.MRDate,
-    AmountReceived: res.data.AmountReceived,
-    InWord: res.data.InWord,
-    PaymentMethodID: res.data.PaymentMethodID,
-    ReceivedByUserID: res.data.ReceivedByUserID
+        MRNo: res.data.receipt.MRNo,
+        PartyID: res.data.receipt.PartyID,
+        MRDate: res.data.receipt.MRDate,
+        AmountReceived: res.data.receipt.AmountReceived,
+        InWord: res.data.receipt.InWord,
+        PaymentMethodID: res.data.receipt.PaymentMethodID,
+        ReceivedByUserID: res.data.receipt.ReceivedByUserID
     })
   }
 

@@ -29,11 +29,11 @@ const page = ({params}) => {
     <div>
     <div className="max-w-xl bg-gray-200 mx-auto rounded-md p-3 my-5">
     <h1 className="text-center text-xl font-semibold py-4">Receipt Details</h1>
-<h1>ID: {state.data.MRID}</h1>
-<h1>Receipt Number: {state.data.MRNo}</h1>
-<h1>Date: {state.data.MRDate}</h1>
-<h1>Party Name: {state.data.PartyName}</h1>
-<h1>Amount Received: {state.data.AmountReceived}</h1>
+    <h1>ID: {state.data.receipt.MRID}</h1>
+    <h1>Receipt Number: {state.data.receipt.MRNo}</h1>
+    <h1>Date: {state.data.receipt.MRDate}</h1>
+    <h1>Party Name: {state.data.receipt.PartyName}</h1>
+    <h1>Amount Received: {state.data.receipt.AmountReceived}</h1>
         </div>
     </div>
   )
