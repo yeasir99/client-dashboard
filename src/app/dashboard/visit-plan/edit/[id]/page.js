@@ -74,7 +74,7 @@ const handleSubmit = async e =>{
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">assign visit plan</h1>
+        <h1 className="text-2xl capitalize mb-3">Visit Plan Requisition</h1>
         <form>
           <input
             name="search"
@@ -86,7 +86,7 @@ const handleSubmit = async e =>{
       </div>
       <div className="max-w-2xl bg-gray-200 rounded-md px-4 py-4">
         <h2 className="text-lg font-semibold mb-2 capitalize">
-          add new visit plan
+        Add New visit plan Requisition
         </h2>
         <form onSubmit={handleSubmit}>
         <div>
@@ -131,7 +131,7 @@ const handleSubmit = async e =>{
                   </div>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
-              Institution Type:
+            Institution/Party Type:
             </label>
 
             <select name="InstitutionTypeID" className="w-full rounded-md" value={formData.InstitutionTypeID} onChange={handleChange}>
@@ -143,7 +143,7 @@ const handleSubmit = async e =>{
           </div>
           <div>
           <label className="capitalize flex font-semibold text-md py-1">
-            Institution Name:
+          Institution/Party Name:
           </label>
 
           <select
@@ -165,7 +165,7 @@ const handleSubmit = async e =>{
         </div>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
-              Purpose:
+            Visit Purpose:
             </label>
 
             <select name="PurposeID" className="w-full rounded-md" value={formData.PurposeID} onChange={handleChange}>
