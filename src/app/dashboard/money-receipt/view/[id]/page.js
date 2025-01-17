@@ -36,6 +36,7 @@ const page = ({params}) => {
     <h1>Date: {state.data.receipt.MRDate}</h1>
     <h1>Party Name: {state.data.receipt.PartyName}</h1>
     <h1>Amount Received: {state.data.receipt.AmountReceived}</h1>
+    <h1>Payment Method: {state.data.receipt.PaymentMethod}</h1>
         </div>
     </div>
 
