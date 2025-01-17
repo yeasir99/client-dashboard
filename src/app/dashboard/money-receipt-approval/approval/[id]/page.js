@@ -12,7 +12,7 @@ const page = ({params}) => {
         const res = await axios.get(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_moneyreceipt&MRID=${id}`)
         setViewableData({
             status: 'idle',
-            data: res.data? res.data : null
+            data: res.data
         })
     }
     useEffect(()=>{

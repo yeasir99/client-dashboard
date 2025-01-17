@@ -10,7 +10,7 @@ const Checked = ({viewableData}) => {
 
     const handleCancel = async () =>{
         const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_CancelledMR&MRID=${viewableData.data.MRID}`, {
-            MRID: viewableData.data.MRID,
+            MRID: viewableData.data.receipt.MRID,
             CanclledComments: formData.CheckedComments,
             UserID: 501
         })
@@ -18,7 +18,7 @@ const Checked = ({viewableData}) => {
     }
     const handleChecked = async () =>{
         const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetailsMR&MRID=${viewableData.data.MRID}`, {
-            MRID: viewableData.data.MRID,
+            MRID: viewableData.data.receipt.MRID,
             CheckedComments: formData.CheckedComments,
             AuthComments: null,
             AppComments: null,
@@ -43,23 +43,23 @@ const Checked = ({viewableData}) => {
         {viewableData.data === null ? <div className="text-center text-xl font-semibold py-5">No Data to Display</div> : <>
             <div className="flex items-center gap-2">
           <h1 className="text-lg">Receipt Id:</h1>
-          <h1>{viewableData.data.MRID}</h1>
+          <h1>{viewableData.data.receipt.MRID}</h1>
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Receipt Number:</h1>
-          <h1>{viewableData.data.MRNo}</h1>
+          <h1>{viewableData.data.receipt.MRNo}</h1>
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Receipt Date:</h1>
-          <h1>{viewableData.data.MRDate}</h1>
+          <h1>{viewableData.data.receipt.MRDate}</h1>
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Party Name:</h1>
-          <h1>{viewableData.data.PartyName}</h1>
+          <h1>{viewableData.data.receipt.PartyName}</h1>
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Received Amount:</h1>
-          <h1>{viewableData.data.AmountReceived}</h1>
+          <h1>{viewableData.data.receipt.AmountReceived}</h1>
         </div>
         </>}
       </div>

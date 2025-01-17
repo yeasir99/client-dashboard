@@ -9,7 +9,7 @@ const Approval = ({viewableData}) => {
 
     const handleReject = async () =>{
         const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_CancelledMR&MRID=${viewableData.data.MRID}`, {
-            MRID: viewableData.data.MRID,
+            MRID: viewableData.data.receipt.MRID,
             RejectComments: formData.ApprovalComments,
             UserID: 501
     })
@@ -17,7 +17,7 @@ const Approval = ({viewableData}) => {
     }
     const handleChecked = async () =>{
         const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetailsMR&MRID=${viewableData.data.MRID}`,{
-            MRID: viewableData.data.MRID,
+            MRID: viewableData.data.receipt.MRID,
            CheckedComments: null,
            AuthComments: null,
            AppComments: formData.AuthorizedComments,
@@ -43,28 +43,61 @@ const Approval = ({viewableData}) => {
         {viewableData.data === null ? <div className="text-center text-xl font-semibold py-5">No Data to Display</div> : <>
             <div className="flex items-center gap-2">
           <h1 className="text-lg">Receipt Id:</h1>
-          <h1>{viewableData.data.MRID}</h1>
+          <h1>{viewableData.data.receipt.MRID}</h1>
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Receipt Number:</h1>
-          <h1>{viewableData.data.MRNo}</h1>
+          <h1>{viewableData.data.receipt.MRNo}</h1>
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Receipt Date:</h1>
-          <h1>{viewableData.data.MRDate}</h1>
+          <h1>{viewableData.data.receipt.MRDate}</h1>
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Party Name:</h1>
-          <h1>{viewableData.data.PartyName}</h1>
+          <h1>{viewableData.data.receipt.PartyName}</h1>
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Received Amount:</h1>
-          <h1>{viewableData.data.AmountReceived}</h1>
+          <h1>{viewableData.data.receipt.AmountReceived}</h1>
         </div>
         </>}
       </div>
     </div>
     </div>
+
+    <div className="flex justify-center mt-5">
+      <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
+        <h1 className="text-center text-xl font-semibold mb-3">
+          Comment details
+        </h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Checked Comments:</h1>
+          <h1>{viewableData.data.Approvals.CheckedComments}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Checked By:</h1>
+          <h1>{viewableData.data.Approvals.CheckedBy}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Date:</h1>
+          <h1>{viewableData.data.Approvals.CheckedDate}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Auth Comments:</h1>
+          <h1>{viewableData.data.Approvals.AuthComments}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Auth By:</h1>
+          <h1>{viewableData.data.Approvals.AuthBy}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Date:</h1>
+          <h1>{viewableData.data.Approvals.AuthDate}</h1>
+        </div>
+      </div>
+    </div>
+
     <div className="py-6">
 
         <label
