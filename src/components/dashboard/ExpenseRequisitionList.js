@@ -1,14 +1,16 @@
-'use client'
-import useGetData from "@/utils/useGetData";
-import { FaEye, FaRegEdit } from "react-icons/fa";
+'use client';
+import useGetData from '@/utils/useGetData';
+import { FaEye, FaRegEdit } from 'react-icons/fa';
 import Link from 'next/link';
 
 const ExpenseRequisitionList = () => {
   const { status, data } = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_BDExpReqs'
   );
-  if(status === 'pending'){
-    return <div className="text-xl font-semibold text-center py-6">Loading....</div>
+  if (status === 'pending') {
+    return (
+      <div className="text-xl font-semibold text-center py-6">Loading....</div>
+    );
   }
   return (
     <div>
@@ -67,7 +69,7 @@ const ExpenseRequisitionList = () => {
                       {item.BDExpReqNo}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.InstitutionName}
+                      {item.InstituteName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                       {item.BDExpReqDate}
