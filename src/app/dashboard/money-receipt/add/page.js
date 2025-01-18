@@ -298,7 +298,8 @@ const page = () => {
                     value={method.PaymentMethodDetailsID}
                     key={method.PaymentMethodDetailsID}
                   >
-                    {method.PMDName}
+                    {method.PMDName}{' '}
+                    {method.PMDNameDetails ? method.PMDNameDetails : ''}
                   </option>
                 ))}
             </select>
