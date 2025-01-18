@@ -121,6 +121,10 @@ const page = () => {
   );
 
   const getMethodInDetail = async id => {
+    setFormData(prevData => ({
+      ...prevData,
+      PaymentMethodDetailsID: '',
+    }));
     const res = await axios.get(
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_PaymentMethodCash&PaymentMethodID=${id}`
     );
