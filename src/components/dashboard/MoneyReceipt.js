@@ -41,13 +41,13 @@ const MoneyReceipt = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Amount InWord
+                    Payment Method
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Payment Method
+                    Payment Method details
                   </th>
 
                   <th scope="col" className="px-6 py-4">
@@ -62,9 +62,6 @@ const MoneyReceipt = () => {
                       className="border-b border-neutral-200 dark:border-white/10"
                       key={item.MRID}
                     >
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.MRID}
-                      </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.MRNo}
                       </td>
@@ -75,11 +72,10 @@ const MoneyReceipt = () => {
                         {item.AmountReceived}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.InWord}
-                      </td>
-
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.PaymentMethod}
+                      </td>
+                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                        {item.PaymentMethodDetails}
                       </td>
 
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
