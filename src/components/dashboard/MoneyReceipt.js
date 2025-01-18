@@ -1,7 +1,7 @@
 'use client';
 import useGetData from '@/utils/useGetData';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
-import Link from 'next/link'
+import Link from 'next/link';
 const MoneyReceipt = () => {
   const { status, data } = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_moneyreceipts'
@@ -23,12 +23,6 @@ const MoneyReceipt = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Receipt Id
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
                     Receipt Number
                   </th>
                   <th
@@ -42,6 +36,12 @@ const MoneyReceipt = () => {
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
                     Amount Received
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Amount InWord
                   </th>
                   <th
                     scope="col"
@@ -74,22 +74,29 @@ const MoneyReceipt = () => {
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.AmountReceived}
                       </td>
-                      
+                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                        {item.InWord}
+                      </td>
+
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.PaymentMethod}
                       </td>
 
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
-                      <Link href={`/dashboard/money-receipt/view/${item.MRID}`}>
-                        <span className="bg-cyan-500 p-1 inline-block rounded-md">
-                          <FaEye className="text-white text-xl" />
-                        </span>{' '}
+                        <Link
+                          href={`/dashboard/money-receipt/view/${item.MRID}`}
+                        >
+                          <span className="bg-cyan-500 p-1 inline-block rounded-md">
+                            <FaEye className="text-white text-xl" />
+                          </span>{' '}
                         </Link>
                         |
-                        <Link href={`/dashboard/money-receipt/edit/${item.MRID}`}>
-                        <span className="bg-amber-600 p-1 inline-block rounded-md">
-                          <FaRegEdit className="text-white text-xl" />
-                        </span>{' '}
+                        <Link
+                          href={`/dashboard/money-receipt/edit/${item.MRID}`}
+                        >
+                          <span className="bg-amber-600 p-1 inline-block rounded-md">
+                            <FaRegEdit className="text-white text-xl" />
+                          </span>{' '}
                         </Link>
                       </td>
                     </tr>
