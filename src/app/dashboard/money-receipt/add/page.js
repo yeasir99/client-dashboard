@@ -174,13 +174,13 @@ useEffect(()=>{
             }}
             value={formData.AmountReceived}
           />
-          <label htmlFor="InWord" className="block text-sm font-bold mb-1">
+          <label htmlFor="InWord" className="block text-sm font-bold mb-1 capitalize">
             Amount In word:
           </label>
           <input
             type="text"
             id="InWord"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm capitalize"
             value={formData.InWord}
             readOnly
           />
