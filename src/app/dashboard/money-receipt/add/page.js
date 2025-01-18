@@ -17,6 +17,54 @@ const page = () => {
   })
 
   console.log(formData)
+  function numberToWords(num) {
+    if (num === 0) return 'zero';
+
+    const belowTwenty = [
+        '', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+        'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
+    ];
+    const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+    const thousands = ['', 'thousand', 'million', 'billion'];
+
+    function helper(n) {
+        if (n === 0) return '';
+        if (n < 20) return belowTwenty[n] + ' ';
+        if (n < 100) return tens[Math.floor(n / 10)] + ' ' + helper(n % 10);
+        if (n < 1000) return belowTwenty[Math.floor(n / 100)] + ' hundred ' + helper(n % 100);
+        return '';
+    }
+
+    let word = '';
+    let i = 0;
+
+    while (num > 0) {
+        if (num % 1000 !== 0) {
+            word = helper(num % 1000) + thousands[i] + ' ' + word;
+        }
+        num = Math.floor(num / 1000);
+        i++;
+    }
+
+    return word.trim();
+}
+
+useEffect(()=>{
+  if(formData.AmountReceived){
+
+    const receiveText = numberToWords(Number(formData.AmountReceived))
+    setFormData(prevData => ({
+      ...prevData,
+      InWord: receiveText
+    }))
+  } else{
+    setFormData(prevData => ({
+      ...prevData,
+      InWord: ''
+    }))
+  }
+
+}, [formData.AmountReceived])
 
   const getMoneyReceipt = async () =>{
     const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=generate_new_money_receipt_number')
@@ -115,7 +163,7 @@ const page = () => {
             Amount Received:
           </label>
           <input
-            type="text"
+            type="number"
             id="AmountReceived"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
             onChange={(event) =>{
@@ -133,13 +181,8 @@ const page = () => {
             type="text"
             id="InWord"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            onChange={(event) =>{
-              setFormData({
-                ...formData,
-                InWord: event.target.value
-              })
-            }}
             value={formData.InWord}
+            readOnly
           />
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
