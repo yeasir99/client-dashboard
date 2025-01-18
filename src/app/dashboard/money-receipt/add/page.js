@@ -84,6 +84,8 @@ useEffect(()=>{
     getMoneyReceipt()
   }, [])
 
+  const paymentMethod = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_PaymentMethod')
+
   const router = useRouter()
 
   const handleSubmit = async e => {
@@ -197,8 +199,10 @@ useEffect(()=>{
             }}>
               <option value="" disabled={true}>
               </option>
-              <option value="1">Cash</option>
-              <option value="2">Bank</option>
+              {paymentMethod.data.length && paymentMethod.data.map(method =>(
+                <option value={method.PaymentMethodID} key={method.PaymentMethodID}>{method.PMName}</option>
+              ))}
+              
             </select>
           </div>
           <div className="mt-5">
