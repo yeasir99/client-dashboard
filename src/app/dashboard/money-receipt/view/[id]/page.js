@@ -29,6 +29,24 @@ const page = ({ params }) => {
       <div className="text-xl font-semibold text-center py-6">Loading...</div>
     );
   }
+
+  const renderApprovalSection = (label, comments, by, date) => (
+    <div className="mb-3">
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">{label} Comments:</h1>
+        <h1>{comments || 'N/A'}</h1>
+      </div>
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">{label} By:</h1>
+        <h1>{by || 'N/A'}</h1>
+      </div>
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">Date:</h1>
+        <h1>{date || 'N/A'}</h1>
+      </div>
+    </div>
+  );
+
   return (
     <>
       <div>
@@ -57,59 +75,56 @@ const page = ({ params }) => {
           <h1 className="text-center text-xl font-semibold mb-3">
             Comment details
           </h1>
-          {state.data.Approvals.CheckedComments ? (
-            <div>
+          {state.data.Approvals.CanclledComments ? (
+            <div className="mt-4">
+              <h1 className="text-lg font-semibold">Cancellation Details</h1>
               <div className="flex items-center gap-2">
-                <h1 className="text-lg">Checked Comments:</h1>
-                <h1>{state.data.Approvals.CheckedComments}</h1>
-              </div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-lg">Checked By:</h1>
-                <h1>{state.data.Approvals.CheckedBy}</h1>
+                <h1 className="text-lg">Cancelled By:</h1>
+                <h1>{state.data.Approvals.CancelledBy}</h1>
               </div>
               <div className="flex items-center gap-2">
                 <h1 className="text-lg">Date:</h1>
-                <h1>{state.data.Approvals.CheckedDate}</h1>
+                <h1>{state.data.Approvals.CancelledDate}</h1>
               </div>
-              {state.data.Approvals.AuthComments ? (
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h1 className="text-lg">Authorized Comments:</h1>
-                    <h1>{state.data.Approvals.AuthComments}</h1>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <h1 className="text-lg">Authorized By:</h1>
-                    <h1>{state.data.Approvals.AuthBy}</h1>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <h1 className="text-lg">Date:</h1>
-                    <h1>{state.data.Approvals.AuthDate}</h1>
-                  </div>
-                  {state.data.Approvals.AppComments ? (
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h1 className="text-lg">Approved Comments:</h1>
-                        <h1>{state.data.Approvals.AuthComments}</h1>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <h1 className="text-lg">Approved By:</h1>
-                        <h1>{state.data.Approvals.AuthBy}</h1>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <h1 className="text-lg">Date:</h1>
-                        <h1>{state.data.Approvals.AuthDate}</h1>
-                      </div>
-                    </div>
-                  ) : (
-                    <div>Process Is Not Approved Yet</div>
-                  )}
-                </div>
-              ) : (
-                <div>Process Is Not Authorized Yet</div>
-              )}
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Comments:</h1>
+                <h1>{state.data.Approvals.CanclledComments || 'N/A'}</h1>
+              </div>
             </div>
           ) : (
-            <div>Approval Process Is Still In Unchecked</div>
+            <>
+              <h1 className="text-center text-lg font-semibold mb-3">
+                Approval Details
+              </h1>
+              {state.data.Approvals.CheckedComments &&
+                renderApprovalSection(
+                  'Checked',
+                  state.data.Approvals.CheckedComments,
+                  state.data.Approvals.CheckedBy,
+                  state.data.Approvals.CheckedDate
+                )}
+              {state.data.Approvals.AuthComments &&
+                renderApprovalSection(
+                  'Authorized',
+                  state.data.Approvals.AuthComments,
+                  state.data.Approvals.AuthBy,
+                  state.data.Approvals.AuthDate
+                )}
+              {state.data.Approvals.AppComments &&
+                renderApprovalSection(
+                  'Approved',
+                  state.data.Approvals.AppComments,
+                  state.data.Approvals.AppBy,
+                  state.data.Approvals.AppDate
+                )}
+              {!state.data.Approvals.CheckedComments &&
+                !state.data.Approvals.AuthComments &&
+                !state.data.Approvals.AppComments && (
+                  <div className="text-center">
+                    No Approval Details Available
+                  </div>
+                )}
+            </>
           )}
         </div>
       </div>

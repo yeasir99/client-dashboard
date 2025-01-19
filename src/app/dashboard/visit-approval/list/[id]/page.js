@@ -1,42 +1,47 @@
-"use client"
-import {useState, useEffect} from 'react'
-import axios from 'axios'
-import Link from 'next/link'
+'use client';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Link from 'next/link';
 
-const page = ({params}) => {
-    const [pendingData, setPendingData] = useState({
-        status: 'pending',
-        data: []
-    })
-    const [completedData, setCompletedData] = useState({
-        status: 'pending',
-        data: []
-    })
-    console.log(pendingData)
-    console.log(completedData)
+const page = ({ params }) => {
+  const [pendingData, setPendingData] = useState({
+    status: 'pending',
+    data: [],
+  });
+  const [completedData, setCompletedData] = useState({
+    status: 'pending',
+    data: [],
+  });
 
-const getPendingData = async id =>{
-    const res = await axios.get(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanApproval&UserID=${id}`)
+  const getPendingData = async id => {
+    const res = await axios.get(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanApproval&UserID=${id}`
+    );
     setPendingData({
-        status: 'idle',
-        data: res.data?.length ? res.data : []
-    })
-}
+      status: 'idle',
+      data: res.data?.length ? res.data : [],
+    });
+  };
 
-const getcompletedData = async id =>{
-    const res = await axios.get(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanCompleteRejectCancelled&UserID=${id}`)
+  const getcompletedData = async id => {
+    const res = await axios.get(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanCompleteRejectCancelled&UserID=${id}`
+    );
     setCompletedData({
-        status: 'idle',
-        data: res.data?.length ? res.data : []
-    })
-}
+      status: 'idle',
+      data: res.data?.length ? res.data : [],
+    });
+  };
 
-useEffect(()=>{
-if(params.id){
-    getPendingData(params.id)
-    getcompletedData(params.id)
-}
-}, [params.id])
+  useEffect(() => {
+    if (params.id) {
+      getPendingData(params.id);
+      getcompletedData(params.id);
+    }
+  }, [params.id]);
+
+  // VisitUserName
+  // Status
   return (
     <div>
       {/* pending data table */}
@@ -61,7 +66,37 @@ if(params.id){
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
+                        Visit Plan No.
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Visit Plan Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
                         Employee Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Institute/party Type
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Institute/party Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Purpose Name
                       </th>
                       <th
                         scope="col"
@@ -83,19 +118,37 @@ if(params.id){
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.VisitPlanID}
                         </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanNo}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanDate}
+                        </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.VisitUserName}
-                          
+                          {item.VisitUserName}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.InstituteType}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.InstituteName}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.PurposeName}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.Status}
                         </td>
-                        <td className="whitespace-nowrap"><Link
+                        <td className="whitespace-nowrap">
+                          <Link
                             className="font-semibold hover:underline"
                             href={`/dashboard/visit-approval/approve-cencel/${item.VisitPlanID}`}
                           >
-                            <button className='px-3 py-2 bg-gray-600 rounded-md text-white'>Approve/Cencel</button>
-                          </Link></td>
+                            <button className="px-3 py-2 bg-gray-600 rounded-md text-white">
+                              Approve/Cencel
+                            </button>
+                          </Link>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -114,7 +167,9 @@ if(params.id){
         <div className="text-xl font-semibold text-center py-6">Loading...</div>
       ) : completedData.data.length ? (
         <div className="flex flex-col">
-          <h1 className="text-2xl font-semibold py-2">Completed / Cenceled Approval List</h1>
+          <h1 className="text-2xl font-semibold py-2">
+            Completed / Cenceled Approval List
+          </h1>
           <div>
             <div className="inline-block max-w-full w-full pt-5">
               <div className="overflow-x-scroll">
@@ -131,9 +186,42 @@ if(params.id){
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
+                        Visit Plan No.
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Visit Plan Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
                         Employee Name
                       </th>
-                      <th scope="col" className="px-6 py-4">
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Institute/party Type
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Institute/party Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Purpose Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
                         Status
                       </th>
                     </tr>
@@ -147,13 +235,28 @@ if(params.id){
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.VisitPlanID}
                         </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanNo}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanDate}
+                        </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                           <Link
                             className="text-blue-600 font-semibold hover:underline"
-                            href={`/dashboard/visit-approval/list/${item.VisitUserID}`}
+                            href={`/dashboard/visit-approval/view/${item.VisitPlanID}`}
                           >
                             {item.VisitUserName}
                           </Link>
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.InstituteType}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.InstituteName}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.PurposeName}
                         </td>
                         <td className="whitespace-nowrap">{item.Status}</td>
                       </tr>
@@ -171,6 +274,6 @@ if(params.id){
       )}
     </div>
   );
-}
+};
 
-export default page
+export default page;

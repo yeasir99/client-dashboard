@@ -1,14 +1,18 @@
-'use client'
+'use client';
 import useGetData from '@/utils/useGetData';
 import Link from 'next/link';
 
 const VisitApproval = () => {
-  const {status, data} = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanApprovalSum&UserID=501')
+  const { status, data } = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanApprovalSum&UserID=501'
+  );
 
-  if(status === 'pending'){
-    return <div className='text-xl font-semibold text-center py-6'>Loading...</div>
+  if (status === 'pending') {
+    return (
+      <div className="text-xl font-semibold text-center py-6">Loading...</div>
+    );
   }
-    
+
   return (
     <div className="flex flex-col">
       <div>
@@ -29,29 +33,47 @@ const VisitApproval = () => {
                   >
                     Employee Name
                   </th>
-                  <th scope="col" className="px-6 py-4">
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
                     Status
+                  </th>
+                  <th scope="col" className="px-6 py-4">
+                    Pending
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {data.length ? data.map(item => (
-                  <tr
-                    className="border-b border-neutral-200 dark:border-white/10"
-                    key={item.SL}
-                  >
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.SL}
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      <Link className="text-blue-600 font-semibold hover:underline" href={`/dashboard/visit-approval/list/${item.VisitUserID}`}>
-                      {item.VisitUserName}
-                      </Link>
-                    </td>
-                    
-                    <td className="whitespace-nowrap">{item.Status}</td>
-                  </tr>
-                )) : <div className='text-xl font-semibold text-center py-6'>No Data To Display</div>}
+                {data.length ? (
+                  data.map(item => (
+                    <tr
+                      className="border-b border-neutral-200 dark:border-white/10"
+                      key={item.SL}
+                    >
+                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                        {item.SL}
+                      </td>
+                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                        <Link
+                          className="text-blue-600 font-semibold hover:underline"
+                          href={`/dashboard/visit-approval/list/${item.VisitUserID}`}
+                        >
+                          {item.VisitUserName}
+                        </Link>
+                      </td>
+
+                      <td className="whitespace-nowrap">{item.Status}</td>
+                      <td className="whitespace-nowrap">
+                        {item.No_of_App_Pending}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <div className="text-xl font-semibold text-center py-6">
+                    No Data To Display
+                  </div>
+                )}
               </tbody>
             </table>
           </div>
