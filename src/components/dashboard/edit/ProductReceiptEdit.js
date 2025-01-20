@@ -158,24 +158,14 @@ const ProductReceiptEdit = ({ id }) => {
     const dataWillBeSubmitted = {};
     for (const key in formData) {
       if (key === 'orderDetails') {
-        formData.orderDetails.forEach((item, index) => {
-          dataWillBeSubmitted.append(
-            `Details[${index}][FinancialYearID]`,
-            item.FinancialYearID
-          );
-          dataWillBeSubmitted.append(
-            `Details[${index}][ProductCategoryID]`,
-            item.ProductCategoryID
-          );
-          dataWillBeSubmitted.append(
-            `Details[${index}][ProductID]`,
-            item.ProductID
-          );
-          dataWillBeSubmitted.append(
-            `Details[${index}][Quantity]`,
-            item.Quantity
-          );
-          dataWillBeSubmitted.append(`Details[${index}][Rate]`, item.Price);
+        dataWillBeSubmitted.Details = formData.orderDetails.map(item => {
+          return {
+            FinancialYearID: item.FinancialYearID,
+            ProductCategoryID: item.ProductCategoryID,
+            ProductID: item.ProductID,
+            Quantity: item.Quantity,
+            Rate: item.Price,
+          };
         });
       } else {
         dataWillBeSubmitted[key] = formData[key];
