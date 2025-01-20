@@ -139,8 +139,8 @@ const NavItem = ({ session }) => {
           href: '/dashboard/ta-da',
         },
         {
-          name: 'Marketing Activity List',
-          displayName: 'Marketing Activity List',
+          name: 'Purpose category',
+          displayName: 'Marketing Activities',
           href: '/dashboard/purpose-management',
         },
         {
@@ -251,7 +251,7 @@ const NavItem = ({ session }) => {
       displayName: 'Damage product/Book',
       href: '/dashboard/expense-requisition',
       status: 'main',
-    }
+    },
     // {
     //   name: 'Specimen Order', BD Expense Requisition
     //   href: '/dashboard/specimen',

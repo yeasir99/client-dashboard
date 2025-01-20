@@ -16,9 +16,7 @@ const page = () => {
     ReceiptDate: new Date(),
     BindingPartyID: '',
     ChallanNumber: '',
-    PrintEdition: '',
     UserID: '',
-    ProductionOrderQty: '',
     ChallanCopyPath: '',
     orderDetails: [
       {
@@ -143,7 +141,7 @@ const page = () => {
     e.preventDefault();
     const dataWillBeSubmitted = new FormData();
 
-    console.log(formData)
+    console.log(formData);
 
     for (const key in formData) {
       if (key === 'ChallanCopyPath' && formData[key]) {
@@ -156,18 +154,18 @@ const page = () => {
       } else if (key === 'UserID') {
         const id = session.data.user.id;
         dataWillBeSubmitted.append(key, id);
-      } else if (key === 'orderDetails'){
+      } else if (key === 'orderDetails') {
         const allDetails = formData.orderDetails.map(item => ({
-            FinancialYearID: item.FinancialYearID,
-            ProductCategoryID: item.ProductCategoryID,
-            ProductID: item.ProductID,
-            Quantity: item.Quantity,
-            Rate: 200,
-        }))
-        const detailsJson = JSON.stringify(allDetails)
+          FinancialYearID: item.FinancialYearID,
+          ProductCategoryID: item.ProductCategoryID,
+          ProductID: item.ProductID,
+          Quantity: item.Quantity,
+          Rate: 200,
+        }));
+        const detailsJson = JSON.stringify(allDetails);
         dataWillBeSubmitted.append('Details', detailsJson);
-      } else if (key === 'TotalAmount'){
-        console.log(key)
+      } else if (key === 'TotalAmount') {
+        console.log(key);
       } else {
         dataWillBeSubmitted.append(key, formData[key]);
       }
@@ -177,7 +175,7 @@ const page = () => {
       dataWillBeSubmitted
     );
 
-    console.log(res)
+    console.log(res);
 
     router.push('/dashboard/product-receipt');
   };
@@ -248,21 +246,6 @@ const page = () => {
             </select>
           </div>
           <label
-            htmlFor="PrintEdition"
-            className="capitalize flex font-semibold text-md py-1"
-          >
-            Print:
-          </label>
-          <input
-            type="text"
-            id="PrintEdition"
-            name="PrintEdition"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            value={formData.PrintEdition}
-            onChange={handleChange}
-          />
-          
-          <label
             htmlFor="ChallanNumber"
             className="capitalize flex font-semibold text-md py-1"
           >
@@ -298,24 +281,7 @@ const page = () => {
             </div>
           </div>
 
-          <label
-            htmlFor="ProductionOrderQty"
-            className="capitalize flex font-semibold text-md py-1"
-          >
-            Production Order Qty:
-          </label>
-          <input
-            type="text"
-            id="ProductionOrderQty"
-            name="ProductionOrderQty"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            value={formData.ProductionOrderQty}
-            onChange={handleChange}
-          />
-
-
-
-<div className="flex flex-col">
+          <div className="flex flex-col">
             {/* table Start */}
             <h2 className="text-xl font-semibold my-2 capitalize">
               add Product details
@@ -442,8 +408,8 @@ const page = () => {
                               />
                             </td>
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            <input
-                                type="text"
+                              <input
+                                type="number"
                                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
                                 name="Price"
                                 onChange={event =>

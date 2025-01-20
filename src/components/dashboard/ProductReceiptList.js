@@ -8,7 +8,7 @@ const ProductReceiptList = () => {
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_ppreceipts'
   );
 
-console.log(data)
+  console.log(data);
 
   if (status === 'pending') {
     return (
@@ -24,7 +24,7 @@ console.log(data)
             <table className="max-w-full w-full overflow-x-scroll border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
               <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
                 <tr className="bg-text1 text-white">
-                <th
+                  <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
@@ -42,13 +42,6 @@ console.log(data)
                   >
                     Receipt Date
                   </th>
-
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Print Edition
-                  </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
@@ -61,13 +54,6 @@ console.log(data)
                   >
                     Challan Copy
                   </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Pro.Order QTY
-                  </th>
-
                   <th scope="col" className="px-6 py-4">
                     Action
                   </th>
@@ -80,7 +66,7 @@ console.log(data)
                       className="border-b border-neutral-200 dark:border-white/10"
                       key={item.ProductReceiptNo}
                     >
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.ProductReceiptID}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
@@ -90,18 +76,14 @@ console.log(data)
                         {item.ReceiptDate}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.PrintEdition}
-                      </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.ChallanNumber}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        <a href={item.ChallanCopyPath} download target='_blank'>Download</a>
+                        <a href={item.ChallanCopyPath} download target="_blank">
+                          Download
+                        </a>
                       </td>
-                      
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.ProductionOrderQty}
-                      </td>
+
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                         <span className="bg-cyan-500 p-1 inline-block rounded-md">
                           <Link
@@ -112,9 +94,11 @@ console.log(data)
                         </span>{' '}
                         |
                         <span className="bg-amber-600 p-1 inline-block rounded-md">
-                        <Link href={`/dashboard/product-receipt/edit/${item.ProductReceiptID}`}>
-                          <FaRegEdit className="text-white text-xl" />
-                        </Link>
+                          <Link
+                            href={`/dashboard/product-receipt/edit/${item.ProductReceiptID}`}
+                          >
+                            <FaRegEdit className="text-white text-xl" />
+                          </Link>
                         </span>{' '}
                       </td>
                     </tr>
