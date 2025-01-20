@@ -171,8 +171,6 @@ const ProductReceiptEdit = ({ id }) => {
         dataWillBeSubmitted[key] = formData[key];
       }
     }
-    console.log(formData);
-    console.log(dataWillBeSubmitted);
     const res = await axios.put(
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_ppreceiptall&ProductReceiptID=${id}`,
       dataWillBeSubmitted
