@@ -155,15 +155,25 @@ const page = () => {
         const id = session.data.user.id;
         dataWillBeSubmitted.append(key, id);
       } else if (key === 'orderDetails') {
-        const allDetails = formData.orderDetails.map(item => ({
-          FinancialYearID: item.FinancialYearID,
-          ProductCategoryID: item.ProductCategoryID,
-          ProductID: item.ProductID,
-          Quantity: item.Quantity,
-          Rate: 200,
-        }));
-        const detailsJson = JSON.stringify(allDetails);
-        dataWillBeSubmitted.append('Details', detailsJson);
+        formData.orderDetails.forEach((item, index) => {
+          dataWillBeSubmitted.append(
+            `Details[${index}][FinancialYearID]`,
+            item.FinancialYearID
+          );
+          dataWillBeSubmitted.append(
+            `Details[${index}][ProductCategoryID]`,
+            item.ProductCategoryID
+          );
+          dataWillBeSubmitted.append(
+            `Details[${index}][ProductID]`,
+            item.ProductID
+          );
+          dataWillBeSubmitted.append(
+            `Details[${index}][Quantity]`,
+            item.Quantity
+          );
+          dataWillBeSubmitted.append(`Details[${index}][Rate]`, item.Price);
+        });
       } else if (key === 'TotalAmount') {
         console.log(key);
       } else {
