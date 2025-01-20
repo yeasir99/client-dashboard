@@ -15,9 +15,7 @@ const ProductReceiptEdit = ({ id }) => {
     ReceiptDate: new Date(),
     BindingPartyID: '',
     ChallanNumber: '',
-    PrintEdition: '',
     UserID: '',
-    ProductionOrderQty: '',
     ChallanCopyPath: '',
     orderDetails: [
       {
@@ -65,9 +63,7 @@ const ProductReceiptEdit = ({ id }) => {
         ReceiptDate: receipt.ReceiptDate,
         BindingPartyID: receipt.BindingPartyID,
         BindingPartyName: receipt.BindingPartyName,
-        PrintEdition: receipt.PrintEdition,
         ChallanNumber: receipt.ChallanNumber,
-        ProductionOrderQty: receipt.ProductionOrderQty,
         UserID: receipt.UserID,
         orderDetails: details.length
           ? details.map(item => {
@@ -162,14 +158,24 @@ const ProductReceiptEdit = ({ id }) => {
     const dataWillBeSubmitted = {};
     for (const key in formData) {
       if (key === 'orderDetails') {
-        dataWillBeSubmitted.Details = formData.orderDetails.map(item => {
-          return {
-            FinancialYearID: item.FinancialYearID,
-            ProductCategoryID: item.ProductCategoryID,
-            ProductID: item.ProductID,
-            Quantity: item.Quantity,
-            Rate: item.Price,
-          };
+        formData.orderDetails.forEach((item, index) => {
+          dataWillBeSubmitted.append(
+            `Details[${index}][FinancialYearID]`,
+            item.FinancialYearID
+          );
+          dataWillBeSubmitted.append(
+            `Details[${index}][ProductCategoryID]`,
+            item.ProductCategoryID
+          );
+          dataWillBeSubmitted.append(
+            `Details[${index}][ProductID]`,
+            item.ProductID
+          );
+          dataWillBeSubmitted.append(
+            `Details[${index}][Quantity]`,
+            item.Quantity
+          );
+          dataWillBeSubmitted.append(`Details[${index}][Rate]`, item.Price);
         });
       } else {
         dataWillBeSubmitted[key] = formData[key];
@@ -250,20 +256,6 @@ const ProductReceiptEdit = ({ id }) => {
                 ))}
             </select>
           </div>
-          <label
-            htmlFor="PrintEdition"
-            className="capitalize flex font-semibold text-md py-1"
-          >
-            Print Edition:
-          </label>
-          <input
-            type="text"
-            id="PrintEdition"
-            name="PrintEdition"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            value={formData.PrintEdition}
-            onChange={handleChange}
-          />
 
           <label
             htmlFor="ChallanNumber"
@@ -277,21 +269,6 @@ const ProductReceiptEdit = ({ id }) => {
             name="ChallanNumber"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
             value={formData.ChallanNumber}
-            onChange={handleChange}
-          />
-
-          <label
-            htmlFor="ProductionOrderQty"
-            className="capitalize flex font-semibold text-md py-1"
-          >
-            Production Order Qty:
-          </label>
-          <input
-            type="text"
-            id="ProductionOrderQty"
-            name="ProductionOrderQty"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            value={formData.ProductionOrderQty}
             onChange={handleChange}
           />
 
