@@ -125,7 +125,7 @@ const NavItem = ({ session }) => {
         },
         {
           name: 'Books Products',
-          displayName: 'Books Products',
+          displayName: 'Books Name',
           href: '/dashboard/book-management',
         },
         {
@@ -480,7 +480,7 @@ const NavItem = ({ session }) => {
                         className="capitalize block text-sm text-white py-[2px] pl-12"
                         href={ele.href}
                       >
-                        {ele.name}
+                        {ele.displayName}
                       </Link>
                     </div>
                   ))}
