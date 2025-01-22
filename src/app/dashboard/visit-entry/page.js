@@ -1,5 +1,13 @@
+'use client';
+import useGetData from '@/utils/useGetData';
 import Link from 'next/link';
 const page = () => {
+  const pendingList = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanCompleteList&UserID=501'
+  );
+  const completeList = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanCompleteEntryList&UserID=501'
+  );
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -33,7 +41,7 @@ const page = () => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Plan ID
+                      Visit No.
                     </th>
                     <th
                       scope="col"
@@ -51,25 +59,19 @@ const page = () => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Place
+                      Institute/Party Name
                     </th>
                     <th
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Visit Area
+                      status
                     </th>
                     <th
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
                       purpose
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                    >
-                      Comment
                     </th>
 
                     <th scope="col" className="px-6 py-4">
@@ -78,41 +80,47 @@ const page = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-neutral-200 dark:border-white/10">
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      1
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      SO-1001
-                    </td>
-
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      2024-09-15
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Mr. Rahman
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Library-1
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Pending
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      20000
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Comment
-                    </td>
-
-                    <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                      <Link href="/dashboard/visit-entry/details">
-                        <button className="bg-gray-300 px-1 py-[2px]">
-                          Visit Entry Details
-                        </button>
-                      </Link>
-                    </td>
-                  </tr>
+                  {pendingList.data.length ? (
+                    pendingList.data.map(item => (
+                      <tr
+                        className="border-b border-neutral-200 dark:border-white/10"
+                        key={item.VisitPlanID}
+                      >
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanID}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanNo}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanDate}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitUserName}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.InstituteName}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.Status}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.PurposeName}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
+                          <Link href="/dashboard/visit-entry/details">
+                            <button className="bg-gray-300 px-1 py-[2px]">
+                              Visit Entry Details
+                            </button>
+                          </Link>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr className="text-xl font-semibold text-center">
+                      No Data To Display
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -139,7 +147,7 @@ const page = () => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Plan ID
+                      Visit No.
                     </th>
                     <th
                       scope="col"
@@ -157,7 +165,7 @@ const page = () => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Place
+                      Institute/Party Name
                     </th>
                     <th
                       scope="col"
@@ -171,52 +179,51 @@ const page = () => {
                     >
                       purpose
                     </th>
-                    <th
-                      scope="col"
-                      className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                    >
-                      Comment
-                    </th>
-
                     <th scope="col" className="px-6 py-4">
                       Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-neutral-200 dark:border-white/10">
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      1
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      SO-1001
-                    </td>
-
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      2024-09-15
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Mr. Rahman
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Library-1
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Pending
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      20000
-                    </td>
-                    <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      Comment
-                    </td>
-
-                    <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                      <button className="bg-gray-300 px-1 py-[2px]">
-                        Show Details
-                      </button>
-                    </td>
-                  </tr>
+                  {completeList.data.length ? (
+                    completeList.data.map(item => (
+                      <tr
+                        className="border-b border-neutral-200 dark:border-white/10"
+                        key={item.VisitPlanID}
+                      >
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanID}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanNo}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanDate}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitUserName}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.InstituteName}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.Status}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.PurposeName}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
+                          <button className="bg-gray-300 px-1 py-[2px]">
+                            Show Details
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr className="text-xl font-semibold text-center">
+                      No Data To Display
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
