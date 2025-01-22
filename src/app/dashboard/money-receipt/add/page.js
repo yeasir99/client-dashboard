@@ -215,7 +215,7 @@ const page = () => {
           </div>
           <div>
             <label className="capitalize flex font-semibold text-md py-1">
-              Payment Method Details:
+              Bank Name/ Purpose:
             </label>
 
             <select
@@ -237,8 +237,7 @@ const page = () => {
                     value={method.PaymentMethodDetailsID}
                     key={method.PaymentMethodDetailsID}
                   >
-                    {method.PMDName}{' '}
-                    {method.PMDNameDetails ? method.PMDNameDetails : ''}
+                    {method.PMDName}
                   </option>
                 ))}
             </select>

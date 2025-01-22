@@ -65,15 +65,14 @@ const page = () => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      status
+                      Visit Purpose
                     </th>
                     <th
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      purpose
+                      Status
                     </th>
-
                     <th scope="col" className="px-6 py-4">
                       Action
                     </th>
@@ -102,10 +101,10 @@ const page = () => {
                           {item.InstituteName}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.Status}
+                          {item.PurposeName}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.PurposeName}
+                          {item.Status}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
                           <Link href="/dashboard/visit-entry/details">
@@ -171,14 +170,15 @@ const page = () => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Status
+                      Visit Purpose
                     </th>
                     <th
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      purpose
+                      Status
                     </th>
+
                     <th scope="col" className="px-6 py-4">
                       Action
                     </th>
@@ -207,10 +207,10 @@ const page = () => {
                           {item.InstituteName}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.Status}
+                          {item.PurposeName}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.PurposeName}
+                          {item.Status}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
                           <button className="bg-gray-300 px-1 py-[2px]">
