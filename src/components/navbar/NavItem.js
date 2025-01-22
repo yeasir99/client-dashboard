@@ -119,7 +119,7 @@ const NavItem = ({ session }) => {
           href: '/dashboard/institution',
         },
         {
-          name: 'Books Group',
+          name: 'Book category',
           displayName: 'Books Group',
           href: '/dashboard/book-category',
         },
