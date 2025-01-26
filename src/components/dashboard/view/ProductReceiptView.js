@@ -1,6 +1,7 @@
 'use client';
 import useGetData from '@/utils/useGetData';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const ProductReceiptView = ({ id }) => {
   const { status, data } = useGetData(
@@ -16,6 +17,13 @@ const ProductReceiptView = ({ id }) => {
   }
   return (
     <>
+      <div className="flex justify-end">
+        <Link href={`/dashboard/product-receipt/preview/${id}`}>
+          <button className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600">
+            Preview
+          </button>
+        </Link>
+      </div>
       <div className="flex justify-center">
         <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
           <h1 className="text-center text-xl font-semibold mb-3">
