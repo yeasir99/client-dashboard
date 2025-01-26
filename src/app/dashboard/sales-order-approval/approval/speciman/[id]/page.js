@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const page = ({ params }) => {
+  const [comment, setComment] = useState(null)
   const [formData, setFormData] = useState({
     SalesOrderID: '',
     SalesOrderNo: '',
@@ -39,43 +40,42 @@ const page = ({ params }) => {
     }
   }, [params]);
 
-  const router = useRouter()
+  const router = useRouter();
 
- 
   const handleAuthorize = async () => {
     const dataWillBeSubmitted = {
       SalesOrderID: formData.SalesOrderID,
-    DemandInfo: formData.DemandInfo,
-    ReturnInfo: "Approved for 90 units due to stock limitations",
-    AuthComments: null,
-    AppComments: formData.AppComments,
-    UserID: formData.UserID
-    }
-     const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetails', dataWillBeSubmitted)
-     router.push('/dashboard/sales-order-approval')
-  }
+      DemandInfo: formData.DemandInfo,
+      ReturnInfo: null,
+      AuthComments: null,
+      AppComments: formData.AppComments,
+      UserID: formData.UserID,
+    };
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetails',
+      dataWillBeSubmitted
+    );
+    router.push('/dashboard/sales-order-approval');
+  };
 
   const handleReject = async () => {
     const dataWillBeSubmitted = {
       SalesOrderID: formData.SalesOrderID,
-    DemandInfo: formData.DemandInfo,
-    ReturnInfo: "Approved for 90 units due to stock limitations",
-    AuthComments: null,
-    AppComments: formData.AppComments,
-    UserID: formData.UserID,
-    AppStatus: 2
-    }
-    console.log(dataWillBeSubmitted)
-   const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_Cancelled', dataWillBeSubmitted)
-   router.push('/dashboard/sales-order-approval')
-  }
+      RejectComments: formData.AppComments,
+      UserID: formData.UserID,
+    };
+    console.log(dataWillBeSubmitted);
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_Cancelled',
+      dataWillBeSubmitted
+    );
+    router.push('/dashboard/sales-order-approval');
+  };
 
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">
-          Sales Order - Approval
-        </h1>
+        <h1 className="text-2xl capitalize mb-3">Sales Order - Approval</h1>
         <form>
           <input
             name="search"
@@ -199,25 +199,9 @@ const page = ({ params }) => {
             </div>
           )}
         </div>
-        <div>
-          <label htmlFor="DemandInfo" className="block text-sm font-bold mb-1">
-            Demand Information:
-          </label>
-          <input
-            type="text"
-            id="DemandInfo"
-            name="DemandInfo"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            readOnly
-            value={formData.DemandInfo}
-          />
-        </div>
 
         <div>
-          <label
-            htmlFor="AppComments"
-            className="block text-sm font-bold mb-1"
-          >
+          <label htmlFor="AppComments" className="block text-sm font-bold mb-1">
             Approved Comment:
           </label>
           <textarea
@@ -226,20 +210,26 @@ const page = ({ params }) => {
             name="AppComments"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
             value={formData.AppComments}
-            onChange={(e) =>{
+            onChange={e => {
               setFormData(prevData => ({
                 ...prevData,
-                AppComments: e.target.value
-              }))
+                AppComments: e.target.value,
+              }));
             }}
           />
         </div>
         <div className="flex justify-between py-3 px-1">
-          <button className="bg-red-400 px-6 py-2 rounded-md text-white" onClick={handleReject}>
+          <button
+            className="bg-red-400 px-6 py-2 rounded-md text-white"
+            onClick={handleReject}
+          >
             Reject Order
           </button>
-          <button className="bg-primary px-6 py-2 rounded-md text-white" onClick={handleAuthorize}>
-            Approve
+          <button
+            className="bg-primary px-6 py-2 rounded-md text-white"
+            onClick={handleAuthorize}
+          >
+            Approved
           </button>
         </div>
       </div>

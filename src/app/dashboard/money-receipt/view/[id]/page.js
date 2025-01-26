@@ -33,16 +33,16 @@ const page = ({ params }) => {
   const renderApprovalSection = (label, comments, by, date) => (
     <div className="mb-3">
       <div className="flex items-center gap-2">
-        <h1 className="text-lg">{label} Comments:</h1>
-        <h1>{comments || 'N/A'}</h1>
+        <h1 className="text-lg">Date:</h1>
+        <h1>{date || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
         <h1 className="text-lg">{label} By:</h1>
         <h1>{by || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
-        <h1 className="text-lg">Date:</h1>
-        <h1>{date || 'N/A'}</h1>
+        <h1 className="text-lg">{label} Comments:</h1>
+        <h1>{comments || 'N/A'}</h1>
       </div>
     </div>
   );
@@ -52,12 +52,13 @@ const page = ({ params }) => {
       <div>
         <div className="max-w-xl bg-gray-200 mx-auto rounded-md p-3 my-5">
           <h1 className="text-center text-xl font-semibold py-4">
-            Collection Details
+            Money Receipt Details
           </h1>
-          <h1>Receipt Number: {state.data.receipt.MRNo}</h1>
           <h1>Date: {state.data.receipt.MRDate}</h1>
+          <h1>Receipt Number: {state.data.receipt.MRNo}</h1>
           <h1>Party Name: {state.data.receipt.PartyName}</h1>
           <h1>Amount Received: {state.data.receipt.AmountReceived}</h1>
+          <h1>Amount In Word: {state.data.receipt.InWord}</h1>
           <h1>Payment Method: {state.data.receipt.PaymentMethod}</h1>
           <h1>
             Payment Method Details: {state.data.receipt.PaymentMethodDetails}
@@ -67,14 +68,21 @@ const page = ({ params }) => {
               Account Number: {state.data.receipt.PaymentMethodDetailsAcc}
             </h1>
           )}
+          {state.data.receipt.PaymentMethodID == 4 && (
+            <>
+              <h1>Account Name: {state.data.receipt.AccName}</h1>
+              <h1>Account Number: {state.data.receipt.AccNumber}</h1>
+              <h1>Cheque Number: {state.data.receipt.ChequeNumber}</h1>
+            </>
+          )}
+          {state.data.receipt.Remarks && (
+            <h1>Remarks: {state.data.receipt.Remarks}</h1>
+          )}
         </div>
       </div>
 
       <div className="flex justify-center mt-5">
         <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
-          <h1 className="text-center text-xl font-semibold mb-3">
-            Comment details
-          </h1>
           {state.data.Approvals.CanclledComments ? (
             <div className="mt-4">
               <h1 className="text-lg font-semibold">Cancellation Details</h1>
@@ -109,6 +117,13 @@ const page = ({ params }) => {
                   state.data.Approvals.AuthComments,
                   state.data.Approvals.AuthBy,
                   state.data.Approvals.AuthDate
+                )}
+              {state.data.Approvals.RejectComments &&
+                renderApprovalSection(
+                  'Rejected',
+                  state.data.Approvals.RejectComments,
+                  state.data.Approvals.RejectBy,
+                  state.data.Approvals.RejectDate
                 )}
               {state.data.Approvals.AppComments &&
                 renderApprovalSection(

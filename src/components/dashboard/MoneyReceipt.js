@@ -43,13 +43,6 @@ const MoneyReceipt = () => {
                   >
                     Payment Method
                   </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Payment Method details
-                  </th>
-
                   <th scope="col" className="px-6 py-4">
                     Action
                   </th>
@@ -74,10 +67,6 @@ const MoneyReceipt = () => {
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.PaymentMethod}
                       </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.PaymentMethodDetails}
-                      </td>
-
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                         <Link
                           href={`/dashboard/money-receipt/view/${item.MRID}`}

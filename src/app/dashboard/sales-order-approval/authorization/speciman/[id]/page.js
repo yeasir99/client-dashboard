@@ -40,42 +40,43 @@ const page = ({ params }) => {
     }
   }, [params]);
 
-  const router = useRouter()
+  const router = useRouter();
 
- 
   const handleAuthorize = async () => {
     const dataWillBeSubmitted = {
       SalesOrderID: formData.SalesOrderID,
-    DemandInfo: formData.DemandInfo,
-    ReturnInfo: null,
-    AuthComments: formData.AuthComments,
-    AppComments: null,
-    UserID: formData.UserID
-    }
-     const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetails', dataWillBeSubmitted)
-     router.push('/dashboard/sales-order-approval')
-  }
+      DemandInfo: formData.DemandInfo,
+      ReturnInfo: null,
+      AuthComments: formData.AuthComments,
+      AppComments: null,
+      UserID: formData.UserID,
+    };
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetails',
+      dataWillBeSubmitted
+    );
+    router.push('/dashboard/sales-order-approval');
+  };
 
   const handleReject = async () => {
     const dataWillBeSubmitted = {
       SalesOrderID: formData.SalesOrderID,
-    DemandInfo: formData.DemandInfo,
-    ReturnInfo: null,
-    AuthComments: formData.AuthComments,
-    AppComments: null,
-    UserID: formData.UserID,
-    AppStatus: 1
-    }
-    console.log(dataWillBeSubmitted)
-   const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_Cancelled', dataWillBeSubmitted)
-    console.log(res)
-  }
+      CanclledComments: formData.AuthComments,
+      UserID: formData.UserID,
+    };
+    console.log(dataWillBeSubmitted);
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_Cancelled',
+      dataWillBeSubmitted
+    );
+    console.log(res);
+  };
 
   return (
     <>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl capitalize mb-3">
-          Sales Order - Authorization
+          Specimen Order - Authorization
         </h1>
         <form>
           <input
@@ -117,8 +118,11 @@ const page = ({ params }) => {
           />
         </div>
         <div>
-          <label htmlFor="SpecimenUserName" className="block text-sm font-bold mb-1">
-          Specimen User Name:
+          <label
+            htmlFor="SpecimenUserName"
+            className="block text-sm font-bold mb-1"
+          >
+            Specimen User Name:
           </label>
           <input
             type="text"
@@ -200,19 +204,6 @@ const page = ({ params }) => {
             </div>
           )}
         </div>
-        <div>
-          <label htmlFor="DemandInfo" className="block text-sm font-bold mb-1">
-            Demand Information:
-          </label>
-          <input
-            type="text"
-            id="DemandInfo"
-            name="DemandInfo"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            readOnly
-            value={formData.DemandInfo}
-          />
-        </div>
 
         <div>
           <label
@@ -227,19 +218,25 @@ const page = ({ params }) => {
             name="AuthComments"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
             value={formData.AuthComments}
-            onChange={(e) =>{
+            onChange={e => {
               setFormData(prevData => ({
                 ...prevData,
-                AuthComments: e.target.value
-              }))
+                AuthComments: e.target.value,
+              }));
             }}
           />
         </div>
         <div className="flex justify-between py-3 px-1">
-          <button className="bg-red-400 px-6 py-2 rounded-md text-white" onClick={handleReject}>
+          <button
+            className="bg-red-400 px-6 py-2 rounded-md text-white"
+            onClick={handleReject}
+          >
             Cencel Order
           </button>
-          <button className="bg-primary px-6 py-2 rounded-md text-white" onClick={handleAuthorize}>
+          <button
+            className="bg-primary px-6 py-2 rounded-md text-white"
+            onClick={handleAuthorize}
+          >
             Authorize
           </button>
         </div>

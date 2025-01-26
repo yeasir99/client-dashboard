@@ -36,7 +36,7 @@ const PendingList = ({ pendingData, type }) => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Party Name
+                    {type === 'speciman' ? 'Employee Name' : 'Party Name'}
                   </th>
                   <th
                     scope="col"
@@ -72,7 +72,9 @@ const PendingList = ({ pendingData, type }) => {
                         {item.OrderDate}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.partyname}
+                        {type === 'speciman'
+                          ? item.SpecimenUserName
+                          : item.partyname}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.TotalAmount}
@@ -94,11 +96,13 @@ const PendingList = ({ pendingData, type }) => {
                             </button>
                           </Link>
                         ) : (
-                          <Link href={
+                          <Link
+                            href={
                               type === 'sales'
                                 ? `/dashboard/sales-order-approval/approval/sales/${item.SalesOrderID}`
                                 : `/dashboard/sales-order-approval/approval/speciman/${item.SalesOrderID}`
-                            }>
+                            }
+                          >
                             <button className="bg-gray-300 px-1 py-[2px]">
                               Approval
                             </button>

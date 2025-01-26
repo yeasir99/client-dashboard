@@ -1,17 +1,14 @@
-'use client';
-import { FaEye, FaRegEdit } from 'react-icons/fa';
-import Link from 'next/link';
+import React from 'react';
 import useGetData from '@/utils/useGetData';
+import Link from 'next/link';
+import { FaEye, FaRegEdit } from 'react-icons/fa';
 
-const SaleOrderList = () => {
-  const { status, data } = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_salesorders'
+const SalesList = () => {
+  const salesOrderList = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_challansOrder'
   );
-
-  if (status === 'pending') {
-    return (
-      <div className="text-xl font-semibold text-center py-6">Loading...</div>
-    );
+  if (salesOrderList.status === 'pending') {
+    <div className="text-xl font-semibold text-center py-6">Loading...</div>;
   }
   return (
     <div className="flex flex-col">
@@ -25,19 +22,19 @@ const SaleOrderList = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Sales Order ID
+                    Challan ID
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Sales Order No
+                    Challan No.
                   </th>
                   <th
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Order Date
+                    Challan Date
                   </th>
                   <th
                     scope="col"
@@ -51,18 +48,6 @@ const SaleOrderList = () => {
                   >
                     Status
                   </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Log User Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Total Amount
-                  </th>
 
                   <th scope="col" className="px-6 py-4">
                     Action
@@ -70,34 +55,27 @@ const SaleOrderList = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.length > 0 &&
-                  data.map(item => (
+                {salesOrderList.data.length > 0 &&
+                  salesOrderList.data.map(item => (
                     <tr
                       className="border-b border-neutral-200 dark:border-white/10"
-                      key={item.salesOrderId}
+                      key={item.ChallanID}
                     >
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.SalesOrderID}
+                        {item.ChallanID}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.SalesOrderNo}
+                        {item.ChallanNo}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.OrderDate}
+                        {item.ChallanDate}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.partyname}
+                        {item.PartyName}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.Status}
+                        {item.StatusName}
                       </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.logUserName}
-                      </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.TotalAmount}
-                      </td>
-
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                         <span className="bg-cyan-500 p-1 inline-block rounded-md">
                           <Link
@@ -126,4 +104,4 @@ const SaleOrderList = () => {
   );
 };
 
-export default SaleOrderList;
+export default SalesList;

@@ -8,16 +8,16 @@ const ReceiptSingleView = ({ viewableData }) => {
   const renderApprovalSection = (label, comments, by, date) => (
     <div className="mb-3">
       <div className="flex items-center gap-2">
-        <h1 className="text-lg">{label} Comments:</h1>
-        <h1>{comments || 'N/A'}</h1>
+        <h1 className="text-lg">Date:</h1>
+        <h1>{date || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
         <h1 className="text-lg">{label} By:</h1>
         <h1>{by || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
-        <h1 className="text-lg">Date:</h1>
-        <h1>{date || 'N/A'}</h1>
+        <h1 className="text-lg">{label} Comments:</h1>
+        <h1>{comments || 'N/A'}</h1>
       </div>
     </div>
   );
@@ -37,12 +37,12 @@ const ReceiptSingleView = ({ viewableData }) => {
             ) : (
               <>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-lg">Receipt Number:</h1>
-                  <h1>{viewableData.data.receipt.MRNo}</h1>
-                </div>
-                <div className="flex items-center gap-2">
                   <h1 className="text-lg">Receipt Date:</h1>
                   <h1>{viewableData.data.receipt.MRDate}</h1>
+                </div>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-lg">Receipt Number:</h1>
+                  <h1>{viewableData.data.receipt.MRNo}</h1>
                 </div>
                 <div className="flex items-center gap-2">
                   <h1 className="text-lg">Party Name:</h1>
@@ -66,6 +66,20 @@ const ReceiptSingleView = ({ viewableData }) => {
                     <h1>{viewableData.data.receipt.PaymentMethodDetailsAcc}</h1>
                   </div>
                 )}
+                {viewableData.data.receipt.PaymentMethodID == 4 && (
+                  <>
+                    <h1>Account Name: {viewableData.data.receipt.AccName}</h1>
+                    <h1>
+                      Account Number: {viewableData.data.receipt.AccNumber}
+                    </h1>
+                    <h1>
+                      Cheque Number: {viewableData.data.receipt.ChequeNumber}
+                    </h1>
+                  </>
+                )}
+                {viewableData.data.receipt.Remarks && (
+                  <h1>Remarks: {viewableData.data.receipt.Remarks}</h1>
+                )}
               </>
             )}
           </div>
@@ -74,9 +88,6 @@ const ReceiptSingleView = ({ viewableData }) => {
 
       <div className="flex justify-center mt-5">
         <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
-          <h1 className="text-center text-xl font-semibold mb-3">
-            Comment details
-          </h1>
           {viewableData.data.Approvals.CanclledComments ? (
             <div className="mt-4">
               <h1 className="text-lg font-semibold">Cancellation Details</h1>
@@ -111,6 +122,13 @@ const ReceiptSingleView = ({ viewableData }) => {
                   viewableData.data.Approvals.AuthComments,
                   viewableData.data.Approvals.AuthBy,
                   viewableData.data.Approvals.AuthDate
+                )}
+              {viewableData.data.Approvals.RejectComments &&
+                renderApprovalSection(
+                  'Rejected',
+                  viewableData.data.Approvals.RejectComments,
+                  viewableData.data.Approvals.RejectBy,
+                  viewableData.data.Approvals.RejectDate
                 )}
               {viewableData.data.Approvals.AppComments &&
                 renderApprovalSection(

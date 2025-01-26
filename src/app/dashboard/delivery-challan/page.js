@@ -1,12 +1,76 @@
+'use client';
+import { useState } from 'react';
 import Link from 'next/link';
-import DeliveryChallan from '@/components/dashboard/DeliveryChallan';
+import SalesList from '@/components/delivery-chalan/SalesList';
+import SpecimanList from '@/components/delivery-chalan/SpecimanList';
+import SalesPendingList from '@/components/delivery-chalan/SalesPendingList';
+import SpecimanPendingList from '@/components/delivery-chalan/SpecimanPendingList';
 
 const page = () => {
+  const [current, setCurrent] = useState('sales');
   return (
     <div>
-      <h1 className="text-2xl capitalize mb-3">delivery challan list</h1>
+      <div className="flex gap-8 items-center mb-5">
+        <h1 className="text-2xl capitalize">
+          {`Delivery Challan ${current} List`}
+        </h1>
+        <div className="flex gap-4">
+          <div
+            className="flex gap-2 items-center"
+            onClick={() => {
+              if (current !== 'sales') {
+                setCurrent('sales');
+              }
+            }}
+          >
+            <input
+              id="sales"
+              type="checkbox"
+              checked={current === 'sales'}
+              className="rounded-full"
+            />
+            <label
+              className={`${
+                current === 'sales' ? 'text-xl font-semibold' : 'text-xl'
+              }`}
+              htmlFor="sales"
+            >
+              Sales
+            </label>
+          </div>
+          <div
+            className="flex gap-2 items-center"
+            onClick={() => {
+              if (current !== 'speciman') {
+                setCurrent('speciman');
+              }
+            }}
+          >
+            <input
+              id="speciman"
+              type="checkbox"
+              checked={current === 'speciman'}
+              className="rounded-full"
+            />
+            <label
+              className={`${
+                current === 'speciman' ? 'text-xl font-semibold' : 'text-xl'
+              }`}
+              htmlFor="speciman"
+            >
+              Speciman
+            </label>
+          </div>
+        </div>
+      </div>
       <div className="flex justify-between items-center">
-        <Link href="/dashboard/delivery-challan/add">
+        <Link
+          href={
+            current === 'sales'
+              ? '/dashboard/delivery-challan/add-sales'
+              : '/dashboard/delivery-challan/add-speciman'
+          }
+        >
           <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
             Add New Challan
           </button>
@@ -20,7 +84,21 @@ const page = () => {
           />
         </form>
       </div>
-      <DeliveryChallan />
+      {current === 'sales' ? (
+        <div>
+          <div>
+            <h1 className="text-xl capitalize text-center">Sales List</h1>
+            <SalesList />
+          </div>
+        </div>
+      ) : (
+        <div>
+          <div>
+            <h1 className="text-xl capitalize text-center">Speciman List</h1>
+            <SpecimanList />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

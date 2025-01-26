@@ -107,7 +107,9 @@ const page = () => {
                           {item.Status}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                          <Link href="/dashboard/visit-entry/details">
+                          <Link
+                            href={`/dashboard/visit-entry/details/${item.VisitPlanID}`}
+                          >
                             <button className="bg-gray-300 px-1 py-[2px]">
                               Visit Entry Details
                             </button>

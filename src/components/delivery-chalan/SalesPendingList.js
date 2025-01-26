@@ -1,17 +1,14 @@
-'use client';
-import { FaEye, FaRegEdit } from 'react-icons/fa';
-import Link from 'next/link';
+import React from 'react';
 import useGetData from '@/utils/useGetData';
+import Link from 'next/link';
+import { FaEye, FaRegEdit } from 'react-icons/fa';
 
-const SaleOrderList = () => {
-  const { status, data } = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_salesorders'
+const SalesPendingList = () => {
+  const salesorderList = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_salesordersChallan'
   );
-
-  if (status === 'pending') {
-    return (
-      <div className="text-xl font-semibold text-center py-6">Loading...</div>
-    );
+  if (salesorderList.status === 'pending') {
+    <div className="text-xl font-semibold text-center py-6">Loading...</div>;
   }
   return (
     <div className="flex flex-col">
@@ -31,7 +28,7 @@ const SaleOrderList = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Sales Order No
+                    Sales Order No.
                   </th>
                   <th
                     scope="col"
@@ -55,13 +52,7 @@ const SaleOrderList = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Log User Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Total Amount
+                    Challan Status
                   </th>
 
                   <th scope="col" className="px-6 py-4">
@@ -70,11 +61,11 @@ const SaleOrderList = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.length > 0 &&
-                  data.map(item => (
+                {salesorderList.data.length > 0 &&
+                  salesorderList.data.map(item => (
                     <tr
                       className="border-b border-neutral-200 dark:border-white/10"
-                      key={item.salesOrderId}
+                      key={item.SalesOrderID}
                     >
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.SalesOrderID}
@@ -92,12 +83,8 @@ const SaleOrderList = () => {
                         {item.Status}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.logUserName}
+                        {item.challanstatusName}
                       </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.TotalAmount}
-                      </td>
-
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                         <span className="bg-cyan-500 p-1 inline-block rounded-md">
                           <Link
@@ -126,4 +113,4 @@ const SaleOrderList = () => {
   );
 };
 
-export default SaleOrderList;
+export default SalesPendingList;

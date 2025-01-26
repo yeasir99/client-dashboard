@@ -1,4 +1,27 @@
+'use client';
+import { useState, useEffect } from 'react';
+import useGetData from '@/utils/useGetData';
+import axios from 'axios';
 const page = () => {
+  const [selectUser, setSelectUser] = useState(null);
+  const pendingSpecima = useGetData(
+    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_specimenordersChallan'
+  );
+  const [formData, setFormData] = useState({
+    ChallanNo: '',
+  });
+  const getChalanNumber = async () => {
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=generate_new_Challan_number'
+    );
+    setFormData(prevData => ({
+      ...prevData,
+      ChallanNo: res.data.NewChallanNo,
+    }));
+  };
+  useEffect(() => {
+    getChalanNumber();
+  }, []);
   return (
     <>
       <div className="flex justify-between items-center">
@@ -14,7 +37,7 @@ const page = () => {
       </div>
       <div className="w-full bg-gray-200 rounded-md px-4 py-4">
         <h1 className="text-2xl capitalize mb-3">pending sales order</h1>
-        <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+        <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white overflow-x-scroll">
           <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
             <tr>
               <th
@@ -61,54 +84,45 @@ const page = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b border-neutral-200 dark:border-white/10">
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                1
-              </td>
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                SO-1001
-              </td>
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                2024-09-15
-              </td>
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                Mr. Rahman
-              </td>
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                Pending
-              </td>
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                1500
-              </td>
-
-              <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                <input type="checkbox" />
-              </td>
-            </tr>
-            <tr className="border-b border-neutral-200 dark:border-white/10">
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                1
-              </td>
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                SO-1003
-              </td>
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                2024-09-15
-              </td>
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                Mr. Hasan
-              </td>
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                Pending
-              </td>
-              <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                1500
-              </td>
-
-              <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                <input type="checkbox" />
-              </td>
-            </tr>
+            {pendingSpecima.data.length &&
+              pendingSpecima.data.map(item => (
+                <tr
+                  className="border-b border-neutral-200 dark:border-white/10"
+                  key={item.SalesOrderID}
+                >
+                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                    {item.SalesOrderID}
+                  </td>
+                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    {item.SalesOrderNo}
+                  </td>
+                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    {item.OrderDate}
+                  </td>
+                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    {item.partyname}
+                  </td>
+                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    {item.challanstatusName}
+                  </td>
+                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                    {item.TotalAmount}
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
+                    <input
+                      type="checkbox"
+                      onChange={() => {
+                        if (selectUser === item.SalesOrderID) {
+                          setSelectUser(null);
+                        } else {
+                          setSelectUser(item.SalesOrderID);
+                        }
+                      }}
+                      checked={item.SalesOrderID === selectUser}
+                    />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
         <form>
@@ -122,8 +136,9 @@ const page = () => {
             </label>
             <input
               type="text"
-              id="designation"
               className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+              value={formData.ChallanNo}
+              readOnly
             />
             <div>
               <label className="capitalize flex font-semibold text-md py-1">
