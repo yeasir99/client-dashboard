@@ -1,5 +1,10 @@
 'use client';
-const GoodsReceivedNote = () => {
+import useGetData from '@/utils/useGetData';
+const GoodsReceivedNote = ({ id }) => {
+  const receiptData = useGetData(
+    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_ppreceiptall&ProductReceiptID=${id}`
+  );
+
   const handlePrint = () => {
     const printContent = document.getElementById('print-area');
     const newWindow = window.open('', '_blank', 'width=800,height=600');
@@ -24,6 +29,18 @@ const GoodsReceivedNote = () => {
     newWindow.document.close();
     newWindow.print();
   };
+
+  if (receiptData.status === 'pending') {
+    return (
+      <div className="text-xl font-semibold text-center py-10">Loading...</div>
+    );
+  }
+
+  if (typeof receiptData.data !== Object) {
+    <div className="text-xl font-semibold text-center py-10">
+      No Data To Display
+    </div>;
+  }
 
   return (
     <div>
@@ -53,24 +70,36 @@ const GoodsReceivedNote = () => {
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <p>
-                <span className="font-semibold">Supplier Name:</span>
+                <span className="font-semibold">
+                  Supplier Name: {receiptData.data.receipt.BindingPartyName}
+                </span>
               </p>
               <p>
-                <span className="font-semibold">Supplier Challan No.:</span>
+                <span className="font-semibold">
+                  Supplier Challan No.: {receiptData.data.receipt.ChallanNumber}
+                </span>
               </p>
               <p>
-                <span className="font-semibold">Supplier Address:</span>
+                <span className="font-semibold">
+                  Supplier Address: {receiptData.data.receipt.Address}
+                </span>
               </p>
               <p>
-                <span className="font-semibold">Phone No.:</span>
+                <span className="font-semibold">
+                  Phone No.: {receiptData.data.receipt.ContactNumber}
+                </span>
               </p>
             </div>
             <div className="text-right">
               <p>
-                <span className="font-semibold">Date:</span>
+                <span className="font-semibold">
+                  Date: {receiptData.data.receipt.ReceiptDate}
+                </span>
               </p>
               <p>
-                <span className="font-semibold">GRN No.:</span>
+                <span className="font-semibold">
+                  GRN No.: {receiptData.data.receipt.ProductReceiptNo}
+                </span>
               </p>
             </div>
           </div>
@@ -84,84 +113,22 @@ const GoodsReceivedNote = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="border border-gray-300 p-2 font-semibold">
-                  Primary-School
-                </td>
-                <td className="border border-gray-300 p-2"></td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2">
-                  অনুপম প্রথম বিভাগ সম (তৃতীয় শ্রেণি)
-                </td>
-                <td className="border border-gray-300 p-2">500</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2">
-                  অনুপম একরেস বিভাগ সম (তৃতীয় শ্রেণি)
-                </td>
-                <td className="border border-gray-300 p-2">1,000</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 font-semibold">
-                  High-School
-                </td>
-                <td className="border border-gray-300 p-2">7,000</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 font-semibold">
-                  SSC-Compulsory
-                </td>
-                <td className="border border-gray-300 p-2"></td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2">
-                  অনুপম মাধ্যমিক বাংলা (১ম ও ২য়)
-                </td>
-                <td className="border border-gray-300 p-2">10,000</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2">
-                  অনুপম মাধ্যমিক ইংলিশ ফর টুডে
-                </td>
-                <td className="border border-gray-300 p-2">9,000</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 font-semibold">
-                  SSC-Commerce
-                </td>
-                <td className="border border-gray-300 p-2"></td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2">
-                  অনুপম মাধ্যমিক হিসাববিজ্ঞান
-                </td>
-                <td className="border border-gray-300 p-2">5,000</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2">
-                  অনুপম মাধ্যমিক ফিন্যান্স ও ব্যাংকিং
-                </td>
-                <td className="border border-gray-300 p-2">6,000</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2 font-semibold">
-                  HSC Series
-                </td>
-                <td className="border border-gray-300 p-2"></td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2">
-                  বাংলা (প্রথম পত্র) সৃজনশীল ও সাহিত্য পাঠ একাদশ-দ্বাদশ শ্রেণি
-                </td>
-                <td className="border border-gray-300 p-2">2,000</td>
-              </tr>
-              <tr>
-                <td className="border border-gray-300 p-2">
-                  এইচ.এস.সি কম্পিউটারিক্স ইংলিশ মডেল কোয়েশ্চেন (প্রথম পত্র)
-                </td>
-                <td className="border border-gray-300 p-2">1,500</td>
-              </tr>
+              {receiptData.data.details.map(item => (
+                <>
+                  <tr>
+                    <td className="border border-gray-300 p-2 font-semibold">
+                      {item.ProductCategoryName}
+                    </td>
+                    <td className="border border-gray-300 p-2"></td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 p-2">
+                      {item.ProductName}
+                    </td>
+                    <td className="border border-gray-300 p-2">{item.Rate}</td>
+                  </tr>
+                </>
+              ))}
             </tbody>
           </table>
 
@@ -169,7 +136,7 @@ const GoodsReceivedNote = () => {
           <div className="grid grid-cols-2 gap-4 mt-8">
             <div className="text-center">
               <p className="font-semibold">Prepared By</p>
-              <p>Mr. XYZ</p>
+              <p>{receiptData.data.receipt.CreatedBy}</p>
             </div>
             <div className="text-center">
               <p className="font-semibold">Verified By</p>

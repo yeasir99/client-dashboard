@@ -3,7 +3,7 @@ import GoodsReceivedNote from '@/components/dashboard/view/GoodsReceivedNote';
 const page = ({ params }) => {
   return (
     <div>
-      <GoodsReceivedNote />
+      <GoodsReceivedNote id={params.id} />
     </div>
   );
 };
