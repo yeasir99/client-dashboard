@@ -3,10 +3,24 @@ import useGetData from '@/utils/useGetData';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 const page = () => {
+  const getCurrentDate = () => {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = String(today.getFullYear()).slice(-2);
+    return `${day}-${month}-${year}`;
+  };
   const [selectUser, setSelectUser] = useState(null);
   const [formData, setFormData] = useState({
     ChallanNo: '',
+    ChallanDate: getCurrentDate(),
+    SalesOrderNo: '',
+    SalesOrderID: '',
+    UserID: '',
+    Details: [],
   });
+  const [orderDetails, setOrderDetails] = useState(null);
+
   const pendingSales = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_salesordersChallan'
   );
@@ -19,9 +33,69 @@ const page = () => {
       ChallanNo: res.data.NewChallanNo,
     }));
   };
+
+  const getOrderDetails = async id => {
+    setOrderDetails(null);
+    const res = await axios.get(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_orderforchallan&SalesOrderID=${id}`
+    );
+    setOrderDetails(res.data);
+  };
+
+  useEffect(() => {
+    if (selectUser) {
+      getOrderDetails(selectUser);
+    }
+  }, [selectUser]);
+
   useEffect(() => {
     getChalanNumber();
   }, []);
+
+  useEffect(() => {
+    if (orderDetails) {
+      setFormData(prevData => ({
+        ...prevData,
+        SalesOrderNo: orderDetails.order.SalesOrderNo,
+        SalesOrderID: orderDetails.order.SalesOrderID,
+        UserID: orderDetails.order.UserID,
+        Details: orderDetails.orderDetails.map(item => ({
+          SL: item.SL,
+          FinancialYearID: item.FinancialYearID,
+          ProductCategoryID: item.ProductCategoryID,
+          CategoryName: item.CategoryName,
+          ProductID: item.ProductID,
+          ProductName: item.ProductName,
+          OrderQty: item.Quantity,
+          ChallanQty: '',
+          AvailQty: item.AvailableQty,
+        })),
+      }));
+    }
+  }, [orderDetails]);
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const dataWillbeSubmitted = {};
+    dataWillbeSubmitted.ChallanNo = formData.ChallanNo;
+    dataWillbeSubmitted.ChallanDate = formData.ChallanDate;
+    dataWillbeSubmitted.SalesOrderID = formData.SalesOrderID;
+    dataWillbeSubmitted.UserID = formData.UserID;
+    dataWillbeSubmitted.Details = formData.Details.map(item => ({
+      FinancialYearID: item.FinancialYearID,
+      ProductCategoryID: item.ProductCategoryID,
+      ProductID: item.ProductID,
+      OrderQty: item.OrderQty,
+      ChallanQty: item.ChallanQty,
+      AvailQty: item.AvailQty,
+    }));
+    const res = await axios.post(
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=Create_DeliveryChallanAll',
+      dataWillbeSubmitted
+    );
+    console.log(res);
+  };
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -125,7 +199,7 @@ const page = () => {
               ))}
           </tbody>
         </table>
-        <form>
+        <form onSubmit={handleSubmit}>
           <h1 className="text-2xl capitalize mb-3">add delivery challan</h1>
           <div>
             <label
@@ -144,12 +218,12 @@ const page = () => {
               <label className="capitalize flex font-semibold text-md py-1">
                 Challan Date:
               </label>
-
-              <select name="zone" className="w-full rounded-md">
-                <option value="" disabled={true} selected>
-                  dd-mm-YYYY
-                </option>
-              </select>
+              <input
+                type="text"
+                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                value={formData.ChallanDate}
+                readOnly
+              />
             </div>
 
             <div>
@@ -157,17 +231,21 @@ const page = () => {
                 Sales Order No:
               </label>
 
-              <select name="zone" className="w-full rounded-md">
-                <option value="" disabled={true} selected>
-                  So-2024-001
-                </option>
-                <option value="Zone one"> So-2024-002</option>
-              </select>
+              <input
+                type="text"
+                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                value={formData.SalesOrderNo}
+                readOnly
+              />
             </div>
-            <label className="block text-sm font-bold mb-1">Party Name:</label>
+            <label className="capitalize flex font-semibold text-md py-1">
+              Party Name:
+            </label>
             <input
               type="text"
               className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+              value={(orderDetails && orderDetails.order.PartyName) || ''}
+              readOnly
             />
           </div>
           {/* table Start */}
@@ -207,7 +285,7 @@ const page = () => {
                           scope="col"
                           className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                         >
-                          Auth. QTY
+                          Challan QTY.
                         </th>
 
                         <th scope="col" className="px-6 py-4">
@@ -216,48 +294,54 @@ const page = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-b border-neutral-200 dark:border-white/10">
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          FY-2023
-                        </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          Group A
-                        </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          Mathematics-class 10
-                        </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          300
-                        </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          2000
-                        </td>
-
-                        <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                          60000
-                        </td>
-                      </tr>
-                      <tr className="border-b border-neutral-200 dark:border-white/10">
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          FY-2023
-                        </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          Group A
-                        </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          Science-class 10
-                        </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          300
-                        </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          2000
-                        </td>
-
-                        <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                          60000
-                        </td>
-                      </tr>
+                      {formData.Details.length ? (
+                        formData.Details.map(item => (
+                          <tr
+                            className="border-b border-neutral-200 dark:border-white/10"
+                            key={item.SL}
+                          >
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              {item.FinancialYearID}
+                            </td>
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              {item.CategoryName}
+                            </td>
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              {item.ProductName}
+                            </td>
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              {item.OrderQty}
+                            </td>
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              <input
+                                type="number"
+                                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                                value={item.ChallanQty}
+                                onChange={e => {
+                                  setFormData(prevData => ({
+                                    ...prevData,
+                                    Details: prevData.Details.map(detail => {
+                                      if (detail.SL === item.SL) {
+                                        return {
+                                          ...detail,
+                                          ChallanQty: e.target.value,
+                                        };
+                                      } else {
+                                        return detail;
+                                      }
+                                    }),
+                                  }));
+                                }}
+                              />
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
+                              {item.AvailQty}
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr className="border-b border-neutral-200 dark:border-white/10"></tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
