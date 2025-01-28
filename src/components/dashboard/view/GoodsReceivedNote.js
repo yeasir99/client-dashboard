@@ -108,8 +108,12 @@ const GoodsReceivedNote = ({ id }) => {
           <table className="w-full border border-gray-300">
             <thead>
               <tr className="bg-gray-200">
-                <th className="border border-gray-300 p-2">Books Name</th>
-                <th className="border border-gray-300 p-2">Quantity (Pcs.)</th>
+                <th className="border border-gray-300 p-2 text-left">
+                  Books Name
+                </th>
+                <th className="border border-gray-300 p-2 text-right">
+                  Quantity (Pcs.)
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -125,7 +129,9 @@ const GoodsReceivedNote = ({ id }) => {
                     <td className="border border-gray-300 p-2">
                       {item.ProductName}
                     </td>
-                    <td className="border border-gray-300 p-2">{item.Rate}</td>
+                    <td className="border border-gray-300 p-2 text-right">
+                      {item.Rate}
+                    </td>
                   </tr>
                 </>
               ))}
@@ -140,7 +146,7 @@ const GoodsReceivedNote = ({ id }) => {
             </div>
             <div className="text-center">
               <p className="font-semibold">Verified By</p>
-              <p>Mr. ABC</p>
+              <p></p>
             </div>
           </div>
         </div>
