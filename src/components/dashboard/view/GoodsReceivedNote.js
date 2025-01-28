@@ -139,7 +139,7 @@ const GoodsReceivedNote = ({ id }) => {
           </table>
 
           {/* Footer */}
-          <div className="grid grid-cols-2 gap-4 mt-8">
+          <div className="grid grid-cols-2 gap-4 mt-20">
             <div className="text-center">
               <p className="font-semibold">Prepared By</p>
               <p>{receiptData.data.receipt.CreatedBy}</p>
