@@ -130,7 +130,7 @@ const GoodsReceivedNote = ({ id }) => {
                       {item.ProductName}
                     </td>
                     <td className="border border-gray-300 p-2 text-right">
-                      {item.Rate}
+                      {item.Quantity}
                     </td>
                   </tr>
                 </>
