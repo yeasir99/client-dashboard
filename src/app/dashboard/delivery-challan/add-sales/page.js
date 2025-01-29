@@ -2,13 +2,16 @@
 import useGetData from '@/utils/useGetData';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import convertDateFormat from '@/utils/convertDateFormat';
+
 const page = () => {
   const getCurrentDate = () => {
     const today = new Date();
     const day = String(today.getDate()).padStart(2, '0');
     const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-    const year = String(today.getFullYear()).slice(-2);
-    return `${day}-${month}-${year}`;
+    const year = String(today.getFullYear());
+    return `${year}-${month}-${day}`;
   };
   const [selectUser, setSelectUser] = useState(null);
   const [formData, setFormData] = useState({
@@ -74,6 +77,8 @@ const page = () => {
     }
   }, [orderDetails]);
 
+  const router = useRouter();
+
   const handleSubmit = async e => {
     e.preventDefault();
     const dataWillbeSubmitted = {};
@@ -86,14 +91,15 @@ const page = () => {
       ProductCategoryID: item.ProductCategoryID,
       ProductID: item.ProductID,
       OrderQty: item.OrderQty,
-      ChallanQty: item.ChallanQty,
+      ChallanQty: Number(item.ChallanQty),
       AvailQty: item.AvailQty,
     }));
+
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=Create_DeliveryChallanAll',
       dataWillbeSubmitted
     );
-    console.log(res);
+    router.push('/dashboard/delivery-challan');
   };
 
   return (
@@ -171,7 +177,7 @@ const page = () => {
                     {item.SalesOrderNo}
                   </td>
                   <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    {item.OrderDate}
+                    {convertDateFormat(item.OrderDate)}
                   </td>
                   <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                     {item.partyname}
@@ -221,7 +227,7 @@ const page = () => {
               <input
                 type="text"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                value={formData.ChallanDate}
+                value={convertDateFormat(formData.ChallanDate)}
                 readOnly
               />
             </div>

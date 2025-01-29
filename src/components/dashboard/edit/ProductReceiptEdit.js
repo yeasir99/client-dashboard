@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import BookById from '@/components/dashboard/BookById';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
+import Image from 'next/image';
 
 const ProductReceiptEdit = ({ id }) => {
   const [formData, setFormData] = useState({
@@ -30,6 +31,8 @@ const ProductReceiptEdit = ({ id }) => {
       },
     ],
   });
+
+  const [displayImage, setDisplayImage] = useState('');
 
   const [booksName, setBooksName] = useState([]);
 
@@ -80,6 +83,7 @@ const ProductReceiptEdit = ({ id }) => {
             })
           : formData.orderDetails,
       });
+      setDisplayImage(receipt.ChallanCopyPath);
     }
   }, [orginalData.data]);
 
@@ -496,6 +500,13 @@ const ProductReceiptEdit = ({ id }) => {
             </button>
           </div>
         </form>
+      </div>
+      <div className="flex justify-center py-5">
+        {displayImage ? (
+          <Image src={displayImage} alt="cover page" width={500} height={500} />
+        ) : (
+          ''
+        )}
       </div>
     </>
   );

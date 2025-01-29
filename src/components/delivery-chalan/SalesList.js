@@ -2,6 +2,7 @@ import React from 'react';
 import useGetData from '@/utils/useGetData';
 import Link from 'next/link';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
+import convertDateFormat from '@/utils/convertDateFormat';
 
 const SalesList = () => {
   const salesOrderList = useGetData(
@@ -68,7 +69,7 @@ const SalesList = () => {
                         {item.ChallanNo}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.ChallanDate}
+                        {convertDateFormat(item.ChallanDate)}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.PartyName}
