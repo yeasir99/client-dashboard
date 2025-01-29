@@ -2,6 +2,7 @@
 import useGetData from '@/utils/useGetData';
 import Image from 'next/image';
 import Link from 'next/link';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const ProductReceiptView = ({ id }) => {
   const { status, data } = useGetData(
@@ -109,13 +110,13 @@ const ProductReceiptView = ({ id }) => {
                         {item.ProductName}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.Quantity}
+                        {formatAmountWithCommas(Number(item.Quantity))}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.Rate}
+                        {formatAmountWithCommas(Number(item.Rate))}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.Total}
+                        {formatAmountWithCommas(Number(item.Total))}
                       </td>
                     </tr>
                   ))}
@@ -129,10 +130,12 @@ const ProductReceiptView = ({ id }) => {
                   </td>
 
                   <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3 font-medium">
-                    {data.details.reduce(
-                      (accumulator, currentValue) =>
-                        accumulator + Number(currentValue.Total),
-                      0
+                    {formatAmountWithCommas(
+                      data.details.reduce(
+                        (accumulator, currentValue) =>
+                          accumulator + Number(currentValue.Total),
+                        0
+                      )
                     )}
                   </td>
                 </tr>
