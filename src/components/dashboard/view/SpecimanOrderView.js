@@ -16,20 +16,17 @@ const SpecimanOrderView = ({ id }) => {
       <div className="flex justify-center">
         <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
           <h1 className="text-center text-xl font-semibold mb-3">
-            Speciman Order Details
+            Speciman Order
           </h1>
           <div className="flex items-center gap-2">
-            <h1 className="text-lg">Order Id:</h1>
-            <h1>{order.SalesOrderID}</h1>
+            <h1 className="text-lg">Date:</h1>
+            <h1>{convertDateFormat(order.OrderDate)}</h1>
           </div>
           <div className="flex items-center gap-2">
             <h1 className="text-lg">Order No:</h1>
             <h1>{order.SalesOrderNo}</h1>
           </div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-lg">Order Date:</h1>
-            <h1>{convertDateFormat(order.OrderDate)}</h1>
-          </div>
+
           <div className="flex items-center gap-2">
             <h1 className="text-lg">Speciman User Name:</h1>
             <h1>{order.SpecimenUserName}</h1>
@@ -90,7 +87,7 @@ const SpecimanOrderView = ({ id }) => {
                           key={item.SL}
                         >
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            {item.FinancialYearID}
+                            {item.FinancialYear}
                           </td>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                             {item.ProductName}
