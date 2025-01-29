@@ -2,6 +2,8 @@
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import Link from 'next/link';
 import useGetData from '@/utils/useGetData';
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const SaleOrderList = () => {
   const { status, data } = useGetData(
@@ -25,7 +27,7 @@ const SaleOrderList = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Sales Order ID
+                    Order ID
                   </th>
                   <th
                     scope="col"
@@ -83,7 +85,7 @@ const SaleOrderList = () => {
                         {item.SalesOrderNo}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.OrderDate}
+                        {convertDateFormat(item.OrderDate)}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.partyname}
@@ -95,7 +97,7 @@ const SaleOrderList = () => {
                         {item.logUserName}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.TotalAmount}
+                        {formatAmountWithCommas(Number(item.TotalAmount))}
                       </td>
 
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">

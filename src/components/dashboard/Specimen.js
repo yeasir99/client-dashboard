@@ -1,16 +1,20 @@
-"use client";
-import { FaEye, FaRegEdit } from "react-icons/fa";
-import useGetData from "@/utils/useGetData";
-import Link from "next/link";
+'use client';
+import { FaEye, FaRegEdit } from 'react-icons/fa';
+import useGetData from '@/utils/useGetData';
+import Link from 'next/link';
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const Specimen = () => {
-	const { status, data } = useGetData(
+  const { status, data } = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_specimenorders'
   );
-  if(status === 'pending'){
-	return <div className="text-xl font-semibold text-center py-6">Loading...</div>
+  if (status === 'pending') {
+    return (
+      <div className="text-xl font-semibold text-center py-6">Loading...</div>
+    );
   }
-	return (
+  return (
     <div className="flex flex-col">
       <div>
         <div className="inline-block max-w-full w-full pt-5">
@@ -78,13 +82,13 @@ const Specimen = () => {
                         {item.UserName}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.OrderDate}
+                        {convertDateFormat(item.OrderDate)}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.Status}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.TotalAmount}
+                        {formatAmountWithCommas(Number(item.TotalAmount))}
                       </td>
 
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
@@ -97,12 +101,11 @@ const Specimen = () => {
                         </span>{' '}
                         |
                         <span className="bg-amber-600 p-1 inline-block rounded-md">
-						 <Link
+                          <Link
                             href={`/dashboard/sales-order/edit/speciman/${item.SalesOrderID}`}
                           >
-
-                          <FaRegEdit className="text-white text-xl" />
-						  </Link>
+                            <FaRegEdit className="text-white text-xl" />
+                          </Link>
                         </span>{' '}
                       </td>
                     </tr>

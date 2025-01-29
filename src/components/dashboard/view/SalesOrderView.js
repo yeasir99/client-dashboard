@@ -1,5 +1,7 @@
 'use client';
 import useGetData from '@/utils/useGetData';
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const SalesOrderView = ({ id }) => {
   const { status, data } = useGetData(
@@ -31,7 +33,7 @@ const SalesOrderView = ({ id }) => {
             </div>
             <div className="flex items-center gap-2">
               <h1 className="text-lg">Order Date:</h1>
-              <h1>{order.OrderDate}</h1>
+              <h1>{convertDateFormat(order.OrderDate)}</h1>
             </div>
             <div className="flex items-center gap-2">
               <h1 className="text-lg">Party Name:</h1>
@@ -39,7 +41,7 @@ const SalesOrderView = ({ id }) => {
             </div>
             <div className="flex items-center gap-2">
               <h1 className="text-lg">Total Amount:</h1>
-              <h1>{order.TotalAmount}</h1>
+              <h1>{formatAmountWithCommas(Number(order.TotalAmount))}</h1>
             </div>
             <div className="flex items-center gap-2">
               <h1 className="text-lg">status:</h1>
@@ -100,14 +102,16 @@ const SalesOrderView = ({ id }) => {
                             {item.ProductName}
                           </td>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            {item.Quantity}
+                            {formatAmountWithCommas(Number(item.Quantity))}
                           </td>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            {item.Price}
+                            {formatAmountWithCommas(Number(item.Price))}
                           </td>
 
-                          <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                            {Number(item.Price) * Number(item.Quantity)}
+                          <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3 font-medium">
+                            {formatAmountWithCommas(
+                              Number(item.Price) * Number(item.Quantity)
+                            )}
                           </td>
                         </tr>
                       ))}

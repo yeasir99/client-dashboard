@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import BookById from './BookById';
 import { useRouter } from 'next/navigation';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const SalesOrderForm = ({ session }) => {
   const [formData, setFormData] = useState({
@@ -328,9 +329,11 @@ const SalesOrderForm = ({ session }) => {
                             </td>
 
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                              {item.Quantity
-                                ? Number(item.Price) * Number(item.Quantity)
-                                : Number(item.Price)}
+                              {formatAmountWithCommas(
+                                Number(
+                                  Number(item.Price) * Number(item.Quantity)
+                                )
+                              )}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 flex justify-center items-end h-full gap-3">
                               <AiOutlineCloseCircle
@@ -356,8 +359,8 @@ const SalesOrderForm = ({ session }) => {
                           Total
                         </td>
 
-                        <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                          {formData.TotalAmount}
+                        <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3 font-medium">
+                          {formatAmountWithCommas(Number(formData.TotalAmount))}
                         </td>
                       </tr>
                       <tr>
