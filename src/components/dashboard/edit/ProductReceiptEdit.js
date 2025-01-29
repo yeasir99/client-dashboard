@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
 import BookById from '@/components/dashboard/BookById';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const ProductReceiptEdit = ({ id }) => {
   const [formData, setFormData] = useState({
@@ -72,7 +73,7 @@ const ProductReceiptEdit = ({ id }) => {
                 FinancialYearID: item.FinancialYearID,
                 ProductCategoryID: item.ProductCategoryID,
                 ProductID: item.ProductID,
-                Quantity: item.ProductID,
+                Quantity: item.Quantity,
                 Price: item.Rate,
                 TotalPrice: item.Total,
               };
@@ -320,7 +321,7 @@ const ProductReceiptEdit = ({ id }) => {
                             className="border-b border-neutral-200 dark:border-white/10"
                             key={item.id}
                           >
-                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
                               <select
                                 id="FinancialYearID"
                                 name="FinancialYearID"
@@ -339,7 +340,7 @@ const ProductReceiptEdit = ({ id }) => {
                                   ))}
                               </select>
                             </td>
-                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
                               <select
                                 name="ProductCategoryID"
                                 id="ProductCategoryID"
@@ -358,16 +359,16 @@ const ProductReceiptEdit = ({ id }) => {
                                   ))}
                               </select>
                             </td>
-                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
                               <BookById
                                 name="ProductID"
                                 item={item}
                                 update={updateOrderDetailBook}
                               />
                             </td>
-                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
                               <input
-                                type="text"
+                                type="number"
                                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
                                 name="Quantity"
                                 onChange={event =>
@@ -380,6 +381,9 @@ const ProductReceiptEdit = ({ id }) => {
                                               ...detail,
                                               [event.target.name]:
                                                 event.target.value,
+                                              TotalPrice:
+                                                Number(event.target.value) *
+                                                Number(item.Price),
                                             }
                                           : detail
                                     ),
@@ -389,9 +393,9 @@ const ProductReceiptEdit = ({ id }) => {
                                 required
                               />
                             </td>
-                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
                               <input
-                                type="text"
+                                type="number"
                                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
                                 name="Price"
                                 onChange={event =>
@@ -418,9 +422,7 @@ const ProductReceiptEdit = ({ id }) => {
                             </td>
 
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                              {item.Quantity
-                                ? Number(item.Price) * Number(item.Quantity)
-                                : Number(item.Price)}
+                              {item.TotalPrice}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 flex justify-center items-end h-full gap-3">
                               <AiOutlineCloseCircle
@@ -442,12 +444,12 @@ const ProductReceiptEdit = ({ id }) => {
                           className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
                           colSpan="4"
                         ></td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10 text-lg font-semibold">
                           Total
                         </td>
 
-                        <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                          {formData.TotalAmount}
+                        <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3 font-semibold text-lg">
+                          {formatAmountWithCommas(formData.TotalAmount)}
                         </td>
                       </tr>
                       <tr>
