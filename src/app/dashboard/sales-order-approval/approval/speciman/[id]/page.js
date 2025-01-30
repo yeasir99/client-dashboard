@@ -75,7 +75,7 @@ const page = ({ params }) => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">Sales Order - Approval</h1>
+        <h1 className="text-2xl capitalize mb-3">Specimen Order - Approval</h1>
         <form>
           <input
             name="search"
@@ -117,7 +117,7 @@ const page = ({ params }) => {
         </div>
         <div>
           <label htmlFor="PartyName" className="block text-sm font-bold mb-1">
-            Party Name:
+            Specimen User Name:
           </label>
           <input
             type="text"
@@ -125,7 +125,7 @@ const page = ({ params }) => {
             name="PartyName"
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
             readOnly
-            value={formData.PartyName}
+            value={formData.SpecimenUserName}
           />
         </div>
         <div>

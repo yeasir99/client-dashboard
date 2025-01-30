@@ -2,10 +2,27 @@
 import useGetData from '@/utils/useGetData';
 import convertDateFormat from '@/utils/convertDateFormat';
 import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
+import Link from 'next/link';
 
 const SpecimanOrderView = ({ id }) => {
   const { status, data } = useGetData(
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_order&SalesOrderID=${id}`
+  );
+  const renderApprovalSection = (label, comments, by, date) => (
+    <div className="mb-3">
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">Date:</h1>
+        <h1>{date || 'N/A'}</h1>
+      </div>
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">{label} By:</h1>
+        <h1>{by || 'N/A'}</h1>
+      </div>
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">{label} Comments:</h1>
+        <h1>{comments || 'N/A'}</h1>
+      </div>
+    </div>
   );
   const { order, orderDetails } = data;
   if (status === 'pending') {
@@ -13,6 +30,14 @@ const SpecimanOrderView = ({ id }) => {
   }
   return (
     <>
+    <div className="flex justify-end">
+        <Link
+          href={`/dashboard/sales-order/preview/speciman/${id}`}
+          className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Preview
+        </Link>
+      </div>
       <div className="flex justify-center">
         <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
           <h1 className="text-center text-xl font-semibold mb-3">
@@ -39,6 +64,68 @@ const SpecimanOrderView = ({ id }) => {
             <h1 className="text-lg">status:</h1>
             <h1>{order.Status}</h1>
           </div>
+        </div>
+      </div>
+      <div className="flex justify-center mt-5">
+        <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
+          {data.approvals.CanclledComments ? (
+            <div className="mt-4">
+              <h1 className="text-lg font-semibold">Cancellation Details</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Date:</h1>
+                <h1>{data.approvals.CancelledDate}</h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Cancelled By:</h1>
+                <h1>{data.approvals.CancelledBy}</h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Comments:</h1>
+                <h1>{data.approvals.CanclledComments || 'N/A'}</h1>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h1 className="text-center text-lg font-semibold mb-3">
+                Approval Details
+              </h1>
+              {data.approvals.CheckedComments &&
+                renderApprovalSection(
+                  'Checked',
+                  data.approvals.CheckedComments,
+                  data.approvals.CheckedBy,
+                  data.approvals.CheckedDate
+                )}
+              {data.approvals.AuthComments &&
+                renderApprovalSection(
+                  'Authorized',
+                  data.approvals.AuthComments,
+                  data.approvals.AuthBy,
+                  convertDateFormat(data.approvals.AuthDate.split(' ')[0])
+                )}
+              {data.approvals.RejectComments &&
+                renderApprovalSection(
+                  'Rejected',
+                  data.approvals.RejectComments,
+                  data.approvals.RejectBy,
+                  convertDateFormat(data.approvals.RejectDate.split(' ')[0])
+                )}
+              {data.approvals.AppComments &&
+                renderApprovalSection(
+                  'Approved',
+                  data.approvals.AppComments,
+                  data.approvals.AppBy,
+                  convertDateFormat(data.approvals.AppDate.split(' ')[0])
+                )}
+              {!data.approvals.CheckedComments &&
+                !data.approvals.AuthComments &&
+                !data.approvals.AppComments && (
+                  <div className="text-center">
+                    No Approval Details Available
+                  </div>
+                )}
+            </>
+          )}
         </div>
       </div>
       {orderDetails && orderDetails.length && (

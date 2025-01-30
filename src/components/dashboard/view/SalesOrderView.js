@@ -8,6 +8,22 @@ const SalesOrderView = ({ id }) => {
   const { status, data } = useGetData(
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_order&SalesOrderID=${id}`
   );
+  const renderApprovalSection = (label, comments, by, date) => (
+    <div className="mb-3">
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">Date:</h1>
+        <h1>{date || 'N/A'}</h1>
+      </div>
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">{label} By:</h1>
+        <h1>{by || 'N/A'}</h1>
+      </div>
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">{label} Comments:</h1>
+        <h1>{comments || 'N/A'}</h1>
+      </div>
+    </div>
+  );
   const { order, orderDetails } = data;
   if (status === 'pending') {
     return <div>Loading...</div>;
@@ -52,6 +68,68 @@ const SalesOrderView = ({ id }) => {
           </div>
         </div>
       )}
+      <div className="flex justify-center mt-5">
+        <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
+          {data.approvals.CanclledComments ? (
+            <div className="mt-4">
+              <h1 className="text-lg font-semibold">Cancellation Details</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Date:</h1>
+                <h1>{data.approvals.CancelledDate}</h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Cancelled By:</h1>
+                <h1>{data.approvals.CancelledBy}</h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Comments:</h1>
+                <h1>{data.approvals.CanclledComments || 'N/A'}</h1>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h1 className="text-center text-lg font-semibold mb-3">
+                Approval Details
+              </h1>
+              {data.approvals.CheckedComments &&
+                renderApprovalSection(
+                  'Checked',
+                  data.approvals.CheckedComments,
+                  data.approvals.CheckedBy,
+                  convertDateFormat(data.approvals.CheckedDate.split(' ')[0])
+                )}
+              {data.approvals.AuthComments &&
+                renderApprovalSection(
+                  'Authorized',
+                  data.approvals.AuthComments,
+                  data.approvals.AuthBy,
+                  convertDateFormat(data.approvals.AuthDate.split(' ')[0])
+                )}
+              {data.approvals.RejectComments &&
+                renderApprovalSection(
+                  'Rejected',
+                  data.approvals.RejectComments,
+                  data.approvals.RejectBy,
+                  convertDateFormat(data.approvals.RejectDate.split(' ')[0])
+                )}
+              {data.approvals.AppComments &&
+                renderApprovalSection(
+                  'Approved',
+                  data.approvals.AppComments,
+                  data.approvals.AppBy,
+                  convertDateFormat(data.approvals.AppDate.split(' ')[0])
+                )}
+              {!data.approvals.CheckedComments &&
+                !data.approvals.AuthComments &&
+                !data.approvals.AppComments && (
+                  <div className="text-center">
+                    No Approval Details Available
+                  </div>
+                )}
+            </>
+          )}
+        </div>
+      </div>
       {orderDetails && orderDetails.length && (
         <div className="inline-block max-w-full w-full pt-5">
           <div className="flex flex-col">
