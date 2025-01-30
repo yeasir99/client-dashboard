@@ -28,7 +28,7 @@ const ViewSingle = ({viewableData}) => {
         <div className="flex justify-center">
       <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
         <h1 className="text-center text-xl font-semibold mb-3">
-          Order Information
+        {viewableData.data.order.PartyName ? "Sales Order Approval" : "Specimen Order Approval"}
         </h1>
         {viewableData.data === null ? <div className="text-center text-xl font-semibold py-5">No Data to Display</div> : <>
             <div className="flex items-center gap-2">
@@ -85,7 +85,7 @@ const ViewSingle = ({viewableData}) => {
           ) : (
             <>
               <h1 className="text-center text-lg font-semibold mb-3">
-                {viewableData.data.order.PartyName ? "Sales Order Approval" : "Specimen Order Approval"}
+                Approval comments
               </h1>
               {viewableData.data.approvals.CheckedComments &&
                 renderApprovalSection(

@@ -89,7 +89,7 @@ const SalesOrderView = ({ id }) => {
           ) : (
             <>
               <h1 className="text-center text-lg font-semibold mb-3">
-                Approval Details
+                Approval Comments
               </h1>
               {data.approvals.CheckedComments &&
                 renderApprovalSection(

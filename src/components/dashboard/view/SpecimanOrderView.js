@@ -87,7 +87,7 @@ const SpecimanOrderView = ({ id }) => {
           ) : (
             <>
               <h1 className="text-center text-lg font-semibold mb-3">
-                Speciman Order Approval
+                Approval Comments
               </h1>
               {data.approvals.CheckedComments &&
                 renderApprovalSection(
