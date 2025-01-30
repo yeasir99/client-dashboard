@@ -1,5 +1,7 @@
 'use client';
 import useGetData from '@/utils/useGetData';
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const ExpenceRequisitionView = ({ id }) => {
   const { status, data } = useGetData(
@@ -32,17 +34,15 @@ const ExpenceRequisitionView = ({ id }) => {
   return (
     <div>
       <div className="max-w-xl bg-gray-200 mx-auto rounded-md p-3 my-5">
-        <h1>ID: {data.BDExpReq.BDExpReqID}</h1>
+      <h1>Date: {convertDateFormat(data.BDExpReq.BDExpReqDate)}</h1>
+        <h1>BD Exp Req No: {data.BDExpReq.BDExpReqNo}</h1>
         <h1>Institution Type: {data.BDExpReq.InstitutionTypeName}</h1>
         <h1>Institution Name: {data.BDExpReq.InstitutionName}</h1>
-        <h1>Total Amount: {data.BDExpReq.TotalAmount}</h1>
+        <h1>Total Amount: {formatAmountWithCommas(Number(data.BDExpReq.TotalAmount))}</h1>
       </div>
 
       <div className="flex justify-center mt-5">
         <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
-          <h1 className="text-center text-xl font-semibold mb-3">
-            Comment details
-          </h1>
           {data.BDExpReqApprovals.CanclledComments ? (
             <div className="mt-4">
               <h1 className="text-lg font-semibold">Cancellation Details</h1>
@@ -62,35 +62,35 @@ const ExpenceRequisitionView = ({ id }) => {
           ) : (
             <>
               <h1 className="text-center text-lg font-semibold mb-3">
-                Approval Details
+                Approval Comments
               </h1>
               {data.BDExpReqApprovals.CheckedComments &&
                 renderApprovalSection(
                   'Checked',
                   data.BDExpReqApprovals.CheckedComments,
                   data.BDExpReqApprovals.CheckedBy,
-                  data.BDExpReqApprovals.CheckedDate
+                  convertDateFormat(data.BDExpReqApprovals.CheckedDate.split(' ')[0])
                 )}
               {data.BDExpReqApprovals.AuthComments &&
                 renderApprovalSection(
                   'Authorized',
                   data.BDExpReqApprovals.AuthComments,
                   data.BDExpReqApprovals.AuthBy,
-                  data.BDExpReqApprovals.AuthDate
+                  convertDateFormat(data.BDExpReqApprovals.AuthDate.split(' ')[0])
                 )}
               {data.BDExpReqApprovals.AppComments &&
                 renderApprovalSection(
                   'Approved',
                   data.BDExpReqApprovals.AppComments,
                   data.BDExpReqApprovals.AppBy,
-                  data.BDExpReqApprovals.AppDate
+                  convertDateFormat(data.BDExpReqApprovals.AppDate.split(' ')[0])
                 )}
               {data.BDExpReqApprovals.RejectComments &&
                 renderApprovalSection(
                   'Rejected',
                   data.BDExpReqApprovals.RejectComments,
                   data.BDExpReqApprovals.RejectBy,
-                  data.BDExpReqApprovals.RejectDate
+                  convertDateFormat(data.BDExpReqApprovals.RejectDate.split(' ')[0])
                 )}
               {!data.BDExpReqApprovals.CheckedComments &&
                 !data.BDExpReqApprovals.AuthComments &&
@@ -178,10 +178,10 @@ const ExpenceRequisitionView = ({ id }) => {
                         {item.ProductName}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.StudentsCount}
+                        {formatAmountWithCommas(Number(item.StudentsCount))}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.DonationAmount}
+                        {formatAmountWithCommas(Number(item.DonationAmount))}
                       </td>
                     </tr>
                   ))}
@@ -196,11 +196,11 @@ const ExpenceRequisitionView = ({ id }) => {
 
                   <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3 font-medium">
                     {data.BDExpReqDetails.length &&
-                      data.BDExpReqDetails.reduce(
+                      formatAmountWithCommas(data.BDExpReqDetails.reduce(
                         (accumulator, currentValue) =>
                           accumulator + Number(currentValue.DonationAmount),
                         0
-                      )}
+                      ))}
                   </td>
                 </tr>
               </tbody>

@@ -2,6 +2,8 @@
 import useGetData from '@/utils/useGetData';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import Link from 'next/link';
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const ExpenseRequisitionList = () => {
   const { status, data } = useGetData(
@@ -72,10 +74,10 @@ const ExpenseRequisitionList = () => {
                       {item.InstitutionName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.BDExpReqDate}
+                      {convertDateFormat(item.BDExpReqDate)}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.TotalAmount}
+                      {formatAmountWithCommas(Number(item.TotalAmount))}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <span className="bg-cyan-500 p-1 inline-block rounded-md">
