@@ -174,8 +174,8 @@ const page = () => {
         </form>
       </div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="BDExpReqNo" className="block text-sm font-bold mb-1">
-          Sale Order No:
+        <label htmlFor="BDExpReqNo" className="capitalize flex font-semibold text-md py-1">
+        BD Exp Req No:
         </label>
         <input
           type="text"
@@ -187,7 +187,7 @@ const page = () => {
         />
         <div className="w-full">
           <label className="capitalize flex font-semibold text-md py-1">
-            Receipt Date:
+            Date:
           </label>
 
           <DatePicker
