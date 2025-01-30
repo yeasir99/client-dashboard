@@ -14,7 +14,7 @@ const ViewSingle = ({viewableData}) => {
         <h1>{by || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
-        <h1 className="text-lg">{label} Comments:</h1>
+        <h1 className="text-lg">{label} Status:</h1>
         <h1>{comments || 'N/A'}</h1>
       </div>
     </div>
@@ -85,7 +85,7 @@ const ViewSingle = ({viewableData}) => {
           ) : (
             <>
               <h1 className="text-center text-lg font-semibold mb-3">
-                Approval Details
+                {viewableData.data.order.PartyName ? "Sales Order Approval" : "Specimen Order Approval"}
               </h1>
               {viewableData.data.approvals.CheckedComments &&
                 renderApprovalSection(

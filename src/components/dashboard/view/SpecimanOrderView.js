@@ -19,7 +19,7 @@ const SpecimanOrderView = ({ id }) => {
         <h1>{by || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
-        <h1 className="text-lg">{label} Comments:</h1>
+        <h1 className="text-lg">{label} Status:</h1>
         <h1>{comments || 'N/A'}</h1>
       </div>
     </div>
@@ -87,7 +87,7 @@ const SpecimanOrderView = ({ id }) => {
           ) : (
             <>
               <h1 className="text-center text-lg font-semibold mb-3">
-                Approval Details
+                Speciman Order Approval
               </h1>
               {data.approvals.CheckedComments &&
                 renderApprovalSection(

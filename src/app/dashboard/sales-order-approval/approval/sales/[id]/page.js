@@ -62,7 +62,7 @@ const page = ({ params }) => {
         <h1>{by || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
-        <h1 className="text-lg">{label} Comments:</h1>
+        <h1 className="text-lg">{label} Status:</h1>
         <h1>{comments || 'N/A'}</h1>
       </div>
     </div>
