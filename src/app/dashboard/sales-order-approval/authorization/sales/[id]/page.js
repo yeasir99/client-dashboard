@@ -13,6 +13,7 @@ const page = ({ params }) => {
     PartyName: '',
     orderDetails: [],
     DemandInfo: 'Approved by management',
+    ReturnInfo: "Approved by management",
     AuthComments: '',
     AppComments: null,
     UserID: '',
@@ -239,6 +240,19 @@ const page = ({ params }) => {
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
             readOnly
             value={formData.DemandInfo}
+          />
+        </div>
+        <div>
+          <label htmlFor="ReturnInfo" className="block text-sm font-bold mb-1">
+            Return Information:
+          </label>
+          <input
+            type="text"
+            id="ReturnInfo"
+            name="ReturnInfo"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            readOnly
+            value={formData.ReturnInfo}
           />
         </div>
         {viewableData.data && <div className="flex justify-center mt-5">

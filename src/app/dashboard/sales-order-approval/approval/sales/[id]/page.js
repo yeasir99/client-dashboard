@@ -13,6 +13,7 @@ const page = ({ params }) => {
     PartyName: '',
     orderDetails: [],
     DemandInfo: 'Approved by management',
+    ReturnInfo: "Approved by management",
     AuthComments: null,
     AppComments: '',
     UserID: '',
@@ -86,14 +87,9 @@ const page = ({ params }) => {
   const handleReject = async () => {
     const dataWillBeSubmitted = {
       SalesOrderID: formData.SalesOrderID,
-    DemandInfo: formData.DemandInfo,
-    ReturnInfo: "Approved for 90 units due to stock limitations",
-    AuthComments: null,
-    AppComments: formData.AppComments,
-    UserID: formData.UserID,
-    AppStatus: 2
+      RejectComments: formData.AppComments,
+      UserID: formData.UserID,
     }
-    console.log(dataWillBeSubmitted)
    const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_Cancelled', dataWillBeSubmitted)
    router.push('/dashboard/sales-order-approval')
   }
@@ -238,6 +234,19 @@ const page = ({ params }) => {
             className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
             readOnly
             value={formData.DemandInfo}
+          />
+        </div>
+        <div>
+          <label htmlFor="ReturnInfo" className="block text-sm font-bold mb-1">
+            Return Information:
+          </label>
+          <input
+            type="text"
+            id="ReturnInfo"
+            name="ReturnInfo"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+            readOnly
+            value={formData.ReturnInfo}
           />
         </div>
 

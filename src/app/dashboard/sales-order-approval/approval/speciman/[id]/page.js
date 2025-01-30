@@ -2,6 +2,8 @@
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const page = ({ params }) => {
   const [comment, setComment] = useState(null)
@@ -9,25 +11,33 @@ const page = ({ params }) => {
     SalesOrderID: '',
     SalesOrderNo: '',
     OrderDate: '',
-    PartyName: '',
+    SpecimenUserName: '',
     orderDetails: [],
     DemandInfo: 'Approved by management',
     AuthComments: null,
     AppComments: '',
     UserID: '',
   });
+  const [viewableData, setViewableData] = useState({
+    status: 'pending',
+    data: null
+  })
 
   const getData = async id => {
     const res = await axios.get(
       `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_order&SalesOrderID=${id}`
     );
     if (res.data.order) {
+      setViewableData({
+        status: 'idle',
+        data: res.data
+      })
       setFormData({
         ...formData,
         SalesOrderID: res.data.order.SalesOrderID,
         SalesOrderNo: res.data.order.SalesOrderNo,
         OrderDate: res.data.order.OrderDate,
-        PartyName: res.data.order.PartyName,
+        SpecimenUserName: res.data.order.SpecimenUserName,
         orderDetails: res.data.orderDetails.length ? res.data.orderDetails : [],
         UserID: res.data.order.UserID,
       });
@@ -39,6 +49,23 @@ const page = ({ params }) => {
       getData(params.id);
     }
   }, [params]);
+
+  const renderApprovalSection = (label, comments, by, date) => (
+    <div className="mb-3">
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">Date:</h1>
+        <h1>{date || 'N/A'}</h1>
+      </div>
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">{label} By:</h1>
+        <h1>{by || 'N/A'}</h1>
+      </div>
+      <div className="flex items-center gap-2">
+        <h1 className="text-lg">{label} Comments:</h1>
+        <h1>{comments || 'N/A'}</h1>
+      </div>
+    </div>
+  );
 
   const router = useRouter();
 
@@ -174,7 +201,7 @@ const page = ({ params }) => {
                             key={item.SL}
                           >
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                              {item.FinancialYearID}
+                              {item.FinancialYear}
                             </td>
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                               {item.ProductName}
@@ -183,11 +210,11 @@ const page = ({ params }) => {
                               {item.Quantity}
                             </td>
                             <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                              {item.Price}
+                              {formatAmountWithCommas(Number(item.Price))}
                             </td>
 
                             <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                              {Number(item.Price) * Number(item.Quantity)}
+                              {formatAmountWithCommas(Number(item.Price) * Number(item.Quantity))}
                             </td>
                           </tr>
                         ))}
@@ -199,6 +226,69 @@ const page = ({ params }) => {
             </div>
           )}
         </div>
+
+        {viewableData.data && <div className="flex justify-center mt-5">
+        <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
+          {viewableData.data.approvals.CanclledComments ? (
+            <div className="mt-4">
+              <h1 className="text-lg font-semibold">Cancellation Details</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Date:</h1>
+                <h1>{viewableData.data.approvals.CancelledDate}</h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Cancelled By:</h1>
+                <h1>{viewableData.data.approvals.CancelledBy}</h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Comments:</h1>
+                <h1>{viewableData.data.approvals.CanclledComments || 'N/A'}</h1>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h1 className="text-center text-lg font-semibold mb-3">
+                Approval Details
+              </h1>
+              {viewableData.data.approvals.CheckedComments &&
+                renderApprovalSection(
+                  'Checked',
+                  viewableData.data.approvals.CheckedComments,
+                  viewableData.data.approvals.CheckedBy,
+                  convertDateFormat(viewableData.data.approvals.CheckedDate.split(' ')[0])
+                )}
+              {viewableData.data.approvals.AuthComments &&
+                renderApprovalSection(
+                  'Authorized',
+                  viewableData.data.approvals.AuthComments,
+                  viewableData.data.approvals.AuthBy,
+                  convertDateFormat(viewableData.data.approvals.AuthDate.split(' ')[0])
+                )}
+              {viewableData.data.approvals.RejectComments &&
+                renderApprovalSection(
+                  'Rejected',
+                  viewableData.data.approvals.RejectComments,
+                  viewableData.data.approvals.RejectBy,
+                  convertDateFormat(viewableData.data.approvals.RejectDate.split(' ')[0])
+                )}
+              {viewableData.data.approvals.AppComments &&
+                renderApprovalSection(
+                  'Approved',
+                  viewableData.data.approvals.AppComments,
+                  viewableData.data.approvals.AppBy,
+                  convertDateFormat(viewableData.data.approvals.AppDate.split(' ')[0])
+                )}
+              {!viewableData.data.approvals.CheckedComments &&
+                !viewableData.data.approvals.AuthComments &&
+                !viewableData.data.approvals.AppComments && (
+                  <div className="text-center">
+                    No Approval Details Available
+                  </div>
+                )}
+            </>
+          )}
+        </div>
+      </div>}
 
         <div>
           <label htmlFor="AppComments" className="block text-sm font-bold mb-1">
