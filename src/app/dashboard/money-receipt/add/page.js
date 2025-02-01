@@ -97,7 +97,7 @@ const page = () => {
     }
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_moneyreceipt',
-      formData
+      dataWillbeSubmitted
     );
     router.push('/dashboard/money-receipt');
   };

@@ -95,7 +95,7 @@ const page = ({ params }) => {
                 <h1>{state.data.Approvals.CancelledDate}</h1>
               </div>
               <div className="flex items-center gap-2">
-                <h1 className="text-lg">Comments:</h1>
+                <h1 className="text-lg">Status:</h1>
                 <h1>{state.data.Approvals.CanclledComments || 'N/A'}</h1>
               </div>
             </div>
