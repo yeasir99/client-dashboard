@@ -17,6 +17,12 @@ const page = ({ params }) => {
     PaymentMethodDetailsID: '',
     ReceivedByUserID: 501,
   });
+  const [remarks, setRemarks] = useState("")
+  const [chqDetails, setChqDetails] = useState({
+    AccName: '',
+    AccNumber: '',
+    ChequeNumber: ''
+  })
 
   const getPreviousData = async id => {
     const res = await axios.get(
@@ -33,6 +39,12 @@ const page = ({ params }) => {
       PaymentMethodDetailsID: res.data.receipt.PaymentMethodDetailsID,
       ReceivedByUserID: res.data.receipt.ReceivedByUserID,
     });
+    setRemarks(res.data.receipt.Remarks ? res.data.receipt.Remarks : "")
+    setChqDetails({
+      AccName: res.data.receipt.AccName ? res.data.receipt.AccName : "",
+      AccNumber: res.data.receipt.AccNumber ? res.data.receipt.AccNumber : "",
+      ChequeNumber: res.data.receipt.ChequeNumber ? res.data.receipt.ChequeNumber : "",
+    })
   };
 
   const [methodDetail, setMethodInDetails] = useState([]);
@@ -87,12 +99,21 @@ const page = ({ params }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const res = await axios.put(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_moneyreceipt&MRID=${params.id}`,
-      formData
-    );
-    console.log(res);
-    router.push('/dashboard/money-receipt');
+    const dataWillbeSubmitted = {...formData}
+    if(formData.PaymentMethodID == 4){
+      dataWillbeSubmitted.AccName = chqDetails.AccName
+      dataWillbeSubmitted.AccNumber = chqDetails.AccNumber
+      dataWillbeSubmitted.ChequeNumber = chqDetails.ChequeNumber
+    }
+    if(formData.PaymentMethodID == 1 && formData.PaymentMethodDetailsID == 5){
+      dataWillbeSubmitted.Remarks = remarks
+    }
+    console.log(dataWillbeSubmitted)
+    // const res = await axios.put(
+    //   `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_moneyreceipt&MRID=${params.id}`,
+    //   dataWillbeSubmitted
+    // );
+    // router.push('/dashboard/money-receipt');
   };
 
   return (
@@ -247,6 +268,67 @@ const page = ({ params }) => {
                 ))}
             </select>
           </div>
+          {formData.PaymentMethodID == 1 && formData.PaymentMethodDetailsID == 5 && <>
+            <label className="capitalize flex font-semibold text-md py-1">
+              Remarks:
+            </label>
+            <input
+            type="text"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm capitalize"
+            value={remarks}
+            onChange={event => setRemarks(event.target.value)}
+            required
+          />
+          </>}
+          {formData.PaymentMethodID == 4 && <>
+            <div className="flex gap-2">
+              <div>
+              <label className="capitalize flex font-semibold text-md py-1">
+              Account Name:
+            </label>
+            <input
+            type="text"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm capitalize"
+            value={chqDetails.AccName}
+            onChange={event => setChqDetails(prevData =>({
+              ...prevData,
+              AccName: event.target.value
+            }))}
+            required
+          />
+              </div>
+              <div>
+              <label className="capitalize flex font-semibold text-md py-1">
+              Account Number:
+            </label>
+            <input
+            type="text"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm capitalize"
+            value={chqDetails.AccNumber}
+            onChange={event => setChqDetails(prevData =>({
+              ...prevData,
+              AccNumber: event.target.value
+            }))}
+            required
+          />
+              </div>
+              <div>
+              <label className="capitalize flex font-semibold text-md py-1">
+              Cheque Number:
+            </label>
+            <input
+            type="text"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm capitalize"
+            value={chqDetails.ChequeNumber}
+            onChange={event => setChqDetails(prevData =>({
+              ...prevData,
+              ChequeNumber: event.target.value
+            }))}
+            required
+          />
+              </div>
+            </div>
+          </>}
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">
               Update Money Receipt
