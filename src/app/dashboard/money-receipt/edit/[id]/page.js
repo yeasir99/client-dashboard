@@ -108,12 +108,11 @@ const page = ({ params }) => {
     if(formData.PaymentMethodID == 1 && formData.PaymentMethodDetailsID == 5){
       dataWillbeSubmitted.Remarks = remarks
     }
-    console.log(dataWillbeSubmitted)
-    // const res = await axios.put(
-    //   `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_moneyreceipt&MRID=${params.id}`,
-    //   dataWillbeSubmitted
-    // );
-    // router.push('/dashboard/money-receipt');
+    const res = await axios.put(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=update_moneyreceipt&MRID=${params.id}`,
+      dataWillbeSubmitted
+    );
+    router.push('/dashboard/money-receipt');
   };
 
   return (
