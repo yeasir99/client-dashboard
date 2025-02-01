@@ -31,7 +31,7 @@ const Authorized = ({viewableData}) => {
     const handleReject = async () =>{
         const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_CancelledBDExpReq',{
             BDExpReqID: viewableData.data.BDExpReq.BDExpReqID,
-            RejectComments: formData.CheckedComments,
+            RejectComments: formData.AuthComments,
             UserID: 501
         })
         router.push('/dashboard/expense-approval/')
@@ -39,9 +39,7 @@ const Authorized = ({viewableData}) => {
     const handleChecked = async () =>{
         const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetailsBDExpReq&BDExpReqID=${viewableData.data.BDExpReq.BDExpReqID}`,{
             BDExpReqID: viewableData.data.BDExpReq.BDExpReqID,
-            CheckedComments: null,
             AuthComments: formData.AuthComments,
-            AppComments: null,
             UserID: 501
         })
         router.push('/dashboard/expense-approval/')

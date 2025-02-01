@@ -38,8 +38,6 @@ const router = useRouter()
     const handleChecked = async () =>{
         const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetailsBDExpReq&BDExpReqID=${viewableData.data.BDExpReq.BDExpReqID}`,{
             BDExpReqID: viewableData.data.BDExpReq.BDExpReqID,
-            CheckedComments: null,
-            AuthComments: null,
             AppComments: formData.ApproveComment,
             UserID: 501
         })
@@ -182,6 +180,70 @@ const router = useRouter()
         </div>
       </div>
     </div>
+
+    <div className="flex justify-center mt-5">
+        <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
+          {viewableData.data.BDExpReqApprovals.CanclledComments ? (
+            <div className="mt-4">
+              <h1 className="text-lg font-semibold">Cancellation Details</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Date:</h1>
+                <h1>{convertDateFormat(viewableData.data.BDExpReqApprovals.CancelledDate.split(' ')[0])}</h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Cancelled By:</h1>
+                <h1>{viewableData.data.BDExpReqApprovals.CancelledBy}</h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Comments:</h1>
+                <h1>{viewableData.data.BDExpReqApprovals.CanclledComments || 'N/A'}</h1>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h1 className="text-center text-lg font-semibold mb-3">
+                Approval Details
+              </h1>
+              {viewableData.data.BDExpReqApprovals.CheckedComments &&
+                renderApprovalSection(
+                  'Checked',
+                  viewableData.data.BDExpReqApprovals.CheckedComments,
+                  viewableData.data.BDExpReqApprovals.CheckedBy,
+                  convertDateFormat(viewableData.data.BDExpReqApprovals.CheckedDate.split(' ')[0])
+                )}
+              {viewableData.data.BDExpReqApprovals.AuthComments &&
+                renderApprovalSection(
+                  'Authorized',
+                  viewableData.data.BDExpReqApprovals.AuthComments,
+                  viewableData.data.BDExpReqApprovals.AuthBy,
+                  convertDateFormat(viewableData.data.BDExpReqApprovals.AuthDate.split(' ')[0])
+                )}
+              {viewableData.data.BDExpReqApprovals.RejectComments &&
+                renderApprovalSection(
+                  'Rejected',
+                  viewableData.data.BDExpReqApprovals.RejectComments,
+                  viewableData.data.BDExpReqApprovals.RejectBy,
+                  convertDateFormat(viewableData.data.BDExpReqApprovals.RejectDate.split(' ')[0])
+                )}
+              {viewableData.data.BDExpReqApprovals.AppComments &&
+                renderApprovalSection(
+                  'Approved',
+                  viewableData.data.BDExpReqApprovals.AppComments,
+                  viewableData.data.BDExpReqApprovals.AppBy,
+                  convertDateFormat(viewableData.data.BDExpReqApprovals.AppDate.split(' ')[0])
+                )}
+              {!viewableData.data.BDExpReqApprovals.CheckedComments &&
+                !viewableData.data.BDExpReqApprovals.AuthComments &&
+                !viewableData.data.BDExpReqApprovals.AppComments && (
+                  <div className="text-center">
+                    No Approval Details Available
+                  </div>
+                )}
+            </>
+          )}
+        </div>
+      </div>
+
     <div className="py-6">
 
         <label

@@ -40,8 +40,6 @@ const Checked = ({viewableData}) => {
         const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalDetailsBDExpReq&BDExpReqID=${viewableData.data.BDExpReq.BDExpReqID}`,{
             BDExpReqID: viewableData.data.BDExpReq.BDExpReqID,
             CheckedComments: formData.CheckedComments,
-            AuthComments: null,
-            AppComments: null,
             UserID: 501
         })
         router.push('/dashboard/expense-approval/')
