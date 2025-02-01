@@ -1,6 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const page = ({ params }) => {
   const [state, setState] = useState({
@@ -34,14 +36,14 @@ const page = ({ params }) => {
     <div className="mb-3">
       <div className="flex items-center gap-2">
         <h1 className="text-lg">Date:</h1>
-        <h1>{date || 'N/A'}</h1>
+        <h1>{convertDateFormat(date.split(' ')[0]) || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
         <h1 className="text-lg">{label} By:</h1>
         <h1>{by || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
-        <h1 className="text-lg">{label} Comments:</h1>
+        <h1 className="text-lg">{label} Status:</h1>
         <h1>{comments || 'N/A'}</h1>
       </div>
     </div>
@@ -52,16 +54,16 @@ const page = ({ params }) => {
       <div>
         <div className="max-w-xl bg-gray-200 mx-auto rounded-md p-3 my-5">
           <h1 className="text-center text-xl font-semibold py-4">
-            Money Receipt Details
+            Money Receipt
           </h1>
-          <h1>Date: {state.data.receipt.MRDate}</h1>
-          <h1>Receipt Number: {state.data.receipt.MRNo}</h1>
+          <h1>Date: {convertDateFormat(state.data.receipt.MRDate)}</h1>
+          <h1>Money Receipt No: {state.data.receipt.MRNo}</h1>
           <h1>Party Name: {state.data.receipt.PartyName}</h1>
-          <h1>Amount Received: {state.data.receipt.AmountReceived}</h1>
+          <h1>Amount Received: {formatAmountWithCommas(Number(state.data.receipt.AmountReceived))}</h1>
           <h1>Amount In Word: {state.data.receipt.InWord}</h1>
-          <h1>Payment Method: {state.data.receipt.PaymentMethod}</h1>
+          <h1>Received Method: {state.data.receipt.PaymentMethod}</h1>
           <h1>
-            Payment Method Details: {state.data.receipt.PaymentMethodDetails}
+          Bank Name/ Purpose: {state.data.receipt.PaymentMethodDetails}
           </h1>
           {state.data.receipt.PaymentMethodDetailsAcc && (
             <h1>
@@ -92,7 +94,7 @@ const page = ({ params }) => {
               </div>
               <div className="flex items-center gap-2">
                 <h1 className="text-lg">Date:</h1>
-                <h1>{state.data.Approvals.CancelledDate}</h1>
+                <h1>{convertDateFormat(state.data.Approvals.CancelledDate)}</h1>
               </div>
               <div className="flex items-center gap-2">
                 <h1 className="text-lg">Status:</h1>

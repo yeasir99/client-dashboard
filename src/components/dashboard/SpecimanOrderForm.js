@@ -53,7 +53,7 @@ const SpecimanOrderForm = ({ session }) => {
 
   const getOrderId = async () => {
     const res = await axios.post(
-      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=generate_new_salesorder_number'
+      'https://kblsf.site/DLogicKBL/salesforce_api.php?action=generate_new_SpecimenOrder_number'
     );
     setFormData({
       ...formData,
@@ -139,7 +139,7 @@ const SpecimanOrderForm = ({ session }) => {
             htmlFor="SalesOrderNo"
             className="block text-sm font-bold mb-1"
           >
-            Sale Order No:
+            Speciman Order No:
           </label>
           <input
             type="text"
