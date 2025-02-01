@@ -1,17 +1,21 @@
+"use client"
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
+
 const ExpenseSingleView = ({ viewableData }) => {
   const renderApprovalSection = (label, comments, by, date) => (
     <div className="mb-3">
       <div className="flex items-center gap-2">
-        <h1 className="text-lg">{label} Comments:</h1>
-        <h1>{comments || 'N/A'}</h1>
+        <h1 className="text-lg">Date:</h1>
+        <h1>{date || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
         <h1 className="text-lg">{label} By:</h1>
         <h1>{by || 'N/A'}</h1>
       </div>
       <div className="flex items-center gap-2">
-        <h1 className="text-lg">Date:</h1>
-        <h1>{date || 'N/A'}</h1>
+        <h1 className="text-lg">{label} Status:</h1>
+        <h1>{comments || 'N/A'}</h1>
       </div>
     </div>
   );
@@ -24,64 +28,53 @@ const ExpenseSingleView = ({ viewableData }) => {
     <>
       <div>
         <div className="flex justify-center">
-          <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
-            <h1 className="text-center text-xl font-semibold mb-3">
-              Expense Information
-            </h1>
-            {viewableData.data === null ? (
-              <div className="text-center text-xl font-semibold py-5">
-                No Data to Display
-              </div>
-            ) : (
-              <>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg">ID:</h1>
-                  <h1>{viewableData.data.BDExpReq.BDExpReqID}</h1>
-                </div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg">Exp No:</h1>
-                  <h1>{viewableData.data.BDExpReq.BDExpReqNo}</h1>
-                </div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg">Date:</h1>
-                  <h1>{viewableData.data.BDExpReq.BDExpReqDate}</h1>
-                </div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg">Party Name:</h1>
-                  <h1>{viewableData.data.BDExpReq.InstitutionName}</h1>
-                </div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg">Total Amount:</h1>
-                  <h1>{viewableData.data.BDExpReq.TotalAmount}</h1>
-                </div>
-              </>
-            )}
-          </div>
+      <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
+        <h1 className="text-center text-xl font-semibold mb-3">
+        Business Development Requisition Approval
+        </h1>
+        {viewableData.data === null ? <div className="text-center text-xl font-semibold py-5">No Data to Display</div> : <>
+          <div className="flex items-center gap-2">
+          <h1 className="text-lg">Date:</h1>
+          <h1>{convertDateFormat(viewableData.data.BDExpReq.BDExpReqDate)}</h1>
         </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">BD Exp Req No:</h1>
+          <h1>{viewableData.data.BDExpReq.BDExpReqNo}</h1>
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Institute Type:</h1>
+          <h1>{viewableData.data.BDExpReq.InstitutionTypeName}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Institute Name:</h1>
+          <h1>{viewableData.data.BDExpReq.InstitutionName}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Total Amount:</h1>
+          <h1>{formatAmountWithCommas(Number(viewableData.data.BDExpReq.TotalAmount))}</h1>
+        </div>
+        </>}
       </div>
+    </div>
+    </div>
 
-      <div className="flex justify-center mt-5">
+    <div className="flex justify-center mt-5">
         <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
-          <h1 className="text-center text-xl font-semibold mb-3">
-            Comment details
-          </h1>
           {viewableData.data.BDExpReqApprovals.CanclledComments ? (
             <div className="mt-4">
               <h1 className="text-lg font-semibold">Cancellation Details</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Date:</h1>
+                <h1>{convertDateFormat(viewableData.data.BDExpReqApprovals.CancelledDate.split(' ')[0])}</h1>
+              </div>
               <div className="flex items-center gap-2">
                 <h1 className="text-lg">Cancelled By:</h1>
                 <h1>{viewableData.data.BDExpReqApprovals.CancelledBy}</h1>
               </div>
               <div className="flex items-center gap-2">
-                <h1 className="text-lg">Date:</h1>
-                <h1>{viewableData.data.BDExpReqApprovals.CancelledDate}</h1>
-              </div>
-              <div className="flex items-center gap-2">
                 <h1 className="text-lg">Comments:</h1>
-                <h1>
-                  {viewableData.data.BDExpReqApprovals.CanclledComments ||
-                    'N/A'}
-                </h1>
+                <h1>{viewableData.data.BDExpReqApprovals.CanclledComments || 'N/A'}</h1>
               </div>
             </div>
           ) : (
@@ -94,28 +87,28 @@ const ExpenseSingleView = ({ viewableData }) => {
                   'Checked',
                   viewableData.data.BDExpReqApprovals.CheckedComments,
                   viewableData.data.BDExpReqApprovals.CheckedBy,
-                  viewableData.data.BDExpReqApprovals.CheckedDate
+                  convertDateFormat(viewableData.data.BDExpReqApprovals.CheckedDate.split(' ')[0])
                 )}
               {viewableData.data.BDExpReqApprovals.AuthComments &&
                 renderApprovalSection(
                   'Authorized',
                   viewableData.data.BDExpReqApprovals.AuthComments,
                   viewableData.data.BDExpReqApprovals.AuthBy,
-                  viewableData.data.BDExpReqApprovals.AuthDate
-                )}
-              {viewableData.data.BDExpReqApprovals.AppComments &&
-                renderApprovalSection(
-                  'Approved',
-                  viewableData.data.BDExpReqApprovals.AppComments,
-                  viewableData.data.BDExpReqApprovals.AppBy,
-                  viewableData.data.BDExpReqApprovals.AppDate
+                  convertDateFormat(viewableData.data.BDExpReqApprovals.AuthDate.split(' ')[0])
                 )}
               {viewableData.data.BDExpReqApprovals.RejectComments &&
                 renderApprovalSection(
                   'Rejected',
                   viewableData.data.BDExpReqApprovals.RejectComments,
                   viewableData.data.BDExpReqApprovals.RejectBy,
-                  viewableData.data.BDExpReqApprovals.RejectDate
+                  convertDateFormat(viewableData.data.BDExpReqApprovals.RejectDate.split(' ')[0])
+                )}
+              {viewableData.data.BDExpReqApprovals.AppComments &&
+                renderApprovalSection(
+                  'Approved',
+                  viewableData.data.BDExpReqApprovals.AppComments,
+                  viewableData.data.BDExpReqApprovals.AppBy,
+                  convertDateFormat(viewableData.data.BDExpReqApprovals.AppDate.split(' ')[0])
                 )}
               {!viewableData.data.BDExpReqApprovals.CheckedComments &&
                 !viewableData.data.BDExpReqApprovals.AuthComments &&
@@ -159,7 +152,7 @@ const ExpenseSingleView = ({ viewableData }) => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Number
+                      Mobile
                     </th>
                     <th
                       scope="col"
