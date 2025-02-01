@@ -1,15 +1,36 @@
 import {useState} from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
+
 const Approved = ({viewableData}) => {
     const [formData, setFormData] = useState({
         ApproveComment: ''
     })
+
+    const renderApprovalSection = (label, comments, by, date) => (
+      <div className="mb-3">
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">Date:</h1>
+          <h1>{date || 'N/A'}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">{label} By:</h1>
+          <h1>{by || 'N/A'}</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg">{label} Comments:</h1>
+          <h1>{comments || 'N/A'}</h1>
+        </div>
+      </div>
+    );
+
 const router = useRouter()
     const handleReject = async () =>{
         const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_sndApprovalRejected_CancelledBDExpReq',{
             BDExpReqID: viewableData.data.BDExpReq.BDExpReqID,
-            RejectComments: formData.CheckedComments,
+            RejectComments: formData.ApproveComment,
             UserID: 501
         })
         router.push('/dashboard/expense-approval/')
@@ -33,28 +54,29 @@ const router = useRouter()
         <div className="flex justify-center">
       <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
         <h1 className="text-center text-xl font-semibold mb-3">
-          Expense Information
+        Business Development Requisition Approval
         </h1>
         {viewableData.data === null ? <div className="text-center text-xl font-semibold py-5">No Data to Display</div> : <>
-            <div className="flex items-center gap-2">
-          <h1 className="text-lg">ID:</h1>
-          <h1>{viewableData.data.BDExpReq.BDExpReqID}</h1>
+          <div className="flex items-center gap-2">
+          <h1 className="text-lg">Date:</h1>
+          <h1>{convertDateFormat(viewableData.data.BDExpReq.BDExpReqDate)}</h1>
         </div>
         <div className="flex items-center gap-2">
-          <h1 className="text-lg">Exp No:</h1>
+          <h1 className="text-lg">BD Exp Req No:</h1>
           <h1>{viewableData.data.BDExpReq.BDExpReqNo}</h1>
         </div>
+        
         <div className="flex items-center gap-2">
-          <h1 className="text-lg">Date:</h1>
-          <h1>{viewableData.data.BDExpReq.BDExpReqDate}</h1>
+          <h1 className="text-lg">Institute Type:</h1>
+          <h1>{viewableData.data.BDExpReq.InstitutionTypeName}</h1>
         </div>
         <div className="flex items-center gap-2">
-          <h1 className="text-lg">Party Name:</h1>
+          <h1 className="text-lg">Institute Name:</h1>
           <h1>{viewableData.data.BDExpReq.InstitutionName}</h1>
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg">Total Amount:</h1>
-          <h1>{viewableData.data.BDExpReq.TotalAmount}</h1>
+          <h1>{formatAmountWithCommas(Number(viewableData.data.BDExpReq.TotalAmount))}</h1>
         </div>
         </>}
       </div>
@@ -145,7 +167,7 @@ const router = useRouter()
                         {item.StudentsCount}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                        {item.DonationAmount}
+                        {formatAmountWithCommas(Number(item.DonationAmount))}
                       </td>
                     </tr>
                   ))

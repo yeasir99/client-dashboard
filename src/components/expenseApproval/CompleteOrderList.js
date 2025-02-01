@@ -1,6 +1,8 @@
 'use client'
 import Link from "next/link"
 import useGetData from "@/utils/useGetData"
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const CompleteOrderList = () => {
 const completedData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_BDExpReqCompleteRejectCancelled&UserID=501')
@@ -10,7 +12,7 @@ const completedData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.ph
     }
   return (
     <>
-        <h1 className="text-2xl capitalize mb-2">Completed / Rejected list</h1>
+        <h1 className="text-2xl capitalize mb-2">Business Development Requisition Approval</h1>
         <div className="flex flex-col">
         <div>
           <div className="inline-block max-w-full w-full pt-5">

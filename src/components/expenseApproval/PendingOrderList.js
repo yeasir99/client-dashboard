@@ -1,6 +1,8 @@
 'use client'
 import Link from 'next/link';
 import useGetData from '@/utils/useGetData';
+import convertDateFormat from '@/utils/convertDateFormat';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 
 const PendingOrderList = () => {
     const pendingData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_BDExpReqApproval&UserID=501')
@@ -11,7 +13,7 @@ const PendingOrderList = () => {
   }
   return (
     <>
-        <h1 className="text-2xl capitalize mb-2">Pending list</h1>
+        <h1 className="text-2xl capitalize mb-2">Business Development Requisition Approval Pending List</h1>
     <div className="flex flex-col">
       <div>
         <div className="inline-block max-w-full w-full pt-5">
@@ -29,7 +31,7 @@ const PendingOrderList = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Exp. No.
+                    BD Exp Req No
                   </th>
                   <th
                     scope="col"
@@ -74,13 +76,13 @@ const PendingOrderList = () => {
                         {item.BDExpReqNo}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.BDExpReqDate}
+                        {convertDateFormat(item.BDExpReqDate)}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.InstituteName}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.TotalAmount}
+                        {formatAmountWithCommas(Number(item.TotalAmount))}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.Status}
