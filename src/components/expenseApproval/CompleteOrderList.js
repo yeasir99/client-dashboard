@@ -30,7 +30,7 @@ const completedData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.ph
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Exp. No.
+                    BD Exp Req No.
                   </th>
                   <th
                     scope="col"
@@ -72,13 +72,13 @@ const completedData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.ph
                     </td>
 
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.BDExpReqDate}
+                      {convertDateFormat(item.BDExpReqDate)}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                      {item.InstituteName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.TotalAmount}
+                      {formatAmountWithCommas(Number(item.TotalAmount))}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                       {item.Status}
