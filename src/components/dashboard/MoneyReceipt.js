@@ -2,6 +2,9 @@
 import useGetData from '@/utils/useGetData';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import Link from 'next/link';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
+import convertDateFormat from '@/utils/convertDateFormat';
+
 const MoneyReceipt = () => {
   const { status, data } = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_moneyreceipts'
@@ -23,7 +26,7 @@ const MoneyReceipt = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Receipt Number
+                    Money Receipt No.
                   </th>
                   <th
                     scope="col"
@@ -43,6 +46,12 @@ const MoneyReceipt = () => {
                   >
                     Payment Method
                   </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Bank Name/Purpose
+                  </th>
                   <th scope="col" className="px-6 py-4">
                     Action
                   </th>
@@ -59,13 +68,16 @@ const MoneyReceipt = () => {
                         {item.MRNo}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.MRDate}
+                        {convertDateFormat(item.MRDate)}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.AmountReceived}
+                        {formatAmountWithCommas(Number(item.AmountReceived))}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.PaymentMethod}
+                      </td>
+                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                        {item.PaymentMethodDetails}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                         <Link

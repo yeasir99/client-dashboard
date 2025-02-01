@@ -19,6 +19,13 @@ const page = () => {
   });
   const [methodDetail, setMethodInDetails] = useState([]);
 
+  const [remarks, setRemarks] = useState("")
+  const [chqDetails, setChqDetails] = useState({
+    AccName: '',
+    AccNumber: '',
+    ChequeNumber: ''
+  })
+
   useEffect(() => {
     if (formData.AmountReceived) {
       const receiveText = numberToWords(Number(formData.AmountReceived));
@@ -79,18 +86,26 @@ const page = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    const dataWillbeSubmitted = {...formData}
+    if(formData.PaymentMethodID == 4){
+      dataWillbeSubmitted.AccName = chqDetails.AccName
+      dataWillbeSubmitted.AccNumber = chqDetails.AccNumber
+      dataWillbeSubmitted.ChequeNumber = chqDetails.ChequeNumber
+    }
+    if(formData.PaymentMethodID == 1 && formData.PaymentMethodDetailsID == 5){
+      dataWillbeSubmitted.Remarks = remarks
+    }
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_moneyreceipt',
       formData
     );
-    console.log(res);
     router.push('/dashboard/money-receipt');
   };
 
   return (
     <>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl capitalize mb-3">add money receipts</h1>
+        <h1 className="text-2xl capitalize mb-3">add money receipt</h1>
         <form>
           <input
             name="search"
@@ -102,9 +117,9 @@ const page = () => {
       </div>
       <div className="max-w-2xl bg-gray-200 rounded-md px-4 py-4">
         <form onSubmit={handleSubmit}>
-          <label htmlFor="MRNo" className="block text-sm font-bold mb-1">
-            Receipt Number:
-          </label>
+          <label htmlFor="MRNo" className="capitalize flex font-semibold text-md py-1">
+          Receipt Number:
+            </label>
           <input
             type="text"
             id="MRNo"
@@ -156,7 +171,7 @@ const page = () => {
           </div>
           <label
             htmlFor="AmountReceived"
-            className="block text-sm font-bold mb-1"
+            className="capitalize flex font-semibold text-md py-1"
           >
             Amount Received:
           </label>
@@ -174,7 +189,7 @@ const page = () => {
           />
           <label
             htmlFor="InWord"
-            className="block text-sm font-bold mb-1 capitalize"
+            className="capitalize flex font-semibold text-md py-1"
           >
             Amount In word:
           </label>
@@ -241,6 +256,70 @@ const page = () => {
                   </option>
                 ))}
             </select>
+          </div>
+          <div>
+          {formData.PaymentMethodID == 1 && formData.PaymentMethodDetailsID == 5 && <>
+            <label className="capitalize flex font-semibold text-md py-1">
+              Remarks:
+            </label>
+            <input
+            type="text"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm capitalize"
+            value={remarks}
+            onChange={event => setRemarks(event.target.value)}
+            required
+          />
+          </>}
+          {formData.PaymentMethodID == 4 && <>
+            <div className="flex gap-2">
+              <div>
+              <label className="capitalize flex font-semibold text-md py-1">
+              Account Name:
+            </label>
+            <input
+            type="text"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm capitalize"
+            value={chqDetails.AccName}
+            onChange={event => setChqDetails(prevData =>({
+              ...prevData,
+              AccName: event.target.value
+            }))}
+            required
+          />
+              </div>
+              <div>
+              <label className="capitalize flex font-semibold text-md py-1">
+              Account Number:
+            </label>
+            <input
+            type="text"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm capitalize"
+            value={chqDetails.AccNumber}
+            onChange={event => setChqDetails(prevData =>({
+              ...prevData,
+              AccNumber: event.target.value
+            }))}
+            required
+          />
+              </div>
+              <div>
+              <label className="capitalize flex font-semibold text-md py-1">
+              Cheque Number:
+            </label>
+            <input
+            type="text"
+            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm capitalize"
+            value={chqDetails.ChequeNumber}
+            onChange={event => setChqDetails(prevData =>({
+              ...prevData,
+              ChequeNumber: event.target.value
+            }))}
+            required
+          />
+              </div>
+            </div>
+          </>}
+            
           </div>
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md">

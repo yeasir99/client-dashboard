@@ -73,7 +73,7 @@ const ExpenseSingleView = ({ viewableData }) => {
                 <h1>{viewableData.data.BDExpReqApprovals.CancelledBy}</h1>
               </div>
               <div className="flex items-center gap-2">
-                <h1 className="text-lg">Comments:</h1>
+                <h1 className="text-lg">Status:</h1>
                 <h1>{viewableData.data.BDExpReqApprovals.CanclledComments || 'N/A'}</h1>
               </div>
             </div>
