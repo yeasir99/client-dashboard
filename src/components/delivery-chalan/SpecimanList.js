@@ -2,6 +2,7 @@ import React from 'react';
 import useGetData from '@/utils/useGetData';
 import Link from 'next/link';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
+import convertDateFormat from '@/utils/convertDateFormat';
 
 const SpecimanList = () => {
   const specOrderList = useGetData(
@@ -68,7 +69,7 @@ const SpecimanList = () => {
                         {item.ChallanNo}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.ChallanDate}
+                        {convertDateFormat(item.ChallanDate)}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.EmployeeName}
@@ -79,17 +80,9 @@ const SpecimanList = () => {
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                         <span className="bg-cyan-500 p-1 inline-block rounded-md">
                           <Link
-                            href={`/dashboard/sales-order/view/sales/${item.SalesOrderID}`}
+                            href={`/dashboard/delivery-challan/view/speciman/${item.ChallanID}`}
                           >
                             <FaEye className="text-white text-xl" />
-                          </Link>
-                        </span>{' '}
-                        |
-                        <span className="bg-amber-600 p-1 inline-block rounded-md">
-                          <Link
-                            href={`/dashboard/sales-order/edit/sales/${item.SalesOrderID}`}
-                          >
-                            <FaRegEdit className="text-white text-xl" />
                           </Link>
                         </span>{' '}
                       </td>

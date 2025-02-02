@@ -44,7 +44,7 @@ const MoneyReceipt = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Payment Method
+                    Received Method
                   </th>
                   <th
                     scope="col"

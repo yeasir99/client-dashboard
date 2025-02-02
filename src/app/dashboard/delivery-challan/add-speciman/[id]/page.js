@@ -1,9 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import convertDateFormat from '@/utils/convertDateFormat';
+import axios from 'axios';
 import getCurrentDate from '@/utils/getCurrentDate';
+import convertDateFormat from '@/utils/convertDateFormat';
 
 const page = ({params}) => {
   const [formData, setFormData] = useState({
@@ -12,6 +12,7 @@ const page = ({params}) => {
     SalesOrderNo: '',
     SalesOrderID: '',
     UserID: '',
+    SpecimenUserName: '',
     Details: [],
   });
   const [orderDetails, setOrderDetails] = useState(null);
@@ -51,6 +52,7 @@ const page = ({params}) => {
         SalesOrderNo: orderDetails.order.SalesOrderNo,
         SalesOrderID: orderDetails.order.SalesOrderID,
         UserID: orderDetails.order.UserID,
+        SpecimenUserName: orderDetails.order.SpecimenUserName,
         Details: orderDetails.orderDetails.map(item => ({
           SL: item.SL,
           FinancialYearID: item.FinancialYearID,
@@ -68,8 +70,8 @@ const page = ({params}) => {
 
   const router = useRouter();
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const handleSubmit = async e =>{
+    e.preventDefault()
     const dataWillbeSubmitted = {};
     dataWillbeSubmitted.ChallanNo = formData.ChallanNo;
     dataWillbeSubmitted.ChallanDate = formData.ChallanDate;
@@ -89,7 +91,7 @@ const page = ({params}) => {
       dataWillbeSubmitted
     );
     router.push('/dashboard/delivery-challan');
-  };
+  }
 
   return (
     <>
@@ -105,12 +107,11 @@ const page = ({params}) => {
         </form>
       </div>
       <div className="w-full bg-gray-200 rounded-md px-4 py-4">
-       
         <form onSubmit={handleSubmit}>
           <div>
             <label
               htmlFor="designation"
-              className="block text-sm font-bold mb-1"
+              className="capitalize flex font-semibold text-md py-1"
             >
               Challan No:
             </label>
@@ -124,12 +125,13 @@ const page = ({params}) => {
               <label className="capitalize flex font-semibold text-md py-1">
                 Challan Date:
               </label>
+
               <input
-                type="text"
-                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                value={convertDateFormat(formData.ChallanDate)}
-                readOnly
-              />
+              type="text"
+              className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+              value={convertDateFormat(formData.ChallanDate)}
+              readOnly
+            />
             </div>
 
             <div>
@@ -138,19 +140,17 @@ const page = ({params}) => {
               </label>
 
               <input
-                type="text"
-                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                value={formData.SalesOrderNo}
-                readOnly
-              />
+              type="text"
+              className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+              value={formData.SalesOrderNo}
+              readOnly
+            />
             </div>
-            <label className="capitalize flex font-semibold text-md py-1">
-              Party Name:
-            </label>
+            <label className="block text-sm font-bold mb-1">Speciman User Name:</label>
             <input
               type="text"
               className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-              value={(orderDetails && orderDetails.order.PartyName) || ''}
+              value={formData.SpecimenUserName}
               readOnly
             />
           </div>

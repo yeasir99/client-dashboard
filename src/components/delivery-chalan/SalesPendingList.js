@@ -1,7 +1,7 @@
 import React from 'react';
 import useGetData from '@/utils/useGetData';
 import Link from 'next/link';
-import { FaEye, FaRegEdit } from 'react-icons/fa';
+import convertDateFormat from '@/utils/convertDateFormat';
 
 const SalesPendingList = () => {
   const salesorderList = useGetData(
@@ -74,7 +74,7 @@ const SalesPendingList = () => {
                         {item.SalesOrderNo}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.OrderDate}
+                        {convertDateFormat(item.OrderDate)}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.partyname}
@@ -92,8 +92,7 @@ const SalesPendingList = () => {
                           >
                             <button className="rounded-md bg-black px-4 py-2 text-white">Add Challan</button>
                           </Link>
-                        </span>{' '}
-                    
+                        </span>
                       </td>
                     </tr>
                   ))}

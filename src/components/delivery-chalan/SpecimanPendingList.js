@@ -1,7 +1,7 @@
 import React from 'react';
 import useGetData from '@/utils/useGetData';
 import Link from 'next/link';
-import { FaEye, FaRegEdit } from 'react-icons/fa';
+import convertDateFormat from '@/utils/convertDateFormat';
 
 const SpecimanPendingList = () => {
   const specimanOrderList = useGetData(
@@ -40,7 +40,7 @@ const SpecimanPendingList = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Party Name
+                    Speciman User Name
                   </th>
                   <th
                     scope="col"
@@ -74,10 +74,10 @@ const SpecimanPendingList = () => {
                         {item.SalesOrderNo}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.OrderDate}
+                        {convertDateFormat(item.OrderDate)}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                        {item.partyname}
+                        {item.SpecimenUserName}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                         {item.Status}
@@ -86,21 +86,13 @@ const SpecimanPendingList = () => {
                         {item.challanstatusName}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
-                        <span className="bg-cyan-500 p-1 inline-block rounded-md">
+                      <span className="inline-block rounded-md">
                           <Link
-                            href={`/dashboard/sales-order/view/sales/${item.SalesOrderID}`}
+                            href={`/dashboard/delivery-challan/add-speciman/${item.SalesOrderID}`}
                           >
-                            <FaEye className="text-white text-xl" />
+                            <button className="rounded-md bg-black px-4 py-2 text-white">Add Challan</button>
                           </Link>
-                        </span>{' '}
-                        |
-                        <span className="bg-amber-600 p-1 inline-block rounded-md">
-                          <Link
-                            href={`/dashboard/sales-order/edit/sales/${item.SalesOrderID}`}
-                          >
-                            <FaRegEdit className="text-white text-xl" />
-                          </Link>
-                        </span>{' '}
+                        </span>
                       </td>
                     </tr>
                   ))}

@@ -12,7 +12,7 @@ const page = () => {
     <div>
       <div className="flex gap-8 items-center mb-5">
         <h1 className="text-2xl capitalize">
-          {`Delivery Challan ${current} List`}
+          {`Delivery Challan ${current}`}
         </h1>
         <div className="flex gap-4">
           <div
@@ -35,7 +35,7 @@ const page = () => {
               }`}
               htmlFor="sales"
             >
-              Sales
+              Sales Order
             </label>
           </div>
           <div
@@ -58,23 +58,13 @@ const page = () => {
               }`}
               htmlFor="speciman"
             >
-              Speciman
+              Speciman Order
             </label>
           </div>
         </div>
       </div>
-      <div className="flex justify-between items-center">
-        <Link
-          href={
-            current === 'sales'
-              ? '/dashboard/delivery-challan/add-sales'
-              : '/dashboard/delivery-challan/add-speciman'
-          }
-        >
-          <button className="capitalize bg-primary px-2 py-1 text-white rounded-md">
-            Add New Challan
-          </button>
-        </Link>
+      <div className="flex justify-end items-center">
+       
         <form>
           <input
             name="search"
@@ -87,22 +77,22 @@ const page = () => {
       {current === 'sales' ? (
         <div>
         <div>
-        <h1 className="text-xl capitalize text-center">Pending Sales List</h1>
+        <h1 className="text-xl capitalize text-center">Pending Sales Order List</h1>
           <SalesPendingList />
         </div>
           <div>
-            <h1 className="text-xl capitalize text-center">Sales List</h1>
+            <h1 className="text-xl capitalize text-center">Complete Challan List</h1>
             <SalesList />
           </div>
         </div>
       ) : (
         <div>
         <div>
-        <h1 className="text-xl capitalize text-center">Pending Sales List</h1>
+        <h1 className="text-xl capitalize text-center">Pending Speciman Order List</h1>
           <SpecimanPendingList />
         </div>
           <div>
-            <h1 className="text-xl capitalize text-center">Speciman List</h1>
+            <h1 className="text-xl capitalize text-center">Complete Challan List</h1>
             <SpecimanList />
           </div>
         </div>
