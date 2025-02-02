@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import convertDateFormat from '@/utils/convertDateFormat';
 
-const page = () => {
+const page = ({params}) => {
   const getCurrentDate = () => {
     const today = new Date();
     const day = String(today.getDate()).padStart(2, '0');
@@ -13,7 +13,6 @@ const page = () => {
     const year = String(today.getFullYear());
     return `${year}-${month}-${day}`;
   };
-  const [selectUser, setSelectUser] = useState(null);
   const [formData, setFormData] = useState({
     ChallanNo: '',
     ChallanDate: getCurrentDate(),
@@ -24,9 +23,6 @@ const page = () => {
   });
   const [orderDetails, setOrderDetails] = useState(null);
 
-  const pendingSales = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_salesordersChallan'
-  );
   const getChalanNumber = async () => {
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=generate_new_Challan_number'
@@ -46,10 +42,10 @@ const page = () => {
   };
 
   useEffect(() => {
-    if (selectUser) {
-      getOrderDetails(selectUser);
+    if (params.id) {
+      getOrderDetails(params.id);
     }
-  }, [selectUser]);
+  }, [params.id]);
 
   useEffect(() => {
     getChalanNumber();
@@ -116,97 +112,8 @@ const page = () => {
         </form>
       </div>
       <div className="w-full bg-gray-200 rounded-md px-4 py-4">
-        <h1 className="text-2xl capitalize mb-3">pending sales order</h1>
-        <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white overflow-x-scroll">
-          <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
-            <tr>
-              <th
-                scope="col"
-                className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-              >
-                SL
-              </th>
-              <th
-                scope="col"
-                className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-              >
-                Sale Order Number
-              </th>
-              <th
-                scope="col"
-                className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-              >
-                Order Date
-              </th>
-
-              <th
-                scope="col"
-                className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-              >
-                Party Name
-              </th>
-              <th
-                scope="col"
-                className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-              >
-                Staus
-              </th>
-              <th
-                scope="col"
-                className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-              >
-                Total Amount
-              </th>
-
-              <th scope="col" className="px-6 py-4">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {pendingSales.data.length &&
-              pendingSales.data.map(item => (
-                <tr
-                  className="border-b border-neutral-200 dark:border-white/10"
-                  key={item.SalesOrderID}
-                >
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                    {item.SalesOrderID}
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    {item.SalesOrderNo}
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    {convertDateFormat(item.OrderDate)}
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    {item.partyname}
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    {item.challanstatusName}
-                  </td>
-                  <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                    {item.TotalAmount}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                    <input
-                      type="checkbox"
-                      onChange={() => {
-                        if (selectUser === item.SalesOrderID) {
-                          setSelectUser(null);
-                        } else {
-                          setSelectUser(item.SalesOrderID);
-                        }
-                      }}
-                      checked={item.SalesOrderID === selectUser}
-                    />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+       
         <form onSubmit={handleSubmit}>
-          <h1 className="text-2xl capitalize mb-3">add delivery challan</h1>
           <div>
             <label
               htmlFor="designation"

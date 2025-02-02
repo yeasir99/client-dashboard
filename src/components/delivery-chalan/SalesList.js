@@ -8,6 +8,7 @@ const SalesList = () => {
   const salesOrderList = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_challansOrder'
   );
+  console.log(salesOrderList)
   if (salesOrderList.status === 'pending') {
     <div className="text-xl font-semibold text-center py-6">Loading...</div>;
   }

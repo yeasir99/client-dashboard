@@ -86,6 +86,10 @@ const page = () => {
       </div>
       {current === 'sales' ? (
         <div>
+        <div>
+        <h1 className="text-xl capitalize text-center">Pending Sales List</h1>
+          <SalesPendingList />
+        </div>
           <div>
             <h1 className="text-xl capitalize text-center">Sales List</h1>
             <SalesList />
@@ -93,6 +97,10 @@ const page = () => {
         </div>
       ) : (
         <div>
+        <div>
+        <h1 className="text-xl capitalize text-center">Pending Sales List</h1>
+          <SpecimanPendingList />
+        </div>
           <div>
             <h1 className="text-xl capitalize text-center">Speciman List</h1>
             <SpecimanList />
