@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
 import SalesList from '@/components/delivery-chalan/SalesList';
 import SpecimanList from '@/components/delivery-chalan/SpecimanList';
 import SalesPendingList from '@/components/delivery-chalan/SalesPendingList';
