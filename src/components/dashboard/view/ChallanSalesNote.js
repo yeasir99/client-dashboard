@@ -64,7 +64,7 @@ const ChallanSalesNote = ({id}) => {
                 <p>24 Puran Paltan, Dhaka-1000.</p>
                 <p>Phone : 088-02-9515301, 088-02-9515302.</p>
                 <h2 className="text-xl font-semibold underline mt-4">
-                  Challan
+                  Delivery Challan
                 </h2>
               </div>
     
@@ -96,6 +96,11 @@ const ChallanSalesNote = ({id}) => {
                   <p>
                     <span className="font-semibold">
                     Challan No: {receiptData.data.ChallanMaster.ChallanNo}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-semibold">
+                    Sales Order No: {receiptData.data.ChallanMaster.SalesOrderNo}
                     </span>
                   </p>
                 </div>

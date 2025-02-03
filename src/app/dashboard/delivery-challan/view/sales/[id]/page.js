@@ -43,7 +43,7 @@ const page = ({params}) => {
           <div className="flex justify-center">
             <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
               <h1 className="text-center text-xl font-semibold mb-3">
-               Challan
+               Delivery Challan
               </h1>
               <div className="flex items-center gap-2">
                 <h1 className="text-lg">Date:</h1>
@@ -52,6 +52,10 @@ const page = ({params}) => {
               <div className="flex items-center gap-2">
                 <h1 className="text-lg">Challan No:</h1>
                 <h1>{state.data.ChallanMaster.ChallanNo}</h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg">Sales Order No:</h1>
+                <h1>{state.data.ChallanMaster.SalesOrderNo}</h1>
               </div>
   
               <div className="flex items-center gap-2">

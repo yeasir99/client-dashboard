@@ -1,4 +1,120 @@
-const page = () => {
+"use client"
+import axios from 'axios';
+import {useState, useEffect} from 'react'
+import getCurrentDate from '@/utils/getCurrentDate';
+import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
+import useGetData from '@/utils/useGetData';
+import { v4 as uuidv4 } from 'uuid';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+
+const page = ({params}) => {
+  const [formData, setFormData] = useState({
+    InvoiceNo: '',
+    InvoiceDate: getCurrentDate(),
+    SalesOrderNo: '',
+    ChallanID: '',
+    ChallanNo: '',
+    TotalAmount: '',
+    UserID: '',
+    Details: [],
+    DetailsCost: [
+    {
+      id: uuidv4(),
+      ParticularsID: '',
+      Quantity: '',
+      UnitPrice: ''
+    }
+    ]
+  })
+
+  const {data: session} = useSession()
+
+  console.log(formData)
+
+  const [partyName, setPartyName] = useState('')
+
+  const costType = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_allparticulars')
+
+
+
+  const createInvoiceId = async ()=>{
+    const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=generate_new_invoice_number')
+    setFormData( prevData => ({
+      ...prevData,
+      InvoiceNo: res.data.newInvoiceNo,
+    }))
+  }
+
+  const getPreviousData = async id =>{
+    const res = await axios.get(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_ChallanToInvoice&ChallanID=${id}`)
+    setFormData( prevData => ({
+      ...prevData,
+      SalesOrderNo: res.data.ChallanMaster.SalesOrderNo,
+      ChallanID: res.data.ChallanMaster.ChallanID,
+      ChallanNo: res.data.ChallanMaster.ChallanNo,
+      Details: res.data.ChallanDetails.map(item => ({
+        FinancialYearID: item.FinancialYearID,
+        FinancialYear: item.FinancialYear,
+        ProductCategoryID: item.ProductCategoryID,
+        ProductID: item.ProductID,
+        ProductName: item.ProductName,
+        Quantity: item.ChallanQty,
+        UnitPrice: item.PRate,
+        Total: item.Total
+      }))
+    }))
+    setPartyName(res.data.ChallanMaster.PartyName)
+  }
+
+  useEffect(()=>{
+if(session){
+  setFormData(prevData =>({
+    ...prevData,
+    UserID: session.user.id
+  }))
+}
+  }, [session])
+
+  useEffect(()=>{
+    createInvoiceId()
+  }, [])
+
+  useEffect(()=>{
+    if(params.id){
+      getPreviousData(params.id)
+    }
+  }, [params.id])
+
+  const router = useRouter()
+
+const handleSubmit = async e =>{
+  e.preventDefault()
+  const dataWillSubmit = {
+    InvoiceNo: formData.InvoiceNo,
+    InvoiceDate: formData.InvoiceDate,
+    ChallanID: formData.ChallanID,
+    UserID: formData.UserID,
+    TotalAmount: formData.DetailsCost.reduce((accumulator, item) => accumulator + (Number(item.Quantity) * Number(item.UnitPrice)), 0),
+    Details: formData.Details.map(item => ({
+      FinancialYearID: item.FinancialYearID,
+      ProductCategoryID: item.ProductCategoryID,
+      ProductID: item.ProductID,
+      Quantity: item.Quantity,
+      UnitPrice: item.UnitPrice
+    })),
+    DetailsCost: formData.DetailsCost.map(item =>({
+      ParticularsID: item.ParticularsID,
+      Quantity: item.Quantity,
+      UnitPrice: item.UnitPrice
+    }))
+  }
+
+ const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=Create_InvoiceAll', dataWillSubmit)
+ router.push('/dashboard/invoice-bill')
+}
+
     return (
       <>
         <div className="flex justify-between items-center">
@@ -13,154 +129,53 @@ const page = () => {
           </form>
         </div>
         <div className="w-full bg-gray-200 rounded-md px-4 py-4">
-          <h1 className="text-2xl capitalize mb-3">pending sales order</h1>
-          <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
-            <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
-              <tr>
-                <th
-                  scope="col"
-                  className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                >
-                  SL
-                </th>
-                <th
-                  scope="col"
-                  className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                >
-                  Challan Number
-                </th>
-                <th
-                  scope="col"
-                  className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                >
-                  Challan Date
-                </th>
-                <th
-                  scope="col"
-                  className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                >
-                  Sale Order No
-                </th>
-                <th
-                  scope="col"
-                  className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                >
-                  Party Name
-                </th>
-                <th
-                  scope="col"
-                  className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                >
-                  Total Amount
-                </th>
-  
-                <th scope="col" className="px-6 py-4">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-neutral-200 dark:border-white/10">
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                  1
-                </td>
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                  CHL-2024-15
-                </td>
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                  2024-09-15
-                </td>
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                  CHL-2024-15
-                </td>
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                  1-Library
-                </td>
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                  1500
-                </td>
-  
-                <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                  <input type="checkbox" />
-                </td>
-              </tr>
-              <tr className="border-b border-neutral-200 dark:border-white/10">
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                  1
-                </td>
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                  CHL-2024-15
-                </td>
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                  2024-09-15
-                </td>
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                  CHL-2024-15
-                </td>
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                  1-Library
-                </td>
-                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                  1500
-                </td>
-  
-                <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                  <input type="checkbox" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <form>
-            <h1 className="text-2xl capitalize mb-3">add delivery challan</h1>
+          <form onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="designation"
-                className="block text-sm font-bold mb-1"
+                className="capitalize flex font-semibold text-md py-1"
               >
                 Invoice No:
               </label>
               <input
-                type="text"
-                id="designation"
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                value={formData.InvoiceNo}
+                readOnly
               />
               <div>
                 <label className="capitalize flex font-semibold text-md py-1">
                   Invoice Date:
                 </label>
   
-                <select name="zone" className="w-full rounded-md">
-                  <option value="" disabled={true} selected>
-                    dd-mm-YYYY
-                  </option>
-                </select>
-              </div>
-              <label className="block text-sm font-bold mb-1">Challan ID:</label>
-              <input
-                type="text"
+                <input
                 className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                value={formData.InvoiceDate}
+                readOnly
               />
-              <label className="block text-sm font-bold mb-1">Party Name:</label>
-              <input
-                type="text"
-                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-              />
-              <div>
-                <label className="capitalize flex font-semibold text-md py-1">
-                  Payment Status:
-                </label>
-  
-                <select name="zone" className="w-full rounded-md">
-                  <option value="" disabled={true} selected>
-                    Unpaid
-                  </option>
-                  <option value="Zone one">Paid</option>
-                </select>
               </div>
+              <label className="capitalize flex font-semibold text-md py-1">Sales Order No:</label>
+              <input
+                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                value={formData.SalesOrderNo}
+                readOnly
+              />
+              <label className="capitalize flex font-semibold text-md py-1">Challan No:</label>
+              <input
+                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                value={formData.ChallanNo}
+                readOnly
+              />
+              
+              <label className="capitalize flex font-semibold text-md py-1">Party Name:</label>
+              <input
+                className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                value={partyName}
+                readOnly
+              />
             </div>
             {/* table Start */}
             <div className="flex flex-col">
-              <h1 className="text-2xl capitalize mb-3">Product Details</h1>
+              <h1 className="text-2xl capitalize my-2">Product Details</h1>
               <div className="overflow-x-auto">
                 <div className="inline-block max-w-full w-full pt-5">
                   <div className="overflow-hidden">
@@ -172,12 +187,6 @@ const page = () => {
                             className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                           >
                             Financial Year
-                          </th>
-                          <th
-                            scope="col"
-                            className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                          >
-                            Books Group
                           </th>
                           <th
                             scope="col"
@@ -199,64 +208,43 @@ const page = () => {
                           </th>
   
                           <th scope="col" className="px-6 py-4">
-                            T.Amount
+                            Total
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr className="border-b border-neutral-200 dark:border-white/10">
+                      {formData.Details.length > 0 && formData.Details.map((item, index) =>(
+                        <tr className="border-b border-neutral-200 dark:border-white/10" key={index}>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            FY-2023
+                            {item.FinancialYear}
                           </td>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            Group A
+                            {item.ProductName}
                           </td>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            mathematics-class 10
+                            {item.Quantity}
                           </td>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            300
-                          </td>
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            2000
+                           {item.UnitPrice}
                           </td>
   
                           <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                            60000
+                            {formatAmountWithCommas(Number(item.Total))}
                           </td>
                         </tr>
-                        <tr className="border-b border-neutral-200 dark:border-white/10">
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            FY-2023
-                          </td>
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            Group A
-                          </td>
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            mathematics-class 10
-                          </td>
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            300
-                          </td>
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            2000
-                          </td>
-  
-                          <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                            60000
-                          </td>
-                        </tr>
+                      ))}
+                        
                         <tr className="border-b border-neutral-200 dark:border-white/10">
                           <td
                             className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
-                            colSpan="4"
+                            colSpan="3"
                           ></td>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                             Total
                           </td>
   
                           <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                            120000
+                            {formatAmountWithCommas(formData.Details.length > 0 && formData.Details.reduce((accumulator, currentValue) => accumulator + Number(currentValue.Total), 0) || 0.00)}
                           </td>
                         </tr>
                       </tbody>
@@ -268,7 +256,7 @@ const page = () => {
   
             {/* table Start */}
             <div className="flex flex-col">
-              <h1 className="text-2xl capitalize mb-3">Product Details</h1>
+              <h1 className="text-2xl capitalize mb-3">Others Expense</h1>
               <div className="overflow-x-auto">
                 <div className="inline-block max-w-full w-full pt-5">
                   <div className="overflow-hidden">
@@ -279,13 +267,7 @@ const page = () => {
                             scope="col"
                             className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                           >
-                            Cost Type
-                          </th>
-                          <th
-                            scope="col"
-                            className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                          >
-                            Cost Center
+                            Particulars
                           </th>
                           <th
                             scope="col"
@@ -300,58 +282,131 @@ const page = () => {
                           >
                             Price
                           </th>
+
+                          <th
+                            scope="col"
+                            className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                          >
+                            Total
+                          </th>
   
                           <th scope="col" className="px-6 py-4">
-                            T.Amount
+                            Action
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr className="border-b border-neutral-200 dark:border-white/10">
+                        {formData.DetailsCost.length > 0 && formData.DetailsCost.map(item =>(
+                          <tr className="border-b border-neutral-200 dark:border-white/10" key={item.id}>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            Parking
+                          <select
+                            className="w-full rounded-md"
+                            onChange={e => {
+                              setFormData(prevData =>({
+                                ...prevData,
+                                DetailsCost: prevData.DetailsCost.map(detail => detail.id == item.id ? {...detail, ParticularsID: e.target.value} : detail)
+                              }));
+                            }}
+                            value={item.ParticularsID}
+                            required
+                          >
+                            <option value=""></option>
+                            {costType.data.length > 0 &&
+                              costType.data.map(item => (
+                                <option value={item.ParticularsID} key={item.ParticularsID}>
+                                  {item.ParticularsName}
+                                </option>
+                              ))}
+                          </select>
                           </td>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            New Parking
-                          </td>
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            100
+                          <input
+                            type="number"
+                            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                            onChange={e=>{
+                              setFormData(prevData =>({
+                                ...prevData,
+                                DetailsCost: prevData.DetailsCost.map(detail => detail.id == item.id ? {...detail, Quantity: e.target.value} : detail)
+                              }));
+                            }}
+                            value={item.Quantity}
+                          />
                           </td>
   
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            2000
+                          <input
+                            type="number"
+                            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                            onChange={e=>{
+                              setFormData(prevData =>({
+                                ...prevData,
+                                DetailsCost: prevData.DetailsCost.map(detail => detail.id == item.id ? {...detail, UnitPrice: e.target.value} : detail)
+                              }));
+                            }}
+                            value={item.UnitPrice}
+                          />
+                          </td>
+                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                            {formatAmountWithCommas(item.Quantity && item.UnitPrice ? Number(item.Quantity) * Number(item.UnitPrice) : 0.00)}
                           </td>
   
                           <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                            200000
+                            <AiOutlineCloseCircle
+                              className="text-4xl text-red-500 cursor-pointer"
+                              onClick={() => {
+                                setFormData( prevData =>({
+                                  ...prevData,
+                                  DetailsCost: formData.DetailsCost.filter(
+                                    detail => detail.id !== item.id
+                                  ),
+                                }));
+                              }}
+                            />
                           </td>
                         </tr>
-                        <tr className="border-b border-neutral-200 dark:border-white/10">
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            Transport Cost
-                          </td>
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                            Sundarban Corier
-                          </td>
-  
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"></td>
-                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"></td>
-  
-                          <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                            60000
-                          </td>
-                        </tr>
+                        ))}
+
+                        <tr>
+                        <td
+                          className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium "
+                          colSpan="5"
+                        >
+                          <div className="flex justify-end">
+                            <button
+                              type="button"
+                              className="bg-green-300 text-md rounded-md px-4 py-2"
+                              onClick={() => {
+                                setFormData({
+                                  ...formData,
+                                  DetailsCost: [
+                                    ...formData.DetailsCost,
+                                    {
+                                      id: uuidv4(),
+                                      ParticularsID: '',
+                                      Quantity: '',
+                                      UnitPrice: ''
+                                    },
+                                  ],
+                                });
+                              }}
+                            >
+                              Add New Row
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                       
                         <tr className="border-b border-neutral-200 dark:border-white/10">
                           <td
                             className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
-                            colSpan="3"
+                            colSpan="2"
                           ></td>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                             Total
                           </td>
   
                           <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
-                            260000
+                            {formatAmountWithCommas(formData.DetailsCost.length > 0 ? formData.DetailsCost.reduce((accumulator, item) => accumulator + (Number(item.Quantity) * Number(item.UnitPrice)), 0) : 0.00)}
                           </td>
                         </tr>
                       </tbody>

@@ -185,7 +185,7 @@ const page = ({params}) => {
                           scope="col"
                           className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                         >
-                          Qty
+                          Order Qty
                         </th>
                         <th
                           scope="col"
