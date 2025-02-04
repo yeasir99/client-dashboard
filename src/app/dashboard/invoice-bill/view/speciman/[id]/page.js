@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import convertDateFormat from "@/utils/convertDateFormat"
 import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
+import Link from 'next/link';
 
 const page = ({params}) => {
   const [state, setState] = useState({
@@ -32,6 +33,14 @@ const page = ({params}) => {
   }
   return (
     <>
+    <div className="flex justify-end">
+          <Link
+            href={`/dashboard/invoice-bill/preview/speciman/${params.id}`}
+            className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Preview
+          </Link>
+        </div>
       <div className="flex justify-center">
       <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
         <h1 className="text-center text-xl font-semibold mb-3">
