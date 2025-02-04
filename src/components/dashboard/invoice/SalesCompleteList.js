@@ -21,7 +21,7 @@ const SalesCompleteList = () => {
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Invoice ID
+                        SL
                       </th>
                       <th
                         scope="col"
@@ -77,7 +77,7 @@ const SalesCompleteList = () => {
                         key={item.SL}
                       >
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.InvoiceID}
+                          {item.SL}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                           {item.InvoiceNo}
@@ -101,7 +101,7 @@ const SalesCompleteList = () => {
                           {item.StatusName}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
-                        <Link href={`/dashboard/invoice-bill/view/sales/${item.SalesOrderID}`}>
+                        <Link href={`/dashboard/invoice-bill/view/sales/${item.InvoiceID}`}>
                             <button className="px-4 py-2 bg-black text-white rounded-md">View</button>
                           </Link>
                         </td>

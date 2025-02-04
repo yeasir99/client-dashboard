@@ -21,7 +21,7 @@ const SalesPendingList = () => {
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Sales_ID
+                        SL
                       </th>
                       <th
                         scope="col"
@@ -78,7 +78,7 @@ const SalesPendingList = () => {
                         key={item.SL}
                       >
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.SalesOrderID}
+                          {item.SL}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.SalesOrderNo}
