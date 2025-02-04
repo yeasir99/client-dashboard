@@ -45,9 +45,26 @@ const SalesCompleteList = () => {
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Party Name
+                        Challan Date
                       </th>
-    
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Sales Order No
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Order Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Status
+                      </th>
                       <th scope="col" className="px-6 py-4">
                         Action
                       </th>
@@ -57,7 +74,7 @@ const SalesCompleteList = () => {
                     {data.length > 0 && data.map(item => (
                       <tr
                         className="border-b border-neutral-200 dark:border-white/10"
-                        key={item.InvoiceID}
+                        key={item.SL}
                       >
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.InvoiceID}
@@ -72,7 +89,16 @@ const SalesCompleteList = () => {
                           {item.ChallanNo}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                          {item.PartyName}
+                          {convertDateFormat(item.ChallanDate.date.split(' ')[0])}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          {item.SalesOrderNo}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          {convertDateFormat(item.OrderDate.date.split(' ')[0])}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          {item.StatusName}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                         <Link href={`/dashboard/invoice-bill/view/sales/${item.SalesOrderID}`}>

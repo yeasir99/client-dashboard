@@ -21,26 +21,38 @@ const SalesPendingList = () => {
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Challan No
+                        Sales_ID
                       </th>
                       <th
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Order Date
+                        Sales Order No
                       </th>
                       
                       <th
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Party Name
+                        Order Date
                       </th>
                       <th
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                       Status
+                       Party Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                       Challan No
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                       Challan Date
                       </th>
                       <th
                         scope="col"
@@ -48,8 +60,12 @@ const SalesPendingList = () => {
                       >
                        Total Amount
                       </th>
-    
-    
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                       Challan Status
+                      </th>
                       <th scope="col" className="px-6 py-4">
                         Action
                       </th>
@@ -59,23 +75,31 @@ const SalesPendingList = () => {
                     {data.length > 0 && data.map(item => (
                       <tr
                         className="border-b border-neutral-200 dark:border-white/10"
-                        key={item.SalesOrderID}
+                        key={item.SL}
                       >
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.ChallanNo}
+                          {item.SalesOrderID}
                         </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.SalesOrderNo}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {convertDateFormat(item.OrderDate)}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                           {item.partyname}
                         </td>
-    
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                          {item.challanstatusName}
+                          {item.ChallanNo}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          {convertDateFormat(item.ChallanDate.date.split(' ')[0])}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                           {formatAmountWithCommas(Number(item.TotalAmount))}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          {item.challanstatusName}
                         </td>
     
                         <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">

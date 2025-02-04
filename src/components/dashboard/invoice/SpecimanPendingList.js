@@ -21,26 +21,38 @@ const SpecimanPendingList = () => {
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Challan No
+                        Sales Order ID
                       </th>
                       <th
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Order Date
+                        Sales Order No
                       </th>
                       
                       <th
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Speciman Name
+                        Order Date
                       </th>
                       <th
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                       Status
+                       Specimen User Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                       Challan No
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                       Challan Date
                       </th>
                       <th
                         scope="col"
@@ -48,7 +60,12 @@ const SpecimanPendingList = () => {
                       >
                        Total Amount
                       </th>
-    
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                       challan status
+                      </th>
     
                       <th scope="col" className="px-6 py-4">
                         Action
@@ -59,10 +76,13 @@ const SpecimanPendingList = () => {
                     {data.length > 0 && data.map(item => (
                       <tr
                         className="border-b border-neutral-200 dark:border-white/10"
-                        key={item.SalesOrderID}
+                        key={item.SL}
                       >
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.ChallanNo}
+                          {item.SalesOrderID}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.SalesOrderNo}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                           {convertDateFormat(item.OrderDate)}
@@ -72,12 +92,17 @@ const SpecimanPendingList = () => {
                         </td>
     
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                          {item.challanstatusName}
+                          {item.ChallanNo}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                        {convertDateFormat(item.ChallanDate.date.split(' ')[0])}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                           {formatAmountWithCommas(Number(item.TotalAmount))}
                         </td>
-    
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          {item.challanstatusName}
+                        </td>
                         <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                           <Link href={`/dashboard/invoice-bill/add/speciman/${item.ChallanID}`}>
                             <button className="px-4 py-2 bg-black text-white rounded-md">Add Invoice</button>

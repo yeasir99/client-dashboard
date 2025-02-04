@@ -38,15 +38,38 @@ const SpecimanCompleteList = () => {
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
+                        Employee Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
                         Challan No
                       </th>
                       <th
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Speciman Name
+                        Challan Date
                       </th>
-    
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Sales Order No
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Order Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Status
+                      </th>
                       <th scope="col" className="px-6 py-4">
                         Action
                       </th>
@@ -56,7 +79,7 @@ const SpecimanCompleteList = () => {
                     {data.length > 0 && data.map(item => (
                       <tr
                         className="border-b border-neutral-200 dark:border-white/10"
-                        key={item.InvoiceID}
+                        key={item.SL}
                       >
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.InvoiceID}
@@ -68,10 +91,22 @@ const SpecimanCompleteList = () => {
                           {convertDateFormat(item.InvoiceDate)}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          {item.EmployeeName}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                           {item.ChallanNo}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                          {item.EmployeeName}
+                          {convertDateFormat(item.ChallanDate.date.split(' ')[0])}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          {item.SalesOrderNo}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          {convertDateFormat(item.OrderDate.date.split(' ')[0])}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          {item.StatusName}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                         <Link href={`/dashboard/invoice-bill/view/speciman/${item.SalesOrderID}`}>
