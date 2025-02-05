@@ -75,7 +75,7 @@ const page = ({params}) => {
                 <p>24 Puran Paltan, Dhaka-1000.</p>
                 <p>Phone : 088-02-9515301, 088-02-9515302.</p>
                 <h2 className="text-xl font-semibold underline mt-4">
-                  Delivery Challan
+                Invoice
                 </h2>
               </div>
     
@@ -180,9 +180,11 @@ const page = ({params}) => {
                 <tr className="border-b border-neutral-200 dark:border-white/10">
                   <td
                     className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
-                    colSpan="4"
+                    colSpan="3"
                   ></td>
-
+                  <td
+                    className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
+                  >Total</td>
                   <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3 font-medium">
                     {state.data.InvoiceDetails.length &&
                       formatAmountWithCommas(state.data.InvoiceDetails.reduce(
@@ -255,9 +257,11 @@ const page = ({params}) => {
                 <tr className="border-b border-neutral-200 dark:border-white/10">
                   <td
                     className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
-                    colSpan="3"
+                    colSpan="2"
                   ></td>
-
+                  <td
+                    className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
+                  >Total</td>
                   <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3 font-medium">
                     {state.data.InvoiceExpenseDetails.length &&
                       formatAmountWithCommas(state.data.InvoiceExpenseDetails.reduce(

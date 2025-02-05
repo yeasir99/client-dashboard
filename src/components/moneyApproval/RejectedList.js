@@ -4,15 +4,14 @@ import useGetData from "@/utils/useGetData"
 import convertDateFormat from "@/utils/convertDateFormat"
 import formatAmountWithCommas from "@/utils/formatAmountWithCommas"
 
-const CompleteOrderList = () => {
-const completedData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_MoneyReceiptComplete&UserID=501')
-  console.log(completedData)
-    if(completedData.status === 'pending'){
+const RejectedList = () => {
+    const RejectedData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_MoneyReceiptReject&UserID=501')
+    if(RejectedData.status === 'pending'){
         return <div className="text-xl font-semibold text-center py-5">Loading...</div>
     }
   return (
     <>
-        <h1 className="text-2xl capitalize mb-2">Completed list</h1>
+        <h1 className="text-2xl capitalize mb-2">Rejected list</h1>
         <div className="flex flex-col">
         <div>
           <div className="inline-block max-w-full w-full pt-5">
@@ -62,7 +61,7 @@ const completedData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.ph
                   </tr>
                 </thead>
                 <tbody>
-                  {completedData.data.length ? completedData.data.map(item =>(
+                  {RejectedData.data.length ? RejectedData.data.map(item =>(
                     <tr className="border-b border-neutral-200 dark:border-white/10" key={item.MRID}>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                       {item.SL}
@@ -100,8 +99,7 @@ const completedData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.ph
         </div>
       </div>
     </>
-    
   )
 }
 
-export default CompleteOrderList
+export default RejectedList

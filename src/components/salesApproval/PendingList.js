@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import convertDateFormat from "@/utils/convertDateFormat"
+import formatAmountWithCommas from "@/utils/formatAmountWithCommas"
 
 const PendingList = ({ pendingData, type }) => {
   if (pendingData.status === 'pending') {
@@ -69,7 +71,7 @@ const PendingList = ({ pendingData, type }) => {
                         {item.SalesOrderNo}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.OrderDate}
+                        {convertDateFormat(item.OrderDate)}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {type === 'speciman'
@@ -77,7 +79,7 @@ const PendingList = ({ pendingData, type }) => {
                           : item.partyname}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.TotalAmount}
+                        {formatAmountWithCommas(Number(item.TotalAmount))}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.Status}

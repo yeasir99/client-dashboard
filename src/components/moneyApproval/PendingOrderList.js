@@ -1,6 +1,8 @@
 'use client'
 import Link from 'next/link';
 import useGetData from '@/utils/useGetData';
+import convertDateFormat from "@/utils/convertDateFormat"
+import formatAmountWithCommas from "@/utils/formatAmountWithCommas"
 
 const PendingOrderList = () => {
     const pendingData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_MoneyReceiptApproval&UserID=501')
@@ -23,7 +25,7 @@ const PendingOrderList = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Id
+                    SL
                   </th>
                   <th
                     scope="col"
@@ -65,7 +67,7 @@ const PendingOrderList = () => {
                   pendingData.data.map(item => (
                     <tr
                       className="border-b border-neutral-200 dark:border-white/10"
-                      key={item.MRID}
+                      key={item.SL}
                     >
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.MRID}
@@ -74,13 +76,13 @@ const PendingOrderList = () => {
                         {item.MRNo}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.MRDate}
+                        {convertDateFormat(item.MRDate)}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.PartyName}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.AmountReceived}
+                        {formatAmountWithCommas(Number(item.AmountReceived))}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.Status}

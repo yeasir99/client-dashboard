@@ -2,14 +2,13 @@ import Link from "next/link"
 import convertDateFormat from "@/utils/convertDateFormat"
 import formatAmountWithCommas from "@/utils/formatAmountWithCommas"
 
-const CompletedList = ({completedData, type}) => {
-  console.log(completedData)
-    if(completedData.status === 'pending'){
+const RejectedList = ({RejectedData, type}) => {
+    if(RejectedData.status === 'pending'){
         return <div className="text-xl font-semibold text-center py-5">Loading...</div>
     }
   return (
     <>
-        <h1 className="text-2xl capitalize mb-2">Approved List</h1>
+        <h1 className="text-2xl capitalize mb-2">Rejected List</h1>
         <div className="flex flex-col">
         <div>
           <div className="inline-block max-w-full w-full pt-5">
@@ -58,7 +57,7 @@ const CompletedList = ({completedData, type}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {completedData.data.length ? completedData.data.map(item =>(
+                  {RejectedData.data.length ? RejectedData.data.map(item =>(
                     <tr className="border-b border-neutral-200 dark:border-white/10" key={item.SalesOrderID}>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                       {item.SalesOrderID}
@@ -96,8 +95,7 @@ const CompletedList = ({completedData, type}) => {
         </div>
       </div>
     </>
-    
   )
 }
 
-export default CompletedList
+export default RejectedList
