@@ -1,6 +1,7 @@
 'use client'
 import useGetData from '@/utils/useGetData';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
+import convertDateFormat from "@/utils/convertDateFormat"
 import Link from 'next/link';
 
 const VisitPlan = () => {
@@ -21,7 +22,7 @@ const VisitPlan = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Id
+                    SL
                   </th>
                   <th
                     scope="col"
@@ -77,13 +78,13 @@ const VisitPlan = () => {
                     key={item.VisitPlanID}
                   >
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.VisitPlanID}
+                      {item.SL}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                       {item.VisitPlanNo}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.VisitPlanDate}
+                      {convertDateFormat(item.VisitPlanDate)}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                       {item.InstitutionTypeName}
@@ -98,7 +99,7 @@ const VisitPlan = () => {
                       {item.VisitUserName}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
-                      {item.AppStatusMeans}
+                      {item.StatusName}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
                     <Link href={`/dashboard/visit-plan/view/${item.VisitPlanID}`}>
