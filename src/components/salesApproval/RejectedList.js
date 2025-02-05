@@ -60,7 +60,7 @@ const RejectedList = ({RejectedData, type}) => {
                   {RejectedData.data.length ? RejectedData.data.map(item =>(
                     <tr className="border-b border-neutral-200 dark:border-white/10" key={item.SalesOrderID}>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                      {item.SalesOrderID}
+                      {item.SL}
                     </td>
                     <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                       {item.SalesOrderNo}

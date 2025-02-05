@@ -65,7 +65,7 @@ const PendingList = ({ pendingData, type }) => {
                       key={item.SalesOrderID}
                     >
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.SalesOrderID}
+                        {item.SL}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.SalesOrderNo}

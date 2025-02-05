@@ -70,7 +70,7 @@ const PendingOrderList = () => {
                       key={item.SL}
                     >
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.MRID}
+                        {item.SL}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.MRNo}
