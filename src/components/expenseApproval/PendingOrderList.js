@@ -25,7 +25,7 @@ const PendingOrderList = () => {
                     scope="col"
                     className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                   >
-                    Id
+                    SL
                   </th>
                   <th
                     scope="col"
@@ -70,7 +70,7 @@ const PendingOrderList = () => {
                       key={item.BDExpReqID}
                     >
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.BDExpReqID}
+                        {item.SL}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.BDExpReqNo}
@@ -85,7 +85,7 @@ const PendingOrderList = () => {
                         {formatAmountWithCommas(Number(item.TotalAmount))}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.Status}
+                        {item.StatusName}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
                         {item.AppStatus === 1 ? (
