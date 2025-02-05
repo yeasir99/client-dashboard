@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import convertDateFormat from "@/utils/convertDateFormat"
 
 const page = ({ params }) => {
   const [pendingData, setPendingData] = useState({
@@ -9,6 +10,11 @@ const page = ({ params }) => {
     data: [],
   });
   const [completedData, setCompletedData] = useState({
+    status: 'pending',
+    data: [],
+  });
+
+  const [cencelledData, setCencelledData] = useState({
     status: 'pending',
     data: [],
   });
@@ -25,9 +31,19 @@ const page = ({ params }) => {
 
   const getcompletedData = async id => {
     const res = await axios.get(
-      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanCompleteRejectCancelled&UserID=${id}`
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanComplete&UserID=${id}`
     );
     setCompletedData({
+      status: 'idle',
+      data: res.data?.length ? res.data : [],
+    });
+  };
+
+  const getcencelledData = async id => {
+    const res = await axios.get(
+      `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_VisitPlanCancelled&UserID=${id}`
+    );
+    setCencelledData({
       status: 'idle',
       data: res.data?.length ? res.data : [],
     });
@@ -37,6 +53,7 @@ const page = ({ params }) => {
     if (params.id) {
       getPendingData(params.id);
       getcompletedData(params.id);
+      getcencelledData(params.id)
     }
   }, [params.id]);
 
@@ -60,7 +77,7 @@ const page = ({ params }) => {
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Id
+                        SL
                       </th>
                       <th
                         scope="col"
@@ -116,13 +133,13 @@ const page = ({ params }) => {
                         key={item.VisitPlanID}
                       >
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.VisitPlanID}
+                          {item.SL}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.VisitPlanNo}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.VisitPlanDate}
+                          {convertDateFormat(item.VisitPlanDate)}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                           {item.VisitUserName}
@@ -168,7 +185,7 @@ const page = ({ params }) => {
       ) : completedData.data.length ? (
         <div className="flex flex-col">
           <h1 className="text-2xl font-semibold py-2">
-            Completed / Cenceled Approval List
+            Approved List
           </h1>
           <div>
             <div className="inline-block max-w-full w-full pt-5">
@@ -180,7 +197,7 @@ const page = ({ params }) => {
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                       >
-                        Id
+                        SL
                       </th>
                       <th
                         scope="col"
@@ -233,13 +250,123 @@ const page = ({ params }) => {
                         key={item.VisitPlanID}
                       >
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.VisitPlanID}
+                          {item.SL}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.VisitPlanNo}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.VisitPlanDate}
+                          {convertDateFormat(item.VisitPlanDate)}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
+                          <Link
+                            className="text-blue-600 font-semibold hover:underline"
+                            href={`/dashboard/visit-approval/view/${item.VisitPlanID}`}
+                          >
+                            {item.VisitUserName}
+                          </Link>
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.InstituteType}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.InstituteName}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.PurposeName}
+                        </td>
+                        <td className="whitespace-nowrap">{item.Status}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="text-xl font-semibold text-center py-6">
+          No Data To Display
+        </div>
+      )}
+      {/* Cencelled table */}
+      {cencelledData.status === 'pending' ? (
+        <div className="text-xl font-semibold text-center py-6">Loading...</div>
+      ) : cencelledData.data.length ? (
+        <div className="flex flex-col">
+          <h1 className="text-2xl font-semibold py-2">
+            Cencelled List
+          </h1>
+          <div>
+            <div className="inline-block max-w-full w-full pt-5">
+              <div className="overflow-x-scroll">
+                <table className="max-w-full w-full overflow-x-scroll border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+                  <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
+                    <tr className="bg-text1 text-white">
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        SL
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Visit Plan No.
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Visit Plan Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Employee Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Institute/party Type
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Institute/party Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Purpose Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cencelledData.data.map(item => (
+                      <tr
+                        className="border-b border-neutral-200 dark:border-white/10"
+                        key={item.VisitPlanID}
+                      >
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.SL}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {item.VisitPlanNo}
+                        </td>
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          {convertDateFormat(item.VisitPlanDate)}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 dark:border-white/10">
                           <Link
