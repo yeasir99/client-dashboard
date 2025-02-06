@@ -42,6 +42,12 @@ const NavItem = ({ session }) => {
       status: 'accordion',
       internalLinks: [
         {
+          name: 'Dashboard',
+          displayName: 'Dashboard',
+          href: '/dashboard/',
+          status: 'main',
+        },
+        {
           name: 'User-Employee registration',
           displayName: 'User-Employee registration',
           href: '/dashboard/user-employee',
