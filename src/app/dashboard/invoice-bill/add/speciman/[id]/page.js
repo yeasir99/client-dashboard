@@ -60,7 +60,8 @@ const page = ({params}) => {
         ProductName: item.ProductName,
         Quantity: item.ChallanQty,
         UnitPrice: item.PRate,
-        Total: item.Total
+        Total: item.Total,
+        discount: 0
       }))
     }))
     setPartyName(res.data.ChallanMaster.EmployeeName)
@@ -94,13 +95,15 @@ const handleSubmit = async e =>{
     InvoiceDate: formData.InvoiceDate,
     ChallanID: formData.ChallanID,
     UserID: formData.UserID,
-    TotalAmount: formData.DetailsCost.reduce((accumulator, item) => accumulator + (Number(item.Quantity) * Number(item.UnitPrice)), 0),
+    TotalAmount: formData.Details.reduce((accumulator, item) => accumulator + Number(item.Total), 0),
+    Inword: 0,
     Details: formData.Details.map(item => ({
       FinancialYearID: item.FinancialYearID,
       ProductCategoryID: item.ProductCategoryID,
       ProductID: item.ProductID,
       Quantity: item.Quantity,
-      UnitPrice: item.UnitPrice
+      UnitPrice: item.UnitPrice,
+      Discount: item.discount
     })),
     DetailsCost: formData.DetailsCost.map(item =>({
       ParticularsID: item.ParticularsID,

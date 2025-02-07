@@ -55,6 +55,7 @@ const page = ({params}) => {
       ChallanID: res.data.ChallanMaster.ChallanID,
       ChallanNo: res.data.ChallanMaster.ChallanNo,
       Details: res.data.ChallanDetails.map(item => ({
+        id: uuidv4(),
         FinancialYearID: item.FinancialYearID,
         FinancialYear: item.FinancialYear,
         ProductCategoryID: item.ProductCategoryID,
@@ -62,6 +63,7 @@ const page = ({params}) => {
         ProductName: item.ProductName,
         Quantity: item.ChallanQty,
         UnitPrice: item.PRate,
+        discount: 0,
         Total: item.Total
       }))
     }))
@@ -96,13 +98,15 @@ const handleSubmit = async e =>{
     InvoiceDate: formData.InvoiceDate,
     ChallanID: formData.ChallanID,
     UserID: formData.UserID,
-    TotalAmount: formData.DetailsCost.reduce((accumulator, item) => accumulator + (Number(item.Quantity) * Number(item.UnitPrice)), 0),
+    TotalAmount: formData.Details.reduce((accumulator, item) => accumulator + Number(item.Total), 0),
+    Inword: 0,
     Details: formData.Details.map(item => ({
       FinancialYearID: item.FinancialYearID,
       ProductCategoryID: item.ProductCategoryID,
       ProductID: item.ProductID,
       Quantity: item.Quantity,
-      UnitPrice: item.UnitPrice
+      UnitPrice: item.UnitPrice,
+      Discount: item.discount
     })),
     DetailsCost: formData.DetailsCost.map(item =>({
       ParticularsID: item.ParticularsID,
@@ -206,15 +210,20 @@ const handleSubmit = async e =>{
                           >
                             Price
                           </th>
-  
+                          <th
+                            scope="col"
+                            className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                          >
+                            Discount
+                          </th>
                           <th scope="col" className="px-6 py-4">
                             Total
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                      {formData.Details.length > 0 && formData.Details.map((item, index) =>(
-                        <tr className="border-b border-neutral-200 dark:border-white/10" key={index}>
+                      {formData.Details.length > 0 && formData.Details.map(item =>(
+                        <tr className="border-b border-neutral-200 dark:border-white/10" key={item.id}>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                             {item.FinancialYear}
                           </td>
@@ -227,7 +236,19 @@ const handleSubmit = async e =>{
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                            {item.UnitPrice}
                           </td>
-  
+                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          <input
+                            type="number"
+                            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                            onChange={e=>{
+                              setFormData(prevData =>({
+                                ...prevData,
+                                Details: prevData.Details.map(detail => detail.id == item.id ? {...detail, discount: e.target.value} : detail)
+                              }));
+                            }}
+                            value={item.discount}
+                          />
+                          </td>
                           <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
                             {formatAmountWithCommas(Number(item.Total))}
                           </td>
@@ -237,7 +258,7 @@ const handleSubmit = async e =>{
                         <tr className="border-b border-neutral-200 dark:border-white/10">
                           <td
                             className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
-                            colSpan="3"
+                            colSpan="4"
                           ></td>
                           <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                             Total

@@ -200,91 +200,34 @@ const page = ({params}) => {
         </div>
       </div>
 
-      <h1 className="text-xl font-semibold text-center py-3">Others Expense</h1>
-    <div className="overflow-x-scroll">
-        <div className="inline-block max-w-full w-full pt-5">
-          <div>
-            <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
-              <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
-                <tr className="bg-text1 text-white">
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Particulars
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    QTY
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Price
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Total
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {state.data.InvoiceExpenseDetails.length &&
-                  state.data.InvoiceExpenseDetails.map((item, index) => (
-                    <tr
-                      className="border-b border-neutral-200 dark:border-white/10"
-                      key={index}
-                    >
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.ParticularsName}
-                      </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.Quantity}
-                      </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.UnitPrice}
-                      </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {formatAmountWithCommas(Number(item.Amount))}
-                      </td>
-                    </tr>
-                  ))}
-                <tr className="border-b border-neutral-200 dark:border-white/10">
-                  <td
-                    className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
-                    colSpan="2"
-                  ></td>
-                  <td
-                    className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10"
-                  >Total</td>
-                  <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3 font-medium">
-                    {state.data.InvoiceExpenseDetails.length &&
-                      formatAmountWithCommas(state.data.InvoiceExpenseDetails.reduce(
-                        (accumulator, currentValue) =>
-                          accumulator + Number(currentValue.Amount),
-                        0
-                      ))}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+      {
+      state.data.InvoiceExpenseDetails.length ? <div className="mt-5">
+        {state.data.InvoiceExpenseDetails.map((item,index) =>(
+          <div className='grid grid-cols-3 gap-3' key={index}>
+          <div>{++index}. {item.ParticularsName}</div>
+          <div>{item.QtyRate}</div>
+          <div> = {item.Amount}</div>
           </div>
-        </div>
-      </div>
+        ))}
+        <div className='grid grid-cols-3 gap-3'>
+          <div></div>
+          <div className="text-right">Total</div>
+          <div> = {formatAmountWithCommas(state.data.InvoiceExpenseDetails.reduce((prevValue, currentValue)=> prevValue + Number(currentValue.Amount), 0))}</div>
+          </div>
+
+      </div> : <div>No Pariculars Cost Data Available</div>
+    }
+
+    <div className='py-4'>
+    
+    <p className="text-right"> Total Invoice Amount: {formatAmountWithCommas(Number(state.data.InvoiceMaster.Net_Amount))}</p>
+                      <p className="capitalize">In-Words: {state.data.InvoiceMaster.Net_Amount_Inword} Only</p>
+    </div>
     
               {/* Footer */}
-              <div className="grid grid-cols-3 gap-4 mt-20">
+              <div className="grid grid-cols-2 gap-4 mt-20">
                 <div className="text-center">
                   <p className="font-semibold">Prepared By</p>
-                  <p></p>
-                </div>
-                <div className="text-center">
-                  <p className="font-semibold">Authorized By</p>
                   <p></p>
                 </div>
                 <div className="text-center">
