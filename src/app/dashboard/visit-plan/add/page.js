@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 
 const page = () => {
   const [name, setName] = useState('');
+  const [userId, setUserId] = useState('')
   const [intName, setIntName] = useState([]);
   const [formData, setFormData] = useState({
     VisitPlanNo: '',
@@ -21,15 +22,21 @@ const page = () => {
   });
   const { data: session, status } = useSession();
   useEffect(() => {
-    if (session?.user) {
-      setFormData({
-        ...formData,
-        VisitUserID: session.user.id,
-        UserID: session.user.id,
-      });
+    if (status === 'authenticated') {
+      setUserId(session.user.id)
       setName(session.user.name);
     }
-  }, [session]);
+  }, [status]);
+
+  useEffect(()=>{
+    if(userId){
+      setFormData(prevData => ({
+        ...prevData,
+        UserID: userId,
+        VisitUserID: userId
+      }))
+    }
+  }, [userId])
 
   const instutionType = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutiontypes'
@@ -76,7 +83,6 @@ const page = () => {
   const router = useRouter();
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(formData);
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_visit_plan',
       formData

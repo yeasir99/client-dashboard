@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import convertDateFormat from '@/utils/convertDateFormat';
 import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
+import useGetData from '@/utils/useGetData';
 
 const page = ({ params }) => {
   const [formData, setFormData] = useState({
@@ -22,6 +23,9 @@ const page = ({ params }) => {
     status: 'pending',
     data: null
   })
+
+  const demandInfo = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_salesordersAutorizationMIS&SalesOrderID=27')
+  const returnInfo = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_salesordersAutorizationMISReturn&SalesOrderID=158')
 
   const getData = async id => {
     const res = await axios.get(
@@ -153,7 +157,7 @@ const page = ({ params }) => {
           />
         </div>
         <div>
-          {formData.orderDetails.length && (
+          {formData.orderDetails.length > 0 && (
             <div className="flex flex-col">
               <div>
                 <div className="inline-block max-w-full w-full pt-5">
@@ -223,33 +227,6 @@ const page = ({ params }) => {
             </div>
           )}
         </div>
-        <div>
-          <label htmlFor="DemandInfo" className="block text-sm font-bold mb-1">
-            Demand Information:
-          </label>
-          <input
-            type="text"
-            id="DemandInfo"
-            name="DemandInfo"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            readOnly
-            value={formData.DemandInfo}
-          />
-        </div>
-        <div>
-          <label htmlFor="ReturnInfo" className="block text-sm font-bold mb-1">
-            Return Information:
-          </label>
-          <input
-            type="text"
-            id="ReturnInfo"
-            name="ReturnInfo"
-            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-            readOnly
-            value={formData.ReturnInfo}
-          />
-        </div>
-
         {viewableData.data && <div className="flex justify-center mt-5">
         <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
           {viewableData.data.approvals.CanclledComments ? (
@@ -312,6 +289,110 @@ const page = ({ params }) => {
           )}
         </div>
       </div>}
+      <h1 className="text-xl font-semibold text-center py-4">Demand Info</h1>
+{demandInfo.data.length > 0 && <div>
+  <div className="flex flex-col">
+              <div>
+                <div className="inline-block max-w-full w-full pt-5">
+                  <div className="overflow-x-scroll">
+                    <table className="max-w-full w-full overflow-x-scroll border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+                      <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
+                        <tr className="bg-text1 text-white">
+                          <th
+                            scope="col"
+                            className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                          >
+                            SL
+                          </th>
+                          <th
+                            scope="col"
+                            className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                          >
+                            Product Name
+                          </th>
+
+                          <th scope="col" className="px-6 py-4">
+                          Products Details
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {demandInfo.data.map(item => (
+                          <tr
+                            className="border-b border-neutral-200 dark:border-white/10"
+                            key={item.SL}
+                          >
+                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              {item.SL}
+                            </td>
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              {item.ProductName}
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
+                              {item.ProductsValue}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>}
+<h1 className="text-xl font-semibold text-center py-4">Return Info</h1>
+{returnInfo.data.length > 0 && <div>
+  <div className="flex flex-col">
+              <div>
+                <div className="inline-block max-w-full w-full pt-5">
+                  <div className="overflow-x-scroll">
+                    <table className="max-w-full w-full overflow-x-scroll border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
+                      <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
+                        <tr className="bg-text1 text-white">
+                          <th
+                            scope="col"
+                            className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                          >
+                            SL
+                          </th>
+                          <th
+                            scope="col"
+                            className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                          >
+                            Product Name
+                          </th>
+                          <th scope="col" className="px-6 py-4">
+                          Products Details
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {returnInfo.data.map(item => (
+                          <tr
+                            className="border-b border-neutral-200 dark:border-white/10"
+                            key={item.SL}
+                          >
+                          <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              {item.SL}
+                            </td>
+                            
+                            <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                              {item.ProductName}
+                            </td>
+
+                            <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-3">
+                              {item.ProductsValue}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>}
+
 
         <div>
           <label
