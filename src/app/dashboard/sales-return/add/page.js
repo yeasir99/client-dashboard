@@ -6,6 +6,9 @@ import useGetData from '@/utils/useGetData';
 import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
 import BookById from '@/components/dashboard/BookById';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import numberToWords from '@/utils/numberToWords';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +31,8 @@ const page = () => {
     ]
   })
 
-  console.log(formData)
+  const {data: session, status} = useSession()
+  console.log(session)
 
   useEffect(() => {
     const total = formData.Details.reduce(
@@ -108,6 +112,29 @@ const page = () => {
   useEffect(()=>{
     createReturnID()
   }, [])
+
+  const router = useRouter()
+
+  const handleSubmit = async e =>{
+    e.preventDefault()
+    if(!session.user.id) return
+    const dataWillBeSubmit = {
+      ...formData,
+      UserID: session.user.id,
+      InWord: numberToWords(formData.TotalAmount),
+      Details: formData.Details.map(item =>({
+        FinancialYearID: item.FinancialYearID,
+        ProductCategoryID: item.ProductCategoryID,
+        ProductID: item.ProductID,
+        Quantity: item.Quantity,
+        Rate: item.Rate,
+        Total: item.Total
+      }))
+    }
+
+    const res = await axios.post('https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_PReturnall', dataWillBeSubmit)
+    router.push('/dashboard/sales-return')
+  }
   return (
     <>
       <div className="flex justify-between items-center">
@@ -122,7 +149,7 @@ const page = () => {
         </form>
       </div>
       <div className="w-full bg-gray-200 rounded-md px-4 py-4">
-        <form>
+        <form onSubmit={handleSubmit}>
           <label className="block text-sm font-bold mb-1">
             Return No:
           </label>
@@ -377,7 +404,7 @@ const page = () => {
           {/* table End */}
           <div className="mt-5">
             <button className="capitalize bg-primary px-5 py-1 text-white rounded-md w-full">
-              Save Order
+              Save Return
             </button>
           </div>
         </form>
