@@ -211,8 +211,8 @@ const NavItem = ({ session }) => {
       status: 'main',
     },
     {
-      name: 'Sales Return',
-      displayName: 'Sales Return',
+      name: 'Product Return',
+      displayName: 'Product Return',
       href: '/dashboard/sales-return',
       status: 'main',
     },
