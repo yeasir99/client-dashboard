@@ -2,19 +2,27 @@
 import useGetData from '@/utils/useGetData';
 import convertDateFormat from '@/utils/convertDateFormat';
 import formatAmountWithCommas from '@/utils/formatAmountWithCommas';
+import Link from 'next/link';
 
 const ProductReturnView = ({id}) => {
     const returnData = useGetData(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_Returnall&ProductReturnID=${id}`)
-    console.log()
     if(returnData.status === 'pending'){
         return <div className='text-xl font-semibold text-center py-6'>Loading...</div>
     }
   return (
     <>
+    <div className="flex justify-end">
+        <Link
+          href={`/dashboard/sales-return/preview/${id}`}
+          className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Preview
+        </Link>
+    </div>
         <div className="flex justify-center">
         <div className="min-w-[600px] rounded-md bg-gray-300 p-5">
           <h1 className="text-center text-xl font-semibold mb-3">
-            Product Return Details
+            Product Return
           </h1>
           <div className="flex items-center gap-2">
             <h1 className="text-lg">Date:</h1>

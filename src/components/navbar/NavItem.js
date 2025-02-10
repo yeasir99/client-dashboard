@@ -211,12 +211,6 @@ const NavItem = ({ session }) => {
       status: 'main',
     },
     {
-      name: 'Product Return',
-      displayName: 'Product Return',
-      href: '/dashboard/sales-return',
-      status: 'main',
-    },
-    {
       name: 'Delivery Challan',
       displayName: 'Delivery Challan',
       href: '/dashboard/delivery-challan',
@@ -250,6 +244,12 @@ const NavItem = ({ session }) => {
       name: 'BD Expense Approval',
       displayName: 'BD Expense Approval',
       href: '/dashboard/expense-approval',
+      status: 'main',
+    },
+    {
+      name: 'Product Return',
+      displayName: 'Product Return',
+      href: '/dashboard/sales-return',
       status: 'main',
     },
     {
