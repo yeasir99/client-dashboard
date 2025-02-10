@@ -26,7 +26,7 @@ const page = () => {
       setUserId(session.user.id)
       setName(session.user.name);
     }
-  }, [status]);
+  }, [status, session]);
 
   useEffect(()=>{
     if(userId){
@@ -82,7 +82,7 @@ const page = () => {
   };
   const router = useRouter();
   const handleSubmit = async e => {
-    e.preventDefault();
+    e.preventDefault()
     const res = await axios.post(
       'https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_visit_plan',
       formData
