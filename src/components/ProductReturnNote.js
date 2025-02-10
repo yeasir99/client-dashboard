@@ -135,7 +135,7 @@ const ProductReturnNote = ({id}) => {
           <div className="grid grid-cols-2 gap-4 mt-20">
             <div className="text-center">
               <p className="font-semibold">Prepared By</p>
-              <p></p>
+              <p>{returnData.data.receipt.CreatedBy}</p>
             </div>
             <div className="text-center">
               <p className="font-semibold">Approved By</p>
