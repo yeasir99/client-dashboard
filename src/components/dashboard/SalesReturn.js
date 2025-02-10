@@ -2,6 +2,7 @@
 import useGetData from '@/utils/useGetData';
 import { FaEye, FaRegEdit } from 'react-icons/fa';
 import convertDateFormat from '@/utils/convertDateFormat';
+import Link from 'next/link';
 
 const SalesReturn = () => {
   const returnData = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_PReturns')
@@ -66,9 +67,11 @@ const SalesReturn = () => {
                       {item.PartyName}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 flex justify-center items-center gap-3">
+                    <Link href={`/dashboard/sales-return/view/${item.ProductReturnID}`} >
                       <span className="bg-cyan-500 p-1 inline-block rounded-md">
                         <FaEye className="text-white text-xl" />
                       </span>{' '}
+                      </Link>
                       |
                       <span className="bg-amber-600 p-1 inline-block rounded-md">
                         <FaRegEdit className="text-white text-xl" />
