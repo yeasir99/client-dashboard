@@ -2,17 +2,24 @@ import useGetData from '@/utils/useGetData';
 import { useState, useEffect } from 'react';
 import BookByIdV2 from './BookGroupIdV2';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { v4 as uuidv4 } from 'uuid';
 
 const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
   const teachersData = useGetData(
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutionTeacher&InstitutionID=${InstitutionID}`
   );
+
+  console.log(teachersData)
   const fiscalYear = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_financialyear'
   );
   const bookGroups = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys'
   );
+
+  const updateOrderDetails = (event, itemId) => {
+    setOtherPurpose(prevData => prevData.map(tData => tData.id === itemId ? {...tData, [event.target.name]: event.target.value} : tData));
+  };
   return (
     <div className="flex flex-col">
       <div>
@@ -63,12 +70,7 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                   >
                     Student Count
                   </th>
-                  <th
-                    scope="col"
-                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                  >
-                    Total
-                  </th>
+                  
                   <th scope="col" className="px-6 py-4">
                     Action
                   </th>
@@ -87,32 +89,28 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                           name="TeacherName"
                           className="w-full rounded-md py-[0.40rem]"
                           value={item.TeacherName}
-                          onChange={event => {
-                            // const updateTeachersData = (tech, details) => {
-                            //   const selectedTeacher = tech.filter(
-                            //     item => item.TeacherName == event.target.value
-                            //   );
-                            //   if (selectedTeacher.length) {
-                            //     return {
-                            //       ...details,
-                            //       TeacherName: selectedTeacher[0].TeacherName,
-                            //       Designation: selectedTeacher[0].Designation,
-                            //       ContactPhone: selectedTeacher[0].ContactPhone,
-                            //     };
-                            //   }
-                            //   return {
-                            //     ...details,
-                            //   };
-                            // };
-                            // setFormData({
-                            //   ...formData,
-                            //   BDExpReqDetails: formData.BDExpReqDetails.map(
-                            //     detail =>
-                            //       detail.id === item.id
-                            //         ? updateTeachersData(teachers, detail)
-                            //         : detail
-                            //   ),
-                            // });
+                          onChange={(event) => {
+                            const updateTeachersData = (tech, details) => {
+                                  const selectedTeacher = tech.filter(
+                                    item =>
+                                      item.TeacherName == event.target.value
+                                  );
+                                  if (selectedTeacher.length) {
+                                    return {
+                                      ...details,
+                                      TeacherName:
+                                        selectedTeacher[0].TeacherName,
+                                      Designation:
+                                        selectedTeacher[0].Designation,
+                                      ContactPhone:
+                                        selectedTeacher[0].ContactPhone,
+                                    };
+                                  }
+                                  return {
+                                    ...details,
+                                  };
+                                };
+                            setOtherPurpose(prevData => prevData.map(tData => tData.id === item.id ? updateTeachersData(teachersData.data, tData) : tData ) )
                           }}
                         >
                           <option value="" disabled></option>
@@ -140,7 +138,7 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                           className="w-full rounded-md py-[0.40rem]"
                           value={item.FinancialYearID}
                           onChange={event => {
-                            // updateOrderDetails(event, item.id)
+                            setOtherPurpose(prevData => prevData.map(tData => tData.id === item.id ? {...tData, FinancialYearID: event.target.value} : tData))
                           }}
                         >
                           <option value="" disabled></option>
@@ -159,7 +157,7 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                           className="w-full rounded-md py-[0.40rem]"
                           value={item.BooksGroupID}
                           onChange={event => {
-                            // updateOrderDetails(event, item.id)
+                            setOtherPurpose(prevData => prevData.map(tData => tData.id === item.id ? {...tData, BooksGroupID: event.target.value} : tData))
                           }}
                         >
                           <option value="" disabled={true}></option>
@@ -175,7 +173,7 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                         <BookByIdV2
                           name="ProductID"
                           item={item}
-                          //   update={updateOrderDetails}
+                          update={updateOrderDetails}
                         />
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
@@ -184,23 +182,12 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                           name="StudentsCount"
                           className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
                           onChange={event => {
-                            // updateOrderDetails(event, item.id);
+                            updateOrderDetails(event, item.id);
                           }}
                           value={item.StudentsCount}
                         />
                       </td>
-                      <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
-                        <input
-                          type="number"
-                          id="Total"
-                          name="Total"
-                          className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                          onChange={event => {
-                            // updateOrderDetails(event, item.id);
-                          }}
-                          value={item.Total}
-                        />
-                      </td>
+                      
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-end h-full gap-3">
                         <AiOutlineCloseCircle
                           className="text-4xl text-red-500 cursor-pointer"
@@ -239,24 +226,16 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                         type="button"
                         className="bg-green-300 text-md rounded-md px-4 py-2"
                         onClick={() => {
-                          //   setFormData({
-                          //     ...formData,
-                          //     BDExpReqDetails: [
-                          //       ...formData.BDExpReqDetails,
-                          //       {
-                          //         id: uuidv4(),
-                          //         TeacherName: '',
-                          //         Designation: '',
-                          //         ContactPhone: '',
-                          //         BooksGroupID: '',
-                          //         ProductID: '',
-                          //         StudentsCount: '',
-                          //         DonationAmount: '',
-                          //         FinancialYearID: '',
-                          //         Total: '',
-                          //       },
-                          //     ],
-                          //   });
+                          setOtherPurpose(prevData =>[...prevData, {
+                            id: uuidv4(),
+                            TeacherName: '',
+                            Designation: '',
+                            ContactPhone: '',
+                            FinancialYearID: '',
+                            BooksGroupID: '',
+                            ProductID: '',
+                            StudentsCount: '',
+                          }])
                         }}
                       >
                         Add New Row

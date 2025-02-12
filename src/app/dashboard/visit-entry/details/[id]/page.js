@@ -28,6 +28,7 @@ const page = ({ params }) => {
       DonationAmount: '',
     },
   ]);
+  console.log(otherPurpose)
   const [timeData, setTimeData] = useState({
     startDate: new Date(),
     endDate: new Date(),
