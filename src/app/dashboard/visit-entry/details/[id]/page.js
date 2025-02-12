@@ -353,11 +353,12 @@ const handleSubmit = async e =>{
                 },
               ]);
             }}
+            type='button'
           >
             Add Row
           </button>
         </div>
-        <button className="bg-primary px-3 py-1 rounded-md text-white">
+        <button className="bg-primary px-3 py-1 rounded-md text-white" type='submit'>
           Save Collection
         </button>
         </form>
