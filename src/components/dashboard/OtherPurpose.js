@@ -8,8 +8,6 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
   const teachersData = useGetData(
     `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutionTeacher&InstitutionID=${InstitutionID}`
   );
-
-  console.log(teachersData)
   const fiscalYear = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_financialyear'
   );

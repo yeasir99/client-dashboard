@@ -8,6 +8,8 @@ import useGetData from '@/utils/useGetData';
 import axios from 'axios';
 import PurposeBusinessDev from '@/components/dashboard/PurposeBusinessDev';
 import OtherPurpose from '@/components/dashboard/OtherPurpose';
+import getCurrentDate from '@/utils/getCurrentDate';
+import { useRouter } from 'next/navigation';
 
 const page = ({ params }) => {
   const [previousData, setPreviousData] = useState({
@@ -25,10 +27,9 @@ const page = ({ params }) => {
       BooksGroupID: '',
       ProductID: '',
       StudentsCount: '',
-      DonationAmount: '',
     },
   ]);
-  console.log(otherPurpose)
+
   const [timeData, setTimeData] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -40,6 +41,8 @@ const page = ({ params }) => {
       amount: '',
     },
   ]);
+
+  console.log(tadaData)
   const tadaType = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_tada_allowances'
   );
@@ -65,6 +68,40 @@ const page = ({ params }) => {
       setPerpouseAmount([...previousData.data.Details]);
     }
   }, [previousData]);
+
+  const router = useRouter()
+
+const handleSubmit = async e =>{
+  e.preventDefault();
+  const dataWillBeSubmit = {
+    CheckInTime: timeData.startDate,
+    CheckOutTime: timeData.endDate,
+    Latitude: 0,
+    Longitude: 0, 
+    VisitEntryDate: getCurrentDate(),
+    VEStatus: 1,
+    Details: otherPurpose.map(item => ({
+      TeacherName: item.TeacherName,
+      Designation: item.Designation,
+      Phone: item.ContactPhone,
+      FinancialYearID: item.FinancialYearID,
+      ProductCategoryID: item.BooksGroupID,
+      ProductID: item.ProductID,
+      StudentNo: item.StudentsCount,
+      DonationAmount: 0,
+      SpecimenQty: 0
+    })),
+    TADADetails: tadaData.map(item =>({
+      TADACategoryID: item.type,
+      Amount: item.amount,
+    }))
+  }
+
+  const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_visit_entryall&VisitPlanID=${params.id}`, dataWillBeSubmit)
+  router.push('/dashboard/visit-entry')
+
+}
+
 
   if (previousData.status === 'pending') {
     <div className="text-xl font-semibold text-center py-10">Loading...</div>;
@@ -147,7 +184,7 @@ const page = ({ params }) => {
             </tr>
           </tbody>
         </table>
-        <form className="mb-10">
+        <form className="mb-10" onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-8 mb-5">
             <div>
               <label className="font-semibold pr-5">
@@ -164,6 +201,7 @@ const page = ({ params }) => {
                 showTimeSelect
                 timeIntervals={15}
                 dateFormat="MMMM d, yyyy h:mm aa"
+                required
               />
             </div>
             <div>
@@ -173,7 +211,7 @@ const page = ({ params }) => {
               <DatePicker
                 selected={timeData.endDate}
                 onChange={date =>
-                  setEndDate(prevData => ({
+                  setTimeData(prevData => ({
                     ...prevData,
                     endDate: date,
                   }))
@@ -181,10 +219,11 @@ const page = ({ params }) => {
                 showTimeSelect
                 timeIntervals={15}
                 dateFormat="MMMM d, yyyy h:mm aa"
+                required
               />
             </div>
           </div>
-        </form>
+        
         {/* start */}
         {previousData.data && previousData.data.PurposeID == 79 && (
           <PurposeBusinessDev
@@ -321,6 +360,7 @@ const page = ({ params }) => {
         <button className="bg-primary px-3 py-1 rounded-md text-white">
           Save Collection
         </button>
+        </form>
       </div>
     </>
   );
