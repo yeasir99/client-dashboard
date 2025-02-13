@@ -132,7 +132,7 @@ const page = () => {
     const dataWillbeSubmitted = {
       BDExpReq: {
         BDExpReqNo: formData.BDExpReqNo,
-        BDExpUserID: formData.BDExpUserID,
+        BDExpUserID: 501,
         BDExpReqDate: formData.BDExpReqDate,
         InstitutionTypeID: formData.InstitutionTypeID,
         InstitutionID: formData.InstitutionID,
