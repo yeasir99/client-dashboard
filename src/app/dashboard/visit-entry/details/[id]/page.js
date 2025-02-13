@@ -224,13 +224,13 @@ const handleSubmit = async e =>{
           </div>
         
         {/* start */}
-        {previousData.data && previousData.data.PurposeID == 79 && (
+        {/* {previousData.data && previousData.data.PurposeID == 79 && (
           <PurposeBusinessDev
             perpouseAmount={perpouseAmount}
             setPerpouseAmount={setPerpouseAmount}
           />
-        )}
-        {previousData.data && previousData.data.PurposeID != 79 && (
+        )} */}
+        {previousData.data && (
           <OtherPurpose
             otherPurpose={otherPurpose}
             setOtherPurpose={setOtherPurpose}
