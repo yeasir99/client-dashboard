@@ -127,7 +127,6 @@ const handleSubmit = async e =>{
         </form>
       </div>
       <div className="w-full bg-gray-200 rounded-md px-4 py-4">
-        <h1 className="text-2xl capitalize mb-3">pending sales order</h1>
         <table className="max-w-full w-full border border-neutral-200 text-center text-sm font-light text-surface dark:border-white/10 dark:text-white">
           <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
             <tr className="bg-text1 text-white">
@@ -359,7 +358,7 @@ const handleSubmit = async e =>{
           </button>
         </div>
         <button className="bg-primary px-3 py-1 rounded-md text-white" type='submit'>
-          Save Collection
+          Save Entry
         </button>
         </form>
       </div>
