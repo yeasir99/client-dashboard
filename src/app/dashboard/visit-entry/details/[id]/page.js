@@ -18,6 +18,7 @@ const page = ({ params }) => {
     status: 'loading',
     data: null,
   });
+ 
   const [perpouseAmount, setPerpouseAmount] = useState([]);
   const [speciPurpose, setSpeciPurpose] = useState([
     {
@@ -33,6 +34,7 @@ const page = ({ params }) => {
       SpecimanQTY: ''
     },
   ]);
+  console.log(speciPurpose)
   const [otherPurpose, setOtherPurpose] = useState([
     {
       id: uuidv4(),
@@ -114,12 +116,38 @@ const handleSubmit = async e =>{
       })),
       TADADetails: tadaData.map(item =>({
         TADACategoryID: item.type,
+        ThansportMediaID: item.media ? item.media : null, 
         Amount: item.amount,
       }))
     }
   } else if (previousData.data.PurposeID == 124){
-
+    console.log(speciPurpose)
+    dataWillBeSubmit = {
+      CheckInTime: timeData.startDate,
+      CheckOutTime: timeData.endDate,
+      Latitude: 0,
+      Longitude: 0, 
+      VisitEntryDate: getCurrentDate(),
+      VEStatus: 1,
+      Details: speciPurpose.map(item => ({
+        TeacherName: item.TeacherName,
+        Designation: item.Designation,
+        Phone: item.ContactPhone,
+        FinancialYearID: item.FinancialYearID,
+        ProductCategoryID: item.BooksGroupID,
+        ProductID: item.ProductID,
+        StudentNo: item.StudentsCount,
+        DonationAmount: 0,
+        SpecimenQty: item.SpecimanQTY
+      })),
+      TADADetails: tadaData.map(item =>({
+        TADACategoryID: item.type,
+        ThansportMediaID: item.media ? item.media : null, 
+        Amount: item.amount,
+      }))
+    }
   } else {
+    console.log('others')
     dataWillBeSubmit = {
       CheckInTime: timeData.startDate,
       CheckOutTime: timeData.endDate,
@@ -140,14 +168,16 @@ const handleSubmit = async e =>{
       })),
       TADADetails: tadaData.map(item =>({
         TADACategoryID: item.type,
+        ThansportMediaID: item.media ? item.media : null, 
         Amount: item.amount,
       }))
     }
   }
    
-
+console.log(dataWillBeSubmit)
   const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_visit_entryall&VisitPlanID=${params.id}`, dataWillBeSubmit)
-  router.push('/dashboard/visit-entry')
+  console.log(res)
+  // router.push('/dashboard/visit-entry')
 
 }
 
@@ -248,6 +278,7 @@ const handleSubmit = async e =>{
                   })) } 
                   value={timeData.startDate}
                   placeholder="10:30 am"
+                  required
                   />
             </div>
             <div className="flex gap-1 items-center">
@@ -262,6 +293,7 @@ const handleSubmit = async e =>{
                   })) } 
                   value={timeData.endDate}
                   placeholder="01:30 pm"
+                  required
                   />
             </div>
           </div>

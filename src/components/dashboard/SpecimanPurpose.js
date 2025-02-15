@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import BookByIdV2 from './BookGroupIdV2';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 
 const SpecimanPurpose = ({speciPurpose, setSpeciPurpose, InstitutionID}) => {
@@ -15,8 +16,17 @@ const SpecimanPurpose = ({speciPurpose, setSpeciPurpose, InstitutionID}) => {
       const bookGroups = useGetData(
         'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys'
       );
-      const updateOrderDetails = (event, itemId) => {
+      const getSpecimanQty = async (fId, pId, itemId)=>{
+        const res = await axios.get(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_productSpecimenQty&FinancialYearID=${fId}&ProductID=${pId}&SpecimenUserID=501`)
+        setSpeciPurpose(prevData=> prevData.map(data => data.id === itemId ? {...data, AvailableQTY: res.data.AvailQty} : data))
+      }
+      
+      const updateOrderDetails =  (event, itemId) => {
         setSpeciPurpose(prevData => prevData.map(tData => tData.id === itemId ? {...tData, [event.target.name]: event.target.value} : tData));
+      };
+      const updateOrderDetailsV2 = fId => (event, itemId) => {
+        setSpeciPurpose(prevData => prevData.map(tData => tData.id === itemId ? {...tData, [event.target.name]: event.target.value} : tData));
+        getSpecimanQty(fId, event.target.value, itemId)
       };
   return (
     <div className="flex flex-col">
@@ -183,7 +193,7 @@ const SpecimanPurpose = ({speciPurpose, setSpeciPurpose, InstitutionID}) => {
                         <BookByIdV2
                           name="ProductID"
                           item={item}
-                          update={updateOrderDetails}
+                          update={updateOrderDetailsV2(item.FinancialYearID)}
                         />
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
@@ -202,10 +212,8 @@ const SpecimanPurpose = ({speciPurpose, setSpeciPurpose, InstitutionID}) => {
                           type="text"
                           name="AvailableQTY"
                           className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
-                          onChange={event => {
-                            updateOrderDetails(event, item.id);
-                          }}
                           value={item.AvailableQTY}
+                          readOnly
                         />
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
@@ -232,7 +240,7 @@ const SpecimanPurpose = ({speciPurpose, setSpeciPurpose, InstitutionID}) => {
                 <tr>
                   <td
                     className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium "
-                    colSpan="9"
+                    colSpan="10"
                   >
                     <div className="flex justify-end">
                       <button
