@@ -47,13 +47,14 @@ const page = ({ params }) => {
   ]);
 
   const [timeData, setTimeData] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: '',
+    endDate: '',
   });
   const [tadaData, setTadaData] = useState([
     {
       id: uuidv4(),
       type: '',
+      media: '',
       amount: '',
     },
   ]);
@@ -61,6 +62,8 @@ const page = ({ params }) => {
   const tadaType = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_tada_allowances'
   );
+
+  const trMedia = useGetData('https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_ThansportMedias')
 
   const getprevData = async id => {
     const res = await axios.get(
@@ -233,41 +236,33 @@ const handleSubmit = async e =>{
         <h1 className="pb-3">Visit Date: {convertDateFormat(getCurrentDate())}</h1>
           <div className="grid grid-cols-2 gap-8 mb-5">
           
-            <div>
+            <div className="flex gap-1 items-center">
               <label className="font-semibold pr-5">
                 Check In Time:
               </label>
-              <DatePicker
-                selected={timeData.startDate}
-                onChange={date =>
-                  setTimeData(prevData => ({
+              <input 
+              className="text-md outline-1 border-1 focus:ring-0 rounded-md block text-sm"
+              onChange={e => setTimeData(prevData => ({
                     ...prevData,
-                    startDate: date,
-                  }))
-                }
-                showTimeSelect
-                timeIntervals={15}
-                dateFormat="MMMM d, yyyy h:mm aa"
-                required
-              />
+                    startDate: e.target.value,
+                  })) } 
+                  value={timeData.startDate}
+                  placeholder="10:30 am"
+                  />
             </div>
-            <div>
+            <div className="flex gap-1 items-center">
               <label className="font-semibold pr-5">
                 Check Out Time:
               </label>
-              <DatePicker
-                selected={timeData.endDate}
-                onChange={date =>
-                  setTimeData(prevData => ({
+              <input 
+              className="text-md outline-1 border-1 focus:ring-0 rounded-md block text-sm"
+              onChange={e => setTimeData(prevData => ({
                     ...prevData,
-                    endDate: date,
-                  }))
-                }
-                showTimeSelect
-                timeIntervals={15}
-                dateFormat="MMMM d, yyyy h:mm aa"
-                required
-              />
+                    endDate: e.target.value,
+                  })) } 
+                  value={timeData.endDate}
+                  placeholder="01:30 pm"
+                  />
             </div>
           </div>
         
@@ -309,6 +304,14 @@ const handleSubmit = async e =>{
                       >
                         TA/DA Allowance Type
                       </th>
+                      
+                      <th
+                        scope="col"
+                        className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                      >
+                        Thansport Media
+                      </th>
+
                       <th
                         scope="col"
                         className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
@@ -350,6 +353,34 @@ const handleSubmit = async e =>{
                               tadaType.data.map(tada => (
                                 <option value={tada.ID} key={tada.id}>
                                   {tada.CategoryName}
+                                </option>
+                              ))}
+                          </select>
+                        </td>
+
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
+                          <select
+                            name="type"
+                            className="w-full rounded-md"
+                            onChange={event => {
+                              setTadaData(prevData =>
+                                prevData.map(itemData =>
+                                  itemData.id === item.id
+                                    ? {
+                                        ...itemData,
+                                        media: event.target.value,
+                                      }
+                                    : itemData
+                                )
+                              );
+                            }}
+                            value={item.media}
+                          >
+                            <option value="" disabled={true}></option>
+                            {trMedia.data.length &&
+                              trMedia.data.map(media => (
+                                <option value={media.ThansportMediaID} key={media.ThansportMediaID}>
+                                  {media.ThansportMedia}
                                 </option>
                               ))}
                           </select>
