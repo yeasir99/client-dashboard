@@ -174,10 +174,8 @@ const handleSubmit = async e =>{
     }
   }
    
-console.log(dataWillBeSubmit)
   const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_visit_entryall&VisitPlanID=${params.id}`, dataWillBeSubmit)
-  console.log(res)
-  // router.push('/dashboard/visit-entry')
+  router.push('/dashboard/visit-entry')
 
 }
 
