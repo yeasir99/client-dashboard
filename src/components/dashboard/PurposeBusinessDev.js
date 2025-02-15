@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PurposeBusinessDev = ({ perpouseAmount, setPerpouseAmount }) => {
+const PurposeBusinessDev = ({perpouseAmount, setPerpouseAmount }) => {
   return (
     <>
       <h1 className="text-2xl capitalize mb-2">Purpose Details</h1>
@@ -33,12 +33,6 @@ const PurposeBusinessDev = ({ perpouseAmount, setPerpouseAmount }) => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Class
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                    >
                       Financial Year
                     </th>
                     <th
@@ -63,26 +57,19 @@ const PurposeBusinessDev = ({ perpouseAmount, setPerpouseAmount }) => {
                       scope="col"
                       className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
                     >
-                      Donation Amount
+                      Approved Amount
                     </th>
-                    <th
-                      scope="col"
-                      className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
-                    >
-                      Donation Disbrush
-                    </th>
-
                     <th scope="col" className="px-6 py-4">
-                      Donation Balance
+                      Paid Amount
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {perpouseAmount.length &&
+                  {
                     perpouseAmount.map(item => (
                       <tr
                         className="border-b border-neutral-200 dark:border-white/10 text-black"
-                        key={item.BDExpReqID}
+                        key={item.BDExpReqDetailsID}
                       >
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.TeacherName}
@@ -94,7 +81,7 @@ const PurposeBusinessDev = ({ perpouseAmount, setPerpouseAmount }) => {
                           {item.ContactPhone}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.FinancialYearID}
+                          {item.FinancialYear}
                         </td>
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.BooksGroup}
@@ -108,11 +95,20 @@ const PurposeBusinessDev = ({ perpouseAmount, setPerpouseAmount }) => {
                         <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                           {item.DonationAmount}
                         </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.DonationDisbrush}
-                        </td>
-                        <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                          {item.DonationBalance}
+                        <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
+                        <input
+                            type="number"
+                            className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                            name="amount"
+                            onChange={event => {
+                              if(Number(event.target.value) <= Number(item.DonationAmount)){
+                              setPerpouseAmount(prevData => prevData.map(data => data.BDExpReqDetailsID == item.BDExpReqDetailsID ? {...data, DonationDisbrush: event.target.value} : data))
+                              } else{
+                                setPerpouseAmount(prevData => prevData.map(data => data.BDExpReqDetailsID == item.BDExpReqDetailsID ? {...data, DonationDisbrush: 0} : data))
+                              }
+                            }}
+                            value={Number(item.DonationDisbrush) ? item.DonationDisbrush : ''}
+                          />
                         </td>
                       </tr>
                     ))}

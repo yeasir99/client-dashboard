@@ -4,20 +4,20 @@ import BookByIdV2 from './BookGroupIdV2';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { v4 as uuidv4 } from 'uuid';
 
-const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
-  const teachersData = useGetData(
-    `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutionTeacher&InstitutionID=${InstitutionID}`
-  );
-  const fiscalYear = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_financialyear'
-  );
-  const bookGroups = useGetData(
-    'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys'
-  );
 
-  const updateOrderDetails = (event, itemId) => {
-    setOtherPurpose(prevData => prevData.map(tData => tData.id === itemId ? {...tData, [event.target.name]: event.target.value} : tData));
-  };
+const SpecimanPurpose = ({speciPurpose, setSpeciPurpose, InstitutionID}) => {
+    const teachersData = useGetData(
+        `https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_institutionTeacher&InstitutionID=${InstitutionID}`
+      );
+      const fiscalYear = useGetData(
+        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_financialyear'
+      );
+      const bookGroups = useGetData(
+        'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_bookscategorys'
+      );
+      const updateOrderDetails = (event, itemId) => {
+        setSpeciPurpose(prevData => prevData.map(tData => tData.id === itemId ? {...tData, [event.target.name]: event.target.value} : tData));
+      };
   return (
     <div className="flex flex-col">
       <div>
@@ -68,6 +68,18 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                   >
                     Student Count
                   </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Available QTY.
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Speciman QTY.
+                  </th>
                   
                   <th scope="col" className="px-6 py-4">
                     Action
@@ -75,8 +87,8 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                 </tr>
               </thead>
               <tbody>
-                {otherPurpose.length &&
-                  otherPurpose.map(item => (
+                {speciPurpose.length &&
+                  speciPurpose.map(item => (
                     <tr
                       className="border-b border-neutral-200 dark:border-white/10"
                       key={item.id}
@@ -108,7 +120,7 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                                     ...details,
                                   };
                                 };
-                            setOtherPurpose(prevData => prevData.map(tData => tData.id === item.id ? updateTeachersData(teachersData.data, tData) : tData ) )
+                            setSpeciPurpose(prevData => prevData.map(tData => tData.id === item.id ? updateTeachersData(teachersData.data, tData) : tData ) )
                           }}
                         >
                           <option value="" disabled></option>
@@ -136,7 +148,7 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                           className="w-full rounded-md py-[0.40rem]"
                           value={item.FinancialYearID}
                           onChange={event => {
-                            setOtherPurpose(prevData => prevData.map(tData => tData.id === item.id ? {...tData, FinancialYearID: event.target.value} : tData))
+                            setSpeciPurpose(prevData => prevData.map(tData => tData.id === item.id ? {...tData, FinancialYearID: event.target.value} : tData))
                           }}
                         >
                           <option value="" disabled></option>
@@ -155,7 +167,7 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                           className="w-full rounded-md py-[0.40rem]"
                           value={item.BooksGroupID}
                           onChange={event => {
-                            setOtherPurpose(prevData => prevData.map(tData => tData.id === item.id ? {...tData, BooksGroupID: event.target.value} : tData))
+                            setSpeciPurpose(prevData => prevData.map(tData => tData.id === item.id ? {...tData, BooksGroupID: event.target.value} : tData))
                           }}
                         >
                           <option value="" disabled={true}></option>
@@ -185,12 +197,33 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                           value={item.StudentsCount}
                         />
                       </td>
-                      
+                      <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
+                        <input
+                          type="text"
+                          name="AvailableQTY"
+                          className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                          onChange={event => {
+                            updateOrderDetails(event, item.id);
+                          }}
+                          value={item.AvailableQTY}
+                        />
+                      </td>
+                      <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
+                        <input
+                          type="text"
+                          name="SpecimanQTY"
+                          className="text-md outline-1 border-1 focus:ring-0 rounded-md w-full block text-sm"
+                          onChange={event => {
+                            updateOrderDetails(event, item.id);
+                          }}
+                          value={item.SpecimanQTY}
+                        />
+                      </td>
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-end h-full gap-3">
                         <AiOutlineCloseCircle
                           className="text-4xl text-red-500 cursor-pointer"
                           onClick={() => {
-                            setOtherPurpose(prevData => prevData.filter(data => data.id != item.id))
+                            setSpeciPurpose(prevData => prevData.filter(data => data.id != item.id));
                           }}
                         />
                       </td>
@@ -206,7 +239,7 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                         type="button"
                         className="bg-green-300 text-md rounded-md px-4 py-2"
                         onClick={() => {
-                          setOtherPurpose(prevData =>[...prevData, {
+                          setSpeciPurpose(prevData =>[...prevData, {
                             id: uuidv4(),
                             TeacherName: '',
                             Designation: '',
@@ -215,6 +248,8 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
                             BooksGroupID: '',
                             ProductID: '',
                             StudentsCount: '',
+                            AvailableQTY: '',
+                            SpecimanQTY: ''
                           }])
                         }}
                       >
@@ -229,7 +264,7 @@ const OtherPurpose = ({ otherPurpose, setOtherPurpose, InstitutionID }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default OtherPurpose;
+export default SpecimanPurpose

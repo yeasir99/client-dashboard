@@ -10,6 +10,8 @@ import PurposeBusinessDev from '@/components/dashboard/PurposeBusinessDev';
 import OtherPurpose from '@/components/dashboard/OtherPurpose';
 import getCurrentDate from '@/utils/getCurrentDate';
 import { useRouter } from 'next/navigation';
+import SpecimanPurpose from '@/components/dashboard/SpecimanPurpose';
+import convertDateFormat from '@/utils/convertDateFormat'
 
 const page = ({ params }) => {
   const [previousData, setPreviousData] = useState({
@@ -17,6 +19,20 @@ const page = ({ params }) => {
     data: null,
   });
   const [perpouseAmount, setPerpouseAmount] = useState([]);
+  const [speciPurpose, setSpeciPurpose] = useState([
+    {
+      id: uuidv4(),
+      TeacherName: '',
+      Designation: '',
+      ContactPhone: '',
+      FinancialYearID: '',
+      BooksGroupID: '',
+      ProductID: '',
+      StudentsCount: '',
+      AvailableQTY: '',
+      SpecimanQTY: ''
+    },
+  ]);
   const [otherPurpose, setOtherPurpose] = useState([
     {
       id: uuidv4(),
@@ -42,7 +58,6 @@ const page = ({ params }) => {
     },
   ]);
 
-  console.log(tadaData)
   const tadaType = useGetData(
     'https://kblsf.site/DLogicKBL/salesforce_api.php?action=get_tada_allowances'
   );
@@ -64,7 +79,7 @@ const page = ({ params }) => {
   }, [params.id]);
 
   useEffect(() => {
-    if (previousData.data && previousData.data?.VisitPlanID) {
+    if (previousData.data && previousData.data?.PurposeID == 79) {
       setPerpouseAmount([...previousData.data.Details]);
     }
   }, [previousData]);
@@ -73,29 +88,60 @@ const page = ({ params }) => {
 
 const handleSubmit = async e =>{
   e.preventDefault();
-  const dataWillBeSubmit = {
-    CheckInTime: timeData.startDate,
-    CheckOutTime: timeData.endDate,
-    Latitude: 0,
-    Longitude: 0, 
-    VisitEntryDate: getCurrentDate(),
-    VEStatus: 1,
-    Details: otherPurpose.map(item => ({
-      TeacherName: item.TeacherName,
-      Designation: item.Designation,
-      Phone: item.ContactPhone,
-      FinancialYearID: item.FinancialYearID,
-      ProductCategoryID: item.BooksGroupID,
-      ProductID: item.ProductID,
-      StudentNo: item.StudentsCount,
-      DonationAmount: 0,
-      SpecimenQty: 0
-    })),
-    TADADetails: tadaData.map(item =>({
-      TADACategoryID: item.type,
-      Amount: item.amount,
-    }))
+  var dataWillBeSubmit;
+  if(previousData.data.PurposeID == 79){
+    dataWillBeSubmit = {
+      CheckInTime: timeData.startDate,
+      CheckOutTime: timeData.endDate,
+      Latitude: 0,
+      Longitude: 0, 
+      VisitEntryDate: getCurrentDate(),
+      VEStatus: 1,
+      Details: perpouseAmount.map(item => ({
+        TeacherName: item.TeacherName,
+        Designation: item.Designation,
+        Phone: item.ContactPhone,
+        FinancialYearID: item.FinancialYearID,
+        ProductCategoryID: item.BooksGroupID,
+        ProductID: item.ProductID,
+        StudentNo: item.StudentsCount,
+        DonationAmount: item.DonationAmount,
+        DonationDisbrush: item.DonationDisbrush,
+        SpecimenQty: 0
+      })),
+      TADADetails: tadaData.map(item =>({
+        TADACategoryID: item.type,
+        Amount: item.amount,
+      }))
+    }
+  } else if (previousData.data.PurposeID == 124){
+
+  } else {
+    dataWillBeSubmit = {
+      CheckInTime: timeData.startDate,
+      CheckOutTime: timeData.endDate,
+      Latitude: 0,
+      Longitude: 0, 
+      VisitEntryDate: getCurrentDate(),
+      VEStatus: 1,
+      Details: otherPurpose.map(item => ({
+        TeacherName: item.TeacherName,
+        Designation: item.Designation,
+        Phone: item.ContactPhone,
+        FinancialYearID: item.FinancialYearID,
+        ProductCategoryID: item.BooksGroupID,
+        ProductID: item.ProductID,
+        StudentNo: item.StudentsCount,
+        DonationAmount: 0,
+        SpecimenQty: 0
+      })),
+      TADADetails: tadaData.map(item =>({
+        TADACategoryID: item.type,
+        Amount: item.amount,
+      }))
+    }
   }
+   
 
   const res = await axios.post(`https://kblsf.site/DLogicKBL/salesforce_api.php?action=create_visit_entryall&VisitPlanID=${params.id}`, dataWillBeSubmit)
   router.push('/dashboard/visit-entry')
@@ -184,10 +230,12 @@ const handleSubmit = async e =>{
           </tbody>
         </table>
         <form className="mb-10" onSubmit={handleSubmit}>
+        <h1 className="pb-3">Visit Date: {convertDateFormat(getCurrentDate())}</h1>
           <div className="grid grid-cols-2 gap-8 mb-5">
+          
             <div>
               <label className="font-semibold pr-5">
-                Actual Check In Time:
+                Check In Time:
               </label>
               <DatePicker
                 selected={timeData.startDate}
@@ -205,7 +253,7 @@ const handleSubmit = async e =>{
             </div>
             <div>
               <label className="font-semibold pr-5">
-                Actual Check Out Time:
+                Check Out Time:
               </label>
               <DatePicker
                 selected={timeData.endDate}
@@ -224,13 +272,22 @@ const handleSubmit = async e =>{
           </div>
         
         {/* start */}
-        {/* {previousData.data && previousData.data.PurposeID == 79 && (
+        {previousData.data && previousData.data.PurposeID == 79 && perpouseAmount.length > 0 && (
           <PurposeBusinessDev
             perpouseAmount={perpouseAmount}
             setPerpouseAmount={setPerpouseAmount}
           />
-        )} */}
-        {previousData.data && (
+        )}
+
+        {previousData.data && previousData.data.PurposeID == 124 && (
+          <SpecimanPurpose
+            speciPurpose={speciPurpose}
+            setSpeciPurpose={setSpeciPurpose}
+            InstitutionID={previousData.data.InstitutionID}
+          />
+        )}
+
+        {previousData.data && previousData.data.PurposeID != 79 && previousData.data.PurposeID != 124 && (
           <OtherPurpose
             otherPurpose={otherPurpose}
             setOtherPurpose={setOtherPurpose}

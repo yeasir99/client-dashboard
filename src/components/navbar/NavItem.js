@@ -188,7 +188,7 @@ const NavItem = ({ session }) => {
     },
     {
       name: 'Visit Entry Approval',
-      displayName: 'Visit Entry Approval',
+      displayName: 'Mkt. Exp. Approval',
       href: '/dashboard/visit-approval-inital',
       status: 'main',
     },
