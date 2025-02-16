@@ -117,6 +117,18 @@ console.log(state.data)
                   >
                     Books_Name
                   </th>
+                  {state.data.VisitPlan.PurposeID === 79 && <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Donation Amount
+                  </th>}
+                  {state.data.VisitPlan.PurposeID === 124 && <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Specimen Qty
+                  </th>}
                   <th scope="col" className="px-6 py-4">
                     Student Count
                   </th>
@@ -143,6 +155,12 @@ console.log(state.data)
                       <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
                       {item.ProductName}
                       </td>
+                      {state.data.VisitPlan.PurposeID === 79 && <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
+                      {item.DonationAmount}
+                      </td>}
+                      {state.data.VisitPlan.PurposeID === 124 && <td className="whitespace-nowrap border-e border-neutral-200 px-1 py-4 font-medium dark:border-white/10">
+                      {item.SpecimenQty}
+                      </td>}
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-end h-full gap-3">
                       {item.StudentNo}
                       </td>
@@ -170,7 +188,12 @@ console.log(state.data)
                   >
                     TA/DA Allowance Type
                   </th>
-                  
+                  <th
+                    scope="col"
+                    className="border-e border-neutral-200 px-6 py-4 dark:border-white/10"
+                  >
+                    Thansport Media
+                  </th>
                   <th scope="col" className="px-6 py-4">
                   Amount
                   </th>
@@ -185,7 +208,9 @@ console.log(state.data)
                       <td className="whitespace-nowrap border-e border-neutral-200 px-2 py-4 font-medium dark:border-white/10">
                         {item.TADACategory}
                       </td>
-                      
+                      <td className="whitespace-nowrap border-e border-neutral-200 px-2 py-4 font-medium dark:border-white/10">
+                        {item.ThansportMedia}
+                      </td>
                       <td className="whitespace-nowrap px-6 py-4 flex justify-center items-end h-full gap-3">
                       {item.Amount}
                       </td>
