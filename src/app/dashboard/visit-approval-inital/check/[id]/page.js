@@ -1,7 +1,7 @@
-
+import Checked from "@/components/dashboard/visit-plan-approval/Checked"
 const page = ({params}) => {
   return (
-    <div>page</div>
+    <Checked id={params.id} />
   )
 }
 

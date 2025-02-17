@@ -1,8 +1,8 @@
-import React from 'react'
+import Authorized from '@/components/dashboard/visit-plan-approval/Authorized'
 
 const page = ({params}) => {
   return (
-    <div>page</div>
+    <Authorized id={params.id} />
   )
 }
 

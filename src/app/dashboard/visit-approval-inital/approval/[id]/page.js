@@ -1,8 +1,8 @@
-import React from 'react'
+import Approved from '@/components/dashboard/visit-plan-approval/Approved'
 
 const page = ({params}) => {
   return (
-    <div>page</div>
+    <Approved id={params.id} />
   )
 }
 

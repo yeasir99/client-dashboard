@@ -81,7 +81,7 @@ const PendingList = () => {
                         {item.VisitUserName}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
-                        {item.PurposeName}
+                        {item.InstituteName}
                       </td>
                       <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium dark:border-white/10">
                         {item.EStatusName}
