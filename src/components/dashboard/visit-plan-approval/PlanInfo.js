@@ -33,19 +33,11 @@ const PlanInfo = ({VisitPlan}) => {
                 </div>
                 <div className="flex items-center gap-2">
                     <h1 className="text-lg">Check In Time:</h1>
-                    <h1>{VisitPlan.CheckInTime.date}</h1>
+                    <h1>{VisitPlan.CheckInTime && VisitPlan.CheckInTime.date}</h1>
                 </div>
                 <div className="flex items-center gap-2">
                     <h1 className="text-lg">Check Out Time:</h1>
-                    <h1>{VisitPlan.CheckOutTime.date}</h1>
-                </div>
-                <div className="flex items-center gap-2">
-                    <h1 className="text-lg">Latitude:</h1>
-                    <h1>{VisitPlan.Latitude}</h1>
-                </div>
-                <div className="flex items-center gap-2">
-                    <h1 className="text-lg">Longitude:</h1>
-                    <h1>{VisitPlan.Longitude}</h1>
+                    <h1>{VisitPlan.CheckOutTime && VisitPlan.CheckOutTime.date}</h1>
                 </div>
             </div>
         </div>
