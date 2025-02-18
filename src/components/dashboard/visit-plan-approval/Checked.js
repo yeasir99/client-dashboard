@@ -2,8 +2,13 @@
 import {useState} from 'react'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import PlanInfo from './PlanInfo';
+import TeachersDetails from './TeachersDetails';
+import DisplayTADA from './DisplayTADA';
+import Comments from './Comments';
 
-const Checked = ({id}) => {
+const Checked = ({viewableData, id}) => {
+  console.log(viewableData)
     const [formData, setFormData] = useState({
         CheckedComments: '',
       });
@@ -35,6 +40,15 @@ const Checked = ({id}) => {
       };
   return (
     <>
+    {viewableData.data?.VisitPlan && <PlanInfo VisitPlan={viewableData.data.VisitPlan} />}
+    
+    {viewableData.data?.Details && <div>
+      {viewableData.data.Details.length > 0 ? <TeachersDetails teachersInfo={viewableData.data.Details} PurposeID={viewableData.data.VisitPlan.PurposeID} /> : <div className='text-xl font-semibold text-center py-3'>No Teachers Details Found</div>}
+    </div>}
+    {viewableData.data?.TADADetails && <div>
+      {viewableData.data.TADADetails.length > 0 ? <DisplayTADA tadaDetails={viewableData.data.TADADetails} /> : <div className='text-xl font-semibold text-center py-3'>No TA/DA Details Found</div>}
+    </div>}
+    {viewableData.data?.visitApprovalsPlan && <Comments Approvals={viewableData.data.visitApprovalsPlan} />}
     <div className="py-6">
         <label
           htmlFor="CheckedComments"
