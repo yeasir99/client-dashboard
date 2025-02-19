@@ -48,6 +48,12 @@ const NavItem = ({ session }) => {
           status: 'main',
         },
         {
+          name: 'Notifications',
+          displayName: 'Notifications',
+          href: '/dashboard/notifications',
+          status: 'main',
+        },
+        {
           name: 'User-Employee registration',
           displayName: 'User-Employee registration',
           href: '/dashboard/user-employee',
